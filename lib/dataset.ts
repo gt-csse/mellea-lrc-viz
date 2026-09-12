@@ -26,6 +26,8 @@ export type Evidence = {
   span: Span | null;
   locatable: boolean;
   outside_store?: boolean;
+  span_from?: "store" | "match";
+  note?: string | null;
 };
 
 export type Annotation = {
@@ -42,6 +44,7 @@ export type Annotation = {
   scope: string | null;
   pin_cite: { text: string; span: Span } | null;
   records_at_locator: number | null;
+  proposition: string | null;
   authority: { kind: string; ids: string[]; case_name?: string; date_filed?: string } | null;
   label: string | null;
   subclasses: string[];
@@ -70,7 +73,7 @@ export type Occurrence = {
   matched_text: string;
   pin_cite_written: { text: string; span: Span } | null;
   scope: string;
-  reason: string | null;
+  basis: string | null;
   note: string | null;
   in_table_of_authorities: boolean | null;
 };

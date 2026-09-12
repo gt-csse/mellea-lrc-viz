@@ -443,7 +443,7 @@ function RootDetail({
                 <div className={styles.field}><dt>pin cite</dt><dd>{occurrence.pin_cite_written.text}</dd></div>
               ) : null}
               {occurrence.scope !== "in_scope" ? (
-                <div className={styles.field}><dt>scope</dt><dd>{occurrence.scope}{occurrence.reason ? ` · ${occurrence.reason}` : ""}</dd></div>
+                <div className={styles.field}><dt>scope</dt><dd>{occurrence.scope}{occurrence.basis ? ` · ${occurrence.basis}` : ""}</dd></div>
               ) : null}
             </dl>
             {occurrence.note ? <p className={styles.note}>{occurrence.note}</p> : null}
@@ -489,6 +489,9 @@ function AnnotationBody({ annotation, onShowEvidence }: { annotation: Annotation
         {annotation.records_at_locator !== null ? (
           <div className={styles.field}><dt>at locator</dt><dd>{annotation.records_at_locator} record(s)</dd></div>
         ) : null}
+        {annotation.proposition ? (
+          <div className={styles.field}><dt>cited for</dt><dd>{annotation.proposition}</dd></div>
+        ) : null}
       </dl>
       {annotation.note ? <p className={styles.note}>{annotation.note}</p> : null}
       {annotation.evidence.map((item, index) => (
@@ -514,9 +517,15 @@ function EvidenceItem({ evidence, onShow }: { evidence: Evidence; onShow: (evide
       </div>
       {evidence.proposition ? <p className={styles.muted}>cited for: {evidence.proposition}</p> : null}
       {evidence.quote ? <p className={styles.quote}>“{evidence.quote}”</p> : null}
+      {evidence.note ? <p className={styles.muted}>{evidence.note}</p> : null}
       <div className={styles.evidenceHead} style={{ marginTop: 6, marginBottom: 0 }}>
         {evidence.locatable ? (
-          <button className={styles.locate} onClick={() => onShow(evidence)}>show it in the text</button>
+          <>
+            <button className={styles.locate} onClick={() => onShow(evidence)}>show it in the text</button>
+            {evidence.span_from === "match" ? (
+              <span className={styles.outside}>span matched by this viewer, not by the store</span>
+            ) : null}
+          </>
         ) : evidence.outside_store ? (
           <span className={styles.outside}>outside this store — nothing here to point at</span>
         ) : evidence.quote ? (
@@ -579,6 +588,8 @@ function Coverage({ bundle, onOpenDocument }: { bundle: Bundle; onOpenDocument: 
             <tr><td>outside the store</td><td className="n">{bundle.totals.evidence.outside_store}</td></tr>
             <tr><td>quoted but not found</td><td className="n">{bundle.totals.evidence.unplaced}</td></tr>
             <tr><td>ambiguous — the quote occurs twice</td><td className="n">{bundle.totals.evidence.ambiguous}</td></tr>
+            <tr><td>span written by the store</td><td className="n">{bundle.totals.evidence.span_from_store ?? 0}</td></tr>
+            <tr><td>span matched by this viewer</td><td className="n">{bundle.totals.evidence.span_from_match ?? 0}</td></tr>
           </tbody>
         </table>
         <p className={styles.muted} style={{ marginTop: 10 }}>
