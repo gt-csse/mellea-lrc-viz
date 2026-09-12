@@ -100,56 +100,43 @@ explained rather than just stated.
 
 ## The dataset reviewer
 
-`/dataset` is a second, separate workspace. The viewer above reads what the
-pipeline produced; this one reads the annotation store itself — what a human or
-a court decided about each citation, and the evidence they decided it on.
+`/dataset` is a second workspace. The viewer above reads what the pipeline
+produced; this one reads the annotation store itself — the citations a person
+read out of a filing, and the tree they form.
 
-It loads one file, `public/dataset-bundle.json`, built from the store:
+It opens **one document**. There is no index, nothing is preloaded, and nothing
+is fetched: you open a bundle and it renders it, the same way the result viewer
+opens a result.
 
 ```bash
-npm run bundle                       # reads ./data, writes public/dataset-bundle.json
-npm run bundle -- --store ../mellea-lrc-datasets
+npm run bundle                        # every document, into bundles/
+npm run bundle -- --document 005      # just that one
+npm run bundle -- --store ../mellea-lrc-datasets --out bundles
 ```
 
-`data/` is a symlink to the annotation store. The bundle is **not committed** —
-the store is not public — so a fresh clone shows an empty state with an *Open
-bundle* control, and anyone with the store can rebuild it in a second.
-
-### What the build does
-
-The store is normalised for annotating: rows in one file, document text in
-another, court orders in a third. A browser with no server cannot join that, so
-the build does it once and writes a single self-contained file, about 2.7 MB:
-every document's text, every annotation about it, and the orders it is judged
-against.
-
-It also **resolves every quote to a span**. An annotation quotes a sentence from
-a filing or from an order; the build matches that quote loosely — whitespace
-collapsed, quote marks and dashes unified — then writes back the exact characters
-and their offsets. The viewer highlights; it never searches. A quote that cannot
-be placed is marked *not found in the text it quotes* rather than dropped, and
-the Coverage tab counts them.
+A bundle is one document: its text, the annotations about it, and the SHA-256
+that says which text those spans index — the build refuses to write one if the
+annotation file and `corpus/documents_txt` disagree. They run 18 KB to 150 KB.
+`bundles/` is gitignored, because the store is not public.
 
 ### What you get
 
-**Documents** — the filing on the left, its citations on the right, the court
-order behind it one tab away. Selecting a citation scrolls the text to it;
-clicking a highlight selects the citation. The detail panel carries the label,
-its subclasses, who decided it, on what basis, the annotator's note, and each
-piece of evidence with a link to its source. Evidence that was placed has a
-*show it in the text* button that jumps to it, in the filing or in the order.
+The filing on the left, in the same type the result viewer uses, with every
+citation marked in place. The tree on the right, **roots only**: one row per case
+the filing introduces, with the locator it states and how many short forms hang
+off it. Expanding a root shows what was read at that place — the citation as
+written, the locator, the pin cite and what it normalises to — and then each
+short form under it, `Id.`, `supra` or the shortened cite, each its own row.
 
-**Coverage** — what the dataset does and does not settle: the label and source
-distributions for both units, how much evidence is placed against how much is
-outside the store, and a per-document table.
+Selecting anything scrolls the text to it; clicking a mark in the text opens its
+root and selects it.
 
-### It follows the store, not one version of it
+Two sections sit below the roots when the document has them: citations that are
+not to a decision, and cases named as authority that the filing never locates.
+Both carry the annotator's note saying why.
 
-The builder takes the highest `extraction-v*` and `validation-v*` it finds and
-reads either layout — one flat file, or one file per document — so it keeps
-working while the store migrates. Field names are normalised on the way in
-(`reason` or `basis`, `comment` or `note`), and the header chips say which
-versions and which store commit the open bundle came from.
+The builder reads the highest `extraction-v*` in the store that is laid out per
+document, so it follows the dataset rather than one version of it.
 
 ## Deploy to Vercel
 
