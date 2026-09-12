@@ -98,6 +98,59 @@ explained rather than just stated.
 
 ---
 
+## The dataset reviewer
+
+`/dataset` is a second, separate workspace. The viewer above reads what the
+pipeline produced; this one reads the annotation store itself — what a human or
+a court decided about each citation, and the evidence they decided it on.
+
+It loads one file, `public/dataset-bundle.json`, built from the store:
+
+```bash
+npm run bundle                       # reads ./data, writes public/dataset-bundle.json
+npm run bundle -- --store ../mellea-lrc-datasets
+```
+
+`data/` is a symlink to the annotation store. The bundle is **not committed** —
+the store is not public — so a fresh clone shows an empty state with an *Open
+bundle* control, and anyone with the store can rebuild it in a second.
+
+### What the build does
+
+The store is normalised for annotating: rows in one file, document text in
+another, court orders in a third. A browser with no server cannot join that, so
+the build does it once and writes a single self-contained file, about 2.7 MB:
+every document's text, every annotation about it, and the orders it is judged
+against.
+
+It also **resolves every quote to a span**. An annotation quotes a sentence from
+a filing or from an order; the build matches that quote loosely — whitespace
+collapsed, quote marks and dashes unified — then writes back the exact characters
+and their offsets. The viewer highlights; it never searches. A quote that cannot
+be placed is marked *not found in the text it quotes* rather than dropped, and
+the Coverage tab counts them.
+
+### What you get
+
+**Documents** — the filing on the left, its citations on the right, the court
+order behind it one tab away. Selecting a citation scrolls the text to it;
+clicking a highlight selects the citation. The detail panel carries the label,
+its subclasses, who decided it, on what basis, the annotator's note, and each
+piece of evidence with a link to its source. Evidence that was placed has a
+*show it in the text* button that jumps to it, in the filing or in the order.
+
+**Coverage** — what the dataset does and does not settle: the label and source
+distributions for both units, how much evidence is placed against how much is
+outside the store, and a per-document table.
+
+### It follows the store, not one version of it
+
+The builder takes the highest `extraction-v*` and `validation-v*` it finds and
+reads either layout — one flat file, or one file per document — so it keeps
+working while the store migrates. Field names are normalised on the way in
+(`reason` or `basis`, `comment` or `note`), and the header chips say which
+versions and which store commit the open bundle came from.
+
 ## Deploy to Vercel
 
 The app is static and needs no environment variables, so deployment is close to

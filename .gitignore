@@ -14,3 +14,9 @@ out/
 
 # OS
 .DS_Store
+
+# The dataset bundle is built from a store that is not public
+public/dataset-bundle.json
+
+# The annotation store, symlinked in locally
+data
