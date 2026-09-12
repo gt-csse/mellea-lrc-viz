@@ -54,6 +54,10 @@ function normaliseWithMap(text) {
   return { text: out.join(""), map };
 }
 
+// The store writes a span's text as a path relative to itself; the bundle keys
+// its texts by id. One map, built as the texts are read.
+const textIdForPath = new Map();
+
 const normalisedCache = new Map();
 function normalised(textId, text) {
   if (!normalisedCache.has(textId)) normalisedCache.set(textId, normaliseWithMap(text));
@@ -165,16 +169,35 @@ function normaliseEvidence(item, context) {
     locatable: false
   };
 
-  // Resolve against a text the store actually holds.
+  // A span the store resolved is authoritative: it was written against the same
+  // text, by the annotator who made the claim, and its anchoring rule may be
+  // better than a contiguous match -- a stitched quotation anchors on its
+  // longest fragment, which no exact search would find.
+  if (item.span && item.span.text) {
+    const textId = textIdForPath.get(item.span.text) ?? null;
+    if (textId) {
+      evidence.span = { text: textId, start: item.span.start, end: item.span.end };
+      evidence.locatable = true;
+      evidence.span_from = "store";
+      if (item.note) evidence.note = item.note;
+      return evidence;
+    }
+    evidence.note = `the store places this in ${item.span.text}, which this bundle does not carry`;
+  }
+  if (item.note) evidence.note = item.note;
+  if (item.locatable === false && !quote) return evidence;
+
+  // Older stores copy the quote and state no span. Match it loosely and write
+  // back the exact characters, so the viewer highlights rather than searches.
   if (quote) {
     if (source.kind === "filing") {
       const span = locate(quote, context.documentTextId, context.documentText);
-      if (span) Object.assign(evidence, { span, locatable: true });
+      if (span) Object.assign(evidence, { span, locatable: true, span_from: "match" });
     } else if (source.kind === "ruling") {
       for (const ruling of context.rulings) {
         const span = locate(quote, ruling.text_id, ruling.text);
         if (span) {
-          Object.assign(evidence, { span, locatable: true });
+          Object.assign(evidence, { span, locatable: true, span_from: "match" });
           evidence.source = {
             kind: "ruling",
             id: ruling.ruling_id,
@@ -209,6 +232,7 @@ function normaliseAnnotation(row, context) {
     pin_cite: row.pin_cite ?? row.pin_cite_written ?? null,
     records_at_locator: row.records_at_locator ?? null,
     authority: row.authority ?? null,
+    proposition: row.proposition ?? null,
     label: row.label ?? null,
     subclasses: row.subclasses ?? [],
     source: row.source ?? null,
@@ -256,6 +280,8 @@ const rulings = rulingIndex.map((ruling) => {
   const text = readFileSync(path, "utf8");
   const text_id = `ruling:${ruling.ruling_id}`;
   texts[text_id] = text;
+  textIdForPath.set(ruling.text ?? `rulings_txt/${ruling.ruling_id}.txt`, text_id);
+  textIdForPath.set(`rulings/${ruling.text ?? `rulings_txt/${ruling.ruling_id}.txt`}`, text_id);
   return { ...ruling, text_id, text, sha256: sha256(text), length: text.length };
 });
 
@@ -271,6 +297,8 @@ for (const name of documentNames) {
   const text = readFileSync(join(documentsTxt, name), "utf8");
   const text_id = `document:${name}`;
   texts[text_id] = text;
+  textIdForPath.set(`corpus/documents_txt/${name}`, text_id);
+  textIdForPath.set(`documents_txt/${name}`, text_id);
   byDocument.set(name, {
     id: name,
     stem: name.replace(/\.txt$/, ""),
@@ -320,13 +348,18 @@ for (const row of extraction.rows) {
       matched_text: row.matched_text,
       pin_cite_written: row.pin_cite_written,
       scope: row.scope,
-      reason: row.reason ?? null,
+      basis: row.basis ?? row.reason ?? null,
       note: noteOf(row),
       in_table_of_authorities: row.in_table_of_authorities ?? null
     });
   } else if (row.unit === "unread_name") {
-    const quote = row.quote ?? null;
-    const span = quote ? locate(quote, document.text_id, texts[document.text_id]) : null;
+    const stored = row.context ?? null;
+    const quote = stored?.quote ?? row.quote ?? null;
+    const span = stored?.span
+      ? { text: document.text_id, start: stored.span.start, end: stored.span.end }
+      : quote
+        ? locate(quote, document.text_id, texts[document.text_id])
+        : null;
     document.unread_names.push({
       id: row.id,
       span: row.span,
@@ -404,7 +437,9 @@ const bundle = {
       outside_store: allEvidence.filter((item) => item.outside_store).length,
       unplaced: allEvidence.filter(
         (item) => !item.locatable && !item.outside_store && item.quote
-      ).length
+      ).length,
+      span_from_store: allEvidence.filter((item) => item.span_from === "store").length,
+      span_from_match: allEvidence.filter((item) => item.span_from === "match").length
     }
   },
   texts,
