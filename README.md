@@ -121,15 +121,20 @@ annotation file and `corpus/documents_txt` disagree. They run 18 KB to 150 KB.
 
 ### What you get
 
-The filing on the left, in the same type the result viewer uses, with every
-citation marked in place. The tree on the right, **roots only**: one row per case
-the filing introduces, with the locator it states and how many short forms hang
-off it. Expanding a root shows what was read at that place — the citation as
-written, the locator, the pin cite and what it normalises to — and then each
-short form under it, `Id.`, `supra` or the shortened cite, each its own row.
+The result viewer's layout: the citation list on the left, tabs across the top,
+one panel showing whichever the tabs select.
 
-Selecting anything scrolls the text to it; clicking a mark in the text opens its
-root and selects it.
+The list holds **roots only** — one row per case the filing introduces, with the
+locator it states and how many short forms hang off it. Expanding a root lists
+those short forms and nothing else: `Id.`, `supra` or the shortened cite, each
+its own row. Details are not in the list; they are in the **Citation** tab,
+which shows whichever row is selected — what was read at that place, the locator,
+the pin cite and what it normalises to, and for a short form, the root it
+inherits its case from.
+
+The **Document** tab is the filing itself, in the same type the result viewer
+uses, with every citation marked where it is written. Selecting anything scrolls
+the text to it; clicking a mark selects it and opens its root.
 
 Two sections sit below the roots when the document has them: citations that are
 not to a decision, and cases named as authority that the filing never locates.

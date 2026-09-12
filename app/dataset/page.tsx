@@ -13,9 +13,15 @@ import {
   segment
 } from "../../lib/bundle";
 
+type Selection =
+  | { kind: "citation"; row: Citation }
+  | { kind: "noncase"; row: NoncaseCitation }
+  | { kind: "nonconforming"; row: NonconformingCitation };
+
 export default function DatasetReviewer() {
   const [bundle, setBundle] = useState<DocumentBundle | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [activeView, setActiveView] = useState<"citation" | "document">("citation");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [openRoots, setOpenRoots] = useState<string[]>([]);
 
@@ -25,19 +31,22 @@ export default function DatasetReviewer() {
     file
       .text()
       .then((text) => {
-        setBundle(parseBundle(JSON.parse(text)));
-        setSelectedId(null);
+        const payload = parseBundle(JSON.parse(text));
+        setBundle(payload);
+        setSelectedId(payload.extraction.citations[0]?.id ?? null);
         setOpenRoots([]);
         setError(null);
       })
       .catch((reason) => {
         setBundle(null);
+        setSelectedId(null);
         setError(reason instanceof Error ? reason.message : "Could not read that file.");
       });
   }
 
   const citations = bundle?.extraction.citations ?? [];
   const roots = useMemo(() => citations.filter((citation) => citation.is_root), [citations]);
+  const rootOf = useMemo(() => new Map(roots.map((root) => [root.id, root])), [roots]);
   const shortFormsOf = useMemo(() => {
     const index = new Map<string, Citation[]>();
     for (const citation of citations) {
@@ -47,11 +56,22 @@ export default function DatasetReviewer() {
     return index;
   }, [citations]);
 
+  const selected: Selection | null = useMemo(() => {
+    if (!bundle || !selectedId) return null;
+    const citation = citations.find((row) => row.id === selectedId);
+    if (citation) return { kind: "citation", row: citation };
+    const noncase = bundle.extraction.noncase_citations.find((row) => row.id === selectedId);
+    if (noncase) return { kind: "noncase", row: noncase };
+    const nonconforming = bundle.extraction.nonconforming_citations.find((row) => row.id === selectedId);
+    if (nonconforming) return { kind: "nonconforming", row: nonconforming };
+    return null;
+  }, [bundle, citations, selectedId]);
+
   const marks = useMemo(() => {
     if (!bundle) return [];
     const list: Mark[] = [];
-    const selectedFirst = (id: string) => (id === selectedId ? -1 : 0);
-    for (const citation of [...citations].sort((a, b) => selectedFirst(a.id) - selectedFirst(b.id))) {
+    const first = (id: string) => (id === selectedId ? -1 : 0);
+    for (const citation of [...citations].sort((a, b) => first(a.id) - first(b.id))) {
       const where = citation.locator ?? citation.cited_as;
       list.push({
         id: citation.id,
@@ -60,48 +80,47 @@ export default function DatasetReviewer() {
         className: `citation-mark${citation.id === selectedId ? " selected" : ""}`
       });
     }
-    for (const row of bundle.extraction.noncase_citations) {
+    for (const row of bundle.extraction.noncase_citations)
       list.push({
         id: row.id,
         start: row.cited_as.start,
         end: row.cited_as.end,
         className: `citation-mark noncase${row.id === selectedId ? " selected" : ""}`
       });
-    }
-    for (const row of bundle.extraction.nonconforming_citations) {
+    for (const row of bundle.extraction.nonconforming_citations)
       list.push({
         id: row.id,
         start: row.named_as.start,
         end: row.named_as.end,
         className: `citation-mark nonconforming${row.id === selectedId ? " selected" : ""}`
       });
-    }
     return list;
   }, [bundle, citations, selectedId]);
 
-  const segments = useMemo(
-    () => (bundle ? segment(bundle.text, marks) : []),
-    [bundle, marks]
-  );
+  const segments = useMemo(() => (bundle ? segment(bundle.text, marks) : []), [bundle, marks]);
 
   const documentRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     documentRef.current
       ?.querySelector('[data-selected="true"]')
       ?.scrollIntoView({ block: "center", behavior: "smooth" });
-  }, [selectedId, segments]);
+  }, [selectedId, segments, activeView]);
 
   function select(id: string) {
     setSelectedId(id);
-    const citation = citations.find((item) => item.id === id);
-    if (citation && !openRoots.includes(citation.root_id)) {
+    const citation = citations.find((row) => row.id === id);
+    if (citation && !citation.is_root && !openRoots.includes(citation.root_id))
       setOpenRoots((open) => [...open, citation.root_id]);
-    }
   }
 
-  function toggleRoot(id: string) {
+  function toggle(id: string) {
     setOpenRoots((open) => (open.includes(id) ? open.filter((other) => other !== id) : [...open, id]));
   }
+
+  const heading =
+    activeView === "document"
+      ? { title: "Source document", note: "Where each citation is written" }
+      : { title: "Citation", note: selectedTitle(selected) };
 
   return (
     <main id="main-content" className="app-shell">
@@ -128,239 +147,324 @@ export default function DatasetReviewer() {
           </p>
         </section>
       ) : (
-        <section className="workspace tree-workspace" aria-label="Extraction annotation">
-          <div className="document-panel">
-            <div className="document-heading">
-              <div>
-                <h2>
-                  {bundle.document.number} · {bundle.document.case_name}
-                </h2>
-                <p>{bundle.document.document_kind}</p>
-              </div>
-              <p>
-                {bundle.document.length.toLocaleString()} characters · sha{" "}
-                {bundle.document.sha256.slice(0, 12)} · {bundle.store.extraction} ·{" "}
-                {bundle.store.commit ?? "—"}
-              </p>
-            </div>
-            <div className="document-viewer" ref={documentRef}>
-              {segments.map((piece, index) =>
-                piece.mark ? (
-                  <button
-                    key={`${piece.mark.id}-${index}`}
-                    type="button"
-                    className={piece.mark.className}
-                    data-selected={piece.mark.id === selectedId ? "true" : undefined}
-                    onClick={() => select(piece.mark!.id)}
-                    title={piece.mark.id}
-                  >
-                    {piece.text}
-                  </button>
-                ) : (
-                  <span key={index}>{piece.text}</span>
-                )
-              )}
-            </div>
+        <>
+          <div className="view-tabs" role="tablist" aria-label="Annotation view">
+            <button
+              role="tab"
+              aria-selected={activeView === "citation"}
+              className={activeView === "citation" ? "active" : ""}
+              onClick={() => setActiveView("citation")}
+            >
+              Citation
+            </button>
+            <button
+              role="tab"
+              aria-selected={activeView === "document"}
+              className={activeView === "document" ? "active" : ""}
+              onClick={() => setActiveView("document")}
+            >
+              Document
+            </button>
           </div>
 
-          <aside className="details" aria-label="Citations">
-            <div className="panel-heading">
-              <h2>Citations</h2>
-              <p>
-                {roots.length} roots · {citations.length} places
-              </p>
-            </div>
-
-            <div className="tree-section">
-              {roots.map((root) => (
-                <Root
-                  key={root.id}
-                  root={root}
-                  shortForms={shortFormsOf.get(root.id) ?? []}
-                  open={openRoots.includes(root.id)}
-                  selectedId={selectedId}
-                  onToggle={() => toggleRoot(root.id)}
-                  onSelect={select}
-                />
-              ))}
-            </div>
-
-            {bundle.extraction.noncase_citations.length ? (
-              <div className="tree-section">
-                <h3>Cited, and not a decision</h3>
-                {bundle.extraction.noncase_citations.map((row) => (
-                  <Aside
-                    key={row.id}
-                    id={row.id}
-                    title={row.cited_as.quote}
-                    note={row.note}
-                    open={openRoots.includes(row.id)}
-                    selected={row.id === selectedId}
-                    onToggle={() => toggleRoot(row.id)}
-                    onSelect={() => setSelectedId(row.id)}
-                  />
-                ))}
+          <section className="workspace document-workspace" aria-label="Extraction annotation">
+            <aside className="citation-list" aria-label="Citations">
+              <div className="panel-heading">
+                <h2>Citations</h2>
+                <span>{roots.length} roots</span>
               </div>
-            ) : null}
 
-            {bundle.extraction.nonconforming_citations.length ? (
-              <div className="tree-section">
-                <h3>Named as authority, never located</h3>
-                {bundle.extraction.nonconforming_citations.map((row) => (
-                  <Aside
-                    key={row.id}
-                    id={row.id}
-                    title={row.named_as.quote}
-                    note={row.note}
-                    context={row.context?.quote}
-                    open={openRoots.includes(row.id)}
-                    selected={row.id === selectedId}
-                    onToggle={() => toggleRoot(row.id)}
-                    onSelect={() => setSelectedId(row.id)}
-                  />
-                ))}
+              {roots.map((root) => {
+                const shortForms = shortFormsOf.get(root.id) ?? [];
+                const open = openRoots.includes(root.id);
+                return (
+                  <div key={root.id}>
+                    <button
+                      className={`citation-button${root.id === selectedId ? " selected" : ""}`}
+                      aria-expanded={shortForms.length ? open : undefined}
+                      onClick={() => {
+                        if (shortForms.length) toggle(root.id);
+                        select(root.id);
+                      }}
+                    >
+                      <strong>
+                        <span className="twist" aria-hidden="true">
+                          {shortForms.length ? (open ? "▾" : "▸") : ""}
+                        </span>
+                        {root.case_name?.quote ?? root.cited_as.quote}
+                      </strong>
+                      <span className="citation-button-meta">
+                        <span className="locator">{identifierOf(root.identifier) ?? "no locator"}</span>
+                        {shortForms.length ? (
+                          <span className="count-chip">
+                            {shortForms.length} short form{shortForms.length === 1 ? "" : "s"}
+                          </span>
+                        ) : null}
+                      </span>
+                    </button>
+
+                    {open && shortForms.length ? (
+                      <div className="branch">
+                        {shortForms.map((shortForm) => (
+                          <button
+                            key={shortForm.id}
+                            className={`citation-button${shortForm.id === selectedId ? " selected" : ""}`}
+                            onClick={() => select(shortForm.id)}
+                          >
+                            <strong>{shortForm.cited_as.quote}</strong>
+                            <span className="citation-button-meta">
+                              <span>{shortForm.kind}</span>
+                              <span className="locator">
+                                {shortForm.pin_cite ? shortForm.pin_cite.quote : "no page"}
+                              </span>
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+
+              {bundle.extraction.noncase_citations.length ? (
+                <>
+                  <h3>Cited, and not a decision</h3>
+                  {bundle.extraction.noncase_citations.map((row) => (
+                    <button
+                      key={row.id}
+                      className={`citation-button${row.id === selectedId ? " selected" : ""}`}
+                      onClick={() => setSelectedId(row.id)}
+                    >
+                      <strong>{row.cited_as.quote}</strong>
+                      <span className="locator">{row.id}</span>
+                    </button>
+                  ))}
+                </>
+              ) : null}
+
+              {bundle.extraction.nonconforming_citations.length ? (
+                <>
+                  <h3>Named as authority, never located</h3>
+                  {bundle.extraction.nonconforming_citations.map((row) => (
+                    <button
+                      key={row.id}
+                      className={`citation-button${row.id === selectedId ? " selected" : ""}`}
+                      onClick={() => setSelectedId(row.id)}
+                    >
+                      <strong>{row.named_as.quote}</strong>
+                      <span className="locator">{row.id}</span>
+                    </button>
+                  ))}
+                </>
+              ) : null}
+            </aside>
+
+            <section className="graph-panel" aria-labelledby="panel-title">
+              <div className="panel-heading">
+                <div>
+                  <h2 id="panel-title">{heading.title}</h2>
+                  <p>{heading.note}</p>
+                </div>
+                <span className="artifact-version">
+                  {bundle.document.number} · {bundle.store.extraction}
+                </span>
               </div>
-            ) : null}
-          </aside>
-        </section>
+
+              {activeView === "document" ? (
+                <div className="document-viewer" ref={documentRef}>
+                  {segments.map((piece, index) =>
+                    piece.mark ? (
+                      <button
+                        key={`${piece.mark.id}-${index}`}
+                        type="button"
+                        className={piece.mark.className}
+                        data-selected={piece.mark.id === selectedId ? "true" : undefined}
+                        onClick={() => select(piece.mark!.id)}
+                        title={piece.mark.id}
+                      >
+                        {piece.text}
+                      </button>
+                    ) : (
+                      <span key={index}>{piece.text}</span>
+                    )
+                  )}
+                </div>
+              ) : selected ? (
+                <Detail selection={selected} root={rootOf.get((selected.row as Citation).root_id ?? "")} />
+              ) : (
+                <section className="bibliography-empty">
+                  <h3>Nothing selected</h3>
+                  <p>Pick a citation on the left. A root is a case the filing introduces; expanding it lists the short forms that return to it.</p>
+                </section>
+              )}
+            </section>
+          </section>
+        </>
       )}
     </main>
   );
 }
 
-function Root({
-  root,
-  shortForms,
-  open,
-  selectedId,
-  onToggle,
-  onSelect
-}: {
-  root: Citation;
-  shortForms: Citation[];
-  open: boolean;
-  selectedId: string | null;
-  onToggle: () => void;
-  onSelect: (id: string) => void;
-}) {
-  const identifier = identifierOf(root.identifier);
-  return (
-    <div className="root">
-      <button
-        type="button"
-        className={`root-summary${root.id === selectedId ? " selected" : ""}`}
-        aria-expanded={open}
-        onClick={() => {
-          onToggle();
-          onSelect(root.id);
-        }}
-      >
-        <span className="twist" aria-hidden="true">{open ? "▾" : "▸"}</span>
-        <strong>{root.case_name?.quote ?? root.cited_as.quote}</strong>
-        <span className="root-meta">
-          <span className="locator">{identifier ?? "no locator stated"}</span>
-          {shortForms.length ? (
-            <span className="count-chip">{shortForms.length} short form{shortForms.length > 1 ? "s" : ""}</span>
-          ) : null}
-          {root.in_table_of_authorities ? <span className="count-chip">table of authorities</span> : null}
-        </span>
-      </button>
-
-      {open ? (
-        <div className="root-body">
-          <CitationFields citation={root} />
-          {shortForms.map((shortForm) => (
-            <button
-              key={shortForm.id}
-              type="button"
-              className={`short-form${shortForm.id === selectedId ? " selected" : ""}`}
-              onClick={() => onSelect(shortForm.id)}
-            >
-              <strong>{shortForm.cited_as.quote}</strong>
-              <span>
-                {shortForm.kind}
-                {shortForm.pin_cite ? ` · ${pinCiteOf(shortForm.pin_cite)}` : " · no page"}
-                {shortForm.in_table_of_authorities ? " · table of authorities" : ""}
-              </span>
-              {shortForm.note ? <span className="row-note">{shortForm.note}</span> : null}
-            </button>
-          ))}
-        </div>
-      ) : null}
-    </div>
-  );
+function selectedTitle(selection: Selection | null) {
+  if (!selection) return "Select a citation";
+  if (selection.kind === "citation") return selection.row.cited_as.quote;
+  if (selection.kind === "noncase") return selection.row.cited_as.quote;
+  return selection.row.named_as.quote;
 }
 
-function CitationFields({ citation }: { citation: Citation }) {
-  return (
-    <dl>
-      <Field label="id">{citation.id}</Field>
-      <Field label="kind">{citation.kind}</Field>
-      <Field label="cited as">{citation.cited_as.quote}</Field>
-      {citation.locator ? <Field label="locator">{citation.locator.quote}</Field> : null}
-      {citation.pin_cite ? <Field label="pin cite">{pinCiteOf(citation.pin_cite)}</Field> : null}
-      {citation.colocation_id ? <Field label="colocated">{citation.colocation_id}</Field> : null}
-      {citation.note ? (
-        <div className="field-row">
-          <dt>note</dt>
-          <dd className="row-note">{citation.note}</dd>
+function Detail({ selection, root }: { selection: Selection; root?: Citation }) {
+  if (selection.kind === "citation") {
+    const citation = selection.row;
+    const home = citation.is_root ? citation : root;
+    return (
+      <section className="bibliography">
+        <div className="candidate-detail">
+          <div className="candidate-detail-header">
+            <div>
+              <p className="candidate-kicker">
+                {citation.is_root ? "Root — the place that states the identifier" : `Short form of ${home?.case_name?.quote ?? home?.id ?? "its root"}`}
+              </p>
+              <h3>{home?.case_name?.quote ?? citation.cited_as.quote}</h3>
+              <div className="candidate-title">
+                <span className="locator">{identifierOf(home?.identifier) ?? "no identifier stated"}</span>
+                <span className="provenance">{citation.kind}</span>
+              </div>
+            </div>
+            <span className="outcome outcome-match">{citation.id}</span>
+          </div>
+
+          <div className="candidate-fields">
+            <Field label="Cited as">
+              <p className="quote">{citation.cited_as.quote}</p>
+              <small>
+                {citation.cited_as.start}–{citation.cited_as.end}
+              </small>
+            </Field>
+            <Field label="Locator">
+              {citation.locator ? (
+                <>
+                  <p className="quote">{citation.locator.quote}</p>
+                  <small>
+                    {citation.locator.start}–{citation.locator.end}
+                  </small>
+                </>
+              ) : (
+                <p>none written here</p>
+              )}
+            </Field>
+            <Field label="Pin cite">
+              {citation.pin_cite ? (
+                <>
+                  <p className="quote">{pinCiteOf(citation.pin_cite)}</p>
+                  <small>{(citation.pin_cite.normalized ?? []).map((part) => part.kind).join(", ") || "not normalised"}</small>
+                </>
+              ) : (
+                <p>no page stated</p>
+              )}
+            </Field>
+            <Field label="Root">
+              <p>{citation.root_id}</p>
+              <small>{citation.is_root ? "this place introduces the case" : "the place that introduced the case"}</small>
+            </Field>
+            {citation.case_name ? (
+              <Field label="Case name, as written">
+                <p className="quote">{citation.case_name.quote}</p>
+              </Field>
+            ) : null}
+            {citation.colocation_id ? (
+              <Field label="Colocated">
+                <p>{citation.colocation_id}</p>
+                <small>another citation to the same case at this place</small>
+              </Field>
+            ) : null}
+            {citation.in_table_of_authorities ? (
+              <Field label="Where">
+                <p>the table of authorities</p>
+              </Field>
+            ) : null}
+          </div>
+
+          {citation.note ? <Note>{citation.note}</Note> : null}
         </div>
-      ) : null}
-    </dl>
+      </section>
+    );
+  }
+
+  if (selection.kind === "noncase") {
+    const row = selection.row;
+    return (
+      <section className="bibliography">
+        <div className="candidate-detail">
+          <div className="candidate-detail-header">
+            <div>
+              <p className="candidate-kicker">Cited, and not a decision</p>
+              <h3>{row.cited_as.quote}</h3>
+            </div>
+            <span className="outcome outcome-inconclusive">{row.id}</span>
+          </div>
+          <div className="candidate-fields">
+            <Field label="Cited as">
+              <p className="quote">{row.cited_as.quote}</p>
+              <small>
+                {row.cited_as.start}–{row.cited_as.end}
+              </small>
+            </Field>
+          </div>
+          <Note>{row.note}</Note>
+        </div>
+      </section>
+    );
+  }
+
+  const row = selection.row;
+  return (
+    <section className="bibliography">
+      <div className="candidate-detail">
+        <div className="candidate-detail-header">
+          <div>
+            <p className="candidate-kicker">Named as authority, never located</p>
+            <h3>{row.named_as.quote}</h3>
+          </div>
+          <span className="outcome outcome-mismatch">{row.id}</span>
+        </div>
+        <div className="candidate-fields">
+          <Field label="Named as">
+            <p className="quote">{row.named_as.quote}</p>
+            <small>
+              {row.named_as.start}–{row.named_as.end}
+            </small>
+          </Field>
+          {row.signal ? (
+            <Field label="Signal">
+              <p className="quote">{row.signal.quote}</p>
+            </Field>
+          ) : null}
+          {row.context ? (
+            <Field label="In context">
+              <p className="quote">{row.context.quote}</p>
+            </Field>
+          ) : null}
+        </div>
+        <Note>{row.note}</Note>
+      </div>
+    </section>
   );
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="field-row">
-      <dt>{label}</dt>
-      <dd>{children}</dd>
+    <div className="candidate-field">
+      <h4>{label}</h4>
+      {children}
     </div>
   );
 }
 
-function Aside({
-  id,
-  title,
-  note,
-  context,
-  open,
-  selected,
-  onToggle,
-  onSelect
-}: {
-  id: string;
-  title: string;
-  note: string;
-  context?: string;
-  open: boolean;
-  selected: boolean;
-  onToggle: () => void;
-  onSelect: () => void;
-}) {
+function Note({ children }: { children: React.ReactNode }) {
   return (
-    <div className="root">
-      <button
-        type="button"
-        className={`root-summary${selected ? " selected" : ""}`}
-        aria-expanded={open}
-        onClick={() => {
-          onToggle();
-          onSelect();
-        }}
-      >
-        <span className="twist" aria-hidden="true">{open ? "▾" : "▸"}</span>
-        <strong>{title}</strong>
-        <span className="root-meta">
-          <span className="locator">{id}</span>
-        </span>
-      </button>
-      {open ? (
-        <div className="root-body">
-          {context ? <p className="row-note">{context}</p> : null}
-          <p className="row-note">{note}</p>
-        </div>
-      ) : null}
+    <div className="pinpoint-unavailable">
+      <strong>The annotator&rsquo;s note</strong>
+      <p>{children}</p>
     </div>
   );
 }
