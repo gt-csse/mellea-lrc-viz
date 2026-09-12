@@ -195,37 +195,22 @@ code { font-family: "SFMono-Regular", Consolas, monospace; font-size: .88em; ove
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
 
-/* The dataset reviewer: a document, and the tree of citations read out of it. */
-.tree-workspace { grid-template-columns: minmax(430px, 1fr) minmax(340px, 440px); }
-.document-panel { display: grid; grid-template-rows: auto minmax(0, 1fr); min-width: 0; min-height: 0; gap: 12px; padding: 18px; }
-.document-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-.document-heading h2 { font-size: 1.15rem; }
-.document-heading p { color: var(--muted); font-size: .78rem; }
+/* The dataset reviewer. Everything else is the result viewer's own stylesheet. */
 .citation-mark.noncase { background: #e2e6f4; }
 .citation-mark.noncase:hover, .citation-mark.noncase.selected { background: #c3cbe8; }
 .citation-mark.nonconforming { background: #f5ddd6; }
 .citation-mark.nonconforming:hover, .citation-mark.nonconforming.selected { background: #e8b7a9; }
 
-.tree-section { margin-bottom: 18px; }
-.tree-section > h3 { margin-bottom: 6px; color: var(--muted); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-.root { border-bottom: 1px solid var(--border); }
-.root:last-child { border-bottom: 0; }
-.root-summary { display: grid; grid-template-columns: 18px minmax(0, 1fr); width: 100%; gap: 2px 8px; border: 0; background: transparent; color: var(--foreground); padding: 9px 6px; text-align: left; }
-.root-summary:hover { background: #e8e5dd; }
-.root-summary.selected { background: var(--accent-soft); }
-.root-summary .twist { grid-row: 1 / span 2; align-self: start; padding-top: 2px; color: var(--muted); font-size: .78rem; }
-.root-summary strong { overflow-wrap: anywhere; font-size: .88rem; }
-.root-summary .root-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; color: var(--muted); font-size: .78rem; }
-.locator { font-family: "SFMono-Regular", Consolas, monospace; font-size: .76rem; }
-.count-chip { border: 1px solid var(--border); border-radius: 999px; background: var(--surface); padding: 1px 7px; font-size: .7rem; font-weight: 700; }
-.root-body { border-left: 2px solid var(--accent-soft); margin: 0 0 10px 14px; padding-left: 12px; }
-.field-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; padding: 3px 0; font-size: .82rem; }
-.field-row dt { color: var(--muted); }
-.field-row dd { margin: 0; overflow-wrap: anywhere; }
-.short-form { display: grid; width: 100%; gap: 2px; border: 1px solid transparent; border-radius: 5px; background: transparent; color: var(--foreground); padding: 7px 8px; text-align: left; }
-.short-form:hover { background: #e8e5dd; }
-.short-form.selected { border-color: #a9c5b9; background: var(--accent-soft); }
-.short-form span { color: var(--muted); font-size: .76rem; }
-.row-note { margin-top: 6px; border-left: 3px solid var(--border); padding: 2px 0 2px 10px; color: var(--foreground); font-size: .8rem; line-height: 1.5; white-space: pre-wrap; }
-.root-body dl { display: grid; gap: 0; }
-.root-body dd { white-space: normal; }
+.citation-list h3 { margin: 18px 0 4px; color: var(--muted); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.citation-button .twist { display: inline-block; width: 12px; color: var(--muted); font-size: .72rem; }
+.citation-button .locator { color: var(--muted); font-family: "SFMono-Regular", Consolas, monospace; font-size: .76rem; }
+.count-chip { border: 1px solid var(--border); border-radius: 999px; background: var(--surface); padding: 1px 7px; color: var(--muted); font-size: .7rem; font-weight: 700; }
+.branch { margin: 2px 0 8px 13px; border-left: 2px solid var(--accent-soft); padding-left: 8px; }
+.branch .citation-button { padding: 7px 8px; }
+.branch .citation-button strong { font-size: .84rem; }
+
+.detail-kicker-row { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+.candidate-field p { line-height: 1.5; overflow-wrap: anywhere; }
+.candidate-field .quote { font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif; font-size: 1rem; line-height: 1.45; }
+.candidate-field code { color: var(--muted); }
+.citation-list .citation-button-meta { flex-wrap: wrap; row-gap: 4px; }
