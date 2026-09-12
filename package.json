@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "bundle": "node scripts/build-bundle.mjs"
+    "bundle": "node scripts/build-bundles.mjs"
   },
   "dependencies": {
     "next": "16.2.9",

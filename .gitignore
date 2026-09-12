@@ -16,7 +16,7 @@ out/
 .DS_Store
 
 # The dataset bundle is built from a store that is not public
-public/dataset-bundle.json
+bundles/
 
 # The annotation store, symlinked in locally
 data
