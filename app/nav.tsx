@@ -2,33 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-// The two workspaces answer different questions over the same corpus: one reads
-// what the pipeline concluded, the other what the dataset claims and on what
-// evidence. This is the only thing they share on screen.
-const ROUTES = [
-  { href: "/", label: "Result viewer", hint: "what the pipeline concluded about one filing" },
-  { href: "/dataset", label: "Dataset reviewer", hint: "what the annotation store records, and its evidence" }
-];
+import { Icon } from "../components/primitives";
 
 export default function Nav() {
   const pathname = usePathname();
-  return (
+  return <>
+    <a className="skip-link" href="#main-content">Skip to review</a>
     <nav className="site-nav" aria-label="Workspaces">
-      {ROUTES.map((route) => {
-        const active = route.href === "/" ? pathname === "/" : pathname.startsWith(route.href);
-        return (
-          <Link
-            key={route.href}
-            href={route.href}
-            className={active ? "active" : ""}
-            aria-current={active ? "page" : undefined}
-            title={route.hint}
-          >
-            {route.label}
-          </Link>
-        );
-      })}
+      <Link className="brand" href="/" aria-label="Mellea citation review"><span className="brand-symbol" aria-hidden="true">m</span><span className="brand-name">mellea</span></Link>
+      <span className="brand-rule" aria-hidden="true" /><span className="brand-caption">Legal reference checking</span>
+      <div className="site-nav-links"><Link href="/" aria-current={pathname === "/" ? "page" : undefined}>Citation review</Link><Link href="/dataset" aria-current={pathname.startsWith("/dataset") ? "page" : undefined}>Annotations</Link></div>
+      <span className="nav-local"><Icon name="lock" size={12} />Local workspace</span>
     </nav>
-  );
+  </>;
 }
