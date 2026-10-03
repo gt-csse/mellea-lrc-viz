@@ -1,5 +1,7 @@
 "use client";
 
+import "./dataset.css";
+
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   Citation,
@@ -123,7 +125,7 @@ export default function DatasetReviewer() {
       : { title: "Citation", note: selectedTitle(selected) };
 
   return (
-    <main id="main-content" className="app-shell">
+    <main id="main-content" className="app-shell dataset-workspace">
       <header className="header">
         <div>
           <p className="eyebrow">Extraction ground truth</p>
