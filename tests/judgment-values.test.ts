@@ -89,7 +89,7 @@ test("later records cannot replace the final identity judgment's saved evidence 
   const root = rootFixture(raw => {
     savedLookup(raw);
     const nodes = raw.nodes as JsonObject[];
-    nodes.push({ id: "future-review", stage: "later_review" });
+    nodes.push({ id: "future-review", substage: "later_review" });
     raw.reporter_unique_review = { node_id: "future-review", failure_reason: "Later failed lookup." };
     (raw.case_name as JsonObject[]).push({ ...(raw.case_name as JsonObject[])[0], node_id: "future-review", quote: "Future reading" });
   });

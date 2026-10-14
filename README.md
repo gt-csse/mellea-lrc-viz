@@ -1,8 +1,26 @@
 # Mellea citation review
 
-A local, read-only workspace for the native `mellea_lrc.model.Document` JSON.
+A read-only workspace for the native `mellea_lrc.model.Document` JSON.
 The design uses navy, warm paper, restrained brass details, and self-hosted
 serif typography for legal text. Imported documents stay in the browser.
+
+## Built-in primary corpus
+
+This branch includes one completed primary-corpus run. Visiting `/` opens the
+first filing; choose another from the filing selector, or link directly with
+`/?document=005`. Documents are fetched individually as compressed native JSON,
+verified against the saved SHA-256, and then reviewed in the browser. The four
+workflow reports are available beside the selector. No backend or upload is needed.
+
+To replace the built-in run after its four workflows and reports are complete:
+
+```bash
+npm run bundle:run -- /absolute/path/to/evaluations/results/primary/TIMESTAMP
+```
+
+The builder refuses unfinished runs. Compression preserves the original Document
+bytes, including every field reading, retrieved source, judgment, and model repair.
+It copies documents and workflow reports, without copying private run configuration.
 
 ## Run
 
@@ -25,10 +43,9 @@ npm run build
 - **Document** preserves the original filing text and highlights the selected
   occurrence and its field readings. Source offsets use Python Unicode code
   points, including when the text contains supplementary characters.
-- **Citation support** shows the occurrence's final support verdict, proposition,
+- **Citation content** shows the occurrence's final support verdict, proposition,
   accepted opinion evidence, and independent page-placement assessment. A supported
-  proposition does not imply a correct written page. This is the UI name for the
-  broader second validation phase; saved backend names are preserved.
+  proposition does not imply a correct written page. The saved pinpoint field and support verdict names remain unchanged.
 - **Identity** shows the authority's final saved verdict and independent field
   comparisons. A leaf reads its root's identity, while retaining its own support
   judgment. Comparisons use their recorded field reading and retrieved evidence.
@@ -45,8 +62,15 @@ formed, citations appear under **Awaiting root assignment**.
 
 Open a Document from any completed or in-progress stage, including preprocessing
 with no citations. The checkpoint selector reconstructs completed stages from
-citation-local node order and `stage_runs`, matching `Document.get_stage`.
+citation-local node order and native `runs` events, matching `Document.get_stage`
+and `Document.get_substage`. Semantic stages and atomic substages are separate
+checkpoint choices. Nodes carry their `substage`; source reviews use the same
+identifier. Obsolete `stage_runs` and node `stage` payloads are rejected.
 No separate checkpoint files, backend connection, or invented judgments are needed.
+
+Table-of-authorities tags are shown per occurrence. Their citation content review
+is skipped, while identity remains available. A body leaf does not inherit its
+root's TOA tag.
 
 The native payload is retained intact. Unknown fields and records remain accessible
 in JSON dialogs and downloads; unfamiliar kinds are displayed with a record notice.
@@ -59,6 +83,8 @@ The older `validated_document` schema is not supported.
 | `app/` | Routes, workspace state, typography and visual system |
 | `components/` | Source text, final judgments, node inspection, shared controls |
 | `lib/document.ts` | Lossless native Document projections and checkpoint recovery |
+| `lib/native-run.ts` | Built-in run index, verified decompression, and lazy document loading |
+| `scripts/build-native-run.mjs` | Completed-run packaging with byte-identical compressed documents |
 | `lib/bundle.ts` | Independent annotation-bundle reader |
 | `tests/` | Native-model fixtures and adapter regression checks |
 
@@ -70,7 +96,8 @@ corpus test compares the adapter with saved Python checkpoint fingerprints:
 MELLEA_NATIVE_CORPUS_MANIFEST=/absolute/path/to/manifest.json npm test
 ```
 
-This is a development check; evaluation documents are not bundled into the app.
+The supplied manifest records both checkpoint kinds and native node snapshots.
+The built-in primary corpus is packaged separately from the invented fixture.
 
 ## Annotation workspace
 

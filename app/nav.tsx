@@ -12,7 +12,7 @@ export default function Nav() {
       <Link className="brand" href="/" aria-label="Mellea citation review"><span className="brand-symbol" aria-hidden="true">m</span><span className="brand-name">mellea</span></Link>
       <span className="brand-rule" aria-hidden="true" /><span className="brand-caption">Legal reference checking</span>
       <div className="site-nav-links"><Link href="/" aria-current={pathname === "/" ? "page" : undefined}>Citation review</Link><Link href="/dataset" aria-current={pathname.startsWith("/dataset") ? "page" : undefined}>Annotations</Link></div>
-      <span className="nav-local"><Icon name="lock" size={12} />Local workspace</span>
+      <span className="nav-local"><Icon name="lock" size={12} />Read-only workspace</span>
     </nav>
   </>;
 }

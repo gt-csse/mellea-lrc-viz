@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   CitationView,
+  checkpointLabel,
   DocumentView,
   JsonObject,
   JsonValue,
@@ -32,8 +33,9 @@ const FIELD_LABELS: Record<string, string> = {
 
 const RECORD_LABELS: Record<string, string> = {
   ...FIELD_LABELS,
+  tags: "Source component tags",
   root_id: "Root assignment",
-  routes: "Next stage",
+  routes: "Next substage",
   colocation_id: "Colocation assignment",
   attributions: "Attribution",
   reviews: "Attribution review",
@@ -64,8 +66,8 @@ const RECORD_LABELS: Record<string, string> = {
   reporter_propositions: "Proposition",
   reporter_pinpoint_evidence: "Pinpoint evidence",
   reporter_opinion_evidence: "Opinion evidence",
-  reporter_support_reviews: "Support review",
-  reporter_pinpoint_judgments: "Pinpoint judgment",
+  reporter_support_reviews: "Citation content review",
+  reporter_pinpoint_judgments: "Citation content judgment",
 };
 
 const SOURCE_PRIORITY = [
@@ -146,10 +148,10 @@ export function NodesView({ citation, document }: { citation: CitationView; docu
     <section className="nodes-view" aria-label="Citation decision history">
       <aside ref={history} className="node-history-panel panel" aria-labelledby="node-history-heading">
         <div className="panel-heading">
-          <div><p className="eyebrow">Citation history</p><h2 id="node-history-heading">Decision stages</h2></div>
+          <div><p className="eyebrow">Citation history</p><h2 id="node-history-heading">Decision history</h2></div>
           <span>{citation.nodes.length}</span>
         </div>
-        <p className="node-history-intro">Select a stage to inspect its citation snapshot and additions.</p>
+        <p className="node-history-intro">Select a substage to inspect its citation snapshot and additions.</p>
         <ol className="node-timeline">
           {citation.nodes.map((node, index) => {
             const selected = node.id === selectedNode.id;
@@ -163,12 +165,12 @@ export function NodesView({ citation, document }: { citation: CitationView; docu
                   className={`node-step-button${selected ? " selected" : ""}`}
                   aria-pressed={selected}
                   aria-current={selected ? "step" : undefined}
-                  aria-label={`Stage ${index + 1}: ${stageLabel(node.stage)}`}
+                  aria-label={`Substage ${index + 1}: ${checkpointLabel(node.substage)}`}
                   onClick={() => setSelection({ source: citation.sourceRaw, nodeId: node.id })}
                 >
                   <span className="node-step-number" aria-hidden="true">{index + 1}</span>
                   <span className="node-step-copy">
-                    <strong>{stageLabel(node.stage)}</strong>
+                    <strong>{checkpointLabel(node.substage)}</strong>
                     <span>{count} {count === 1 ? "record" : "records"} added{repairs ? ` · ${repairs} ${repairs === 1 ? "repair" : "repairs"}` : ""}</span>
                     {index === citation.nodes.length - 1 ? <small>Current snapshot</small> : null}
                   </span>
@@ -183,12 +185,12 @@ export function NodesView({ citation, document }: { citation: CitationView; docu
       <article ref={inspector} tabIndex={0} className="node-inspector panel" aria-labelledby="node-inspector-heading">
         <header className="panel-heading">
           <div>
-            <p className="eyebrow">Stage {selectedNode.index + 1} of {citation.nodes.length}{isCurrent ? " · Current snapshot" : ""}</p>
-            <h2 id="node-inspector-heading">{stageLabel(selectedNode.stage)}</h2>
-            <p className="node-stage-id"><code>{selectedNode.stage}</code></p>
+            <p className="eyebrow">Substage {selectedNode.index + 1} of {citation.nodes.length}{isCurrent ? " · Current snapshot" : ""}</p>
+            <h2 id="node-inspector-heading">{checkpointLabel(selectedNode.substage)}</h2>
+            <p className="node-stage-id"><code>{selectedNode.substage}</code></p>
           </div>
           <RawDialog
-            title={`${stageLabel(selectedNode.stage)} — ${selectedNode.id}`}
+            title={`${checkpointLabel(selectedNode.substage)} — ${selectedNode.id}`}
             triggerLabel="View raw node records"
             value={{ node: selectedNode.raw, records: selectedNode.additions }}
           />
@@ -197,19 +199,19 @@ export function NodesView({ citation, document }: { citation: CitationView; docu
         <NodeMetrics node={selectedNode} />
 
         <section className="node-section" aria-labelledby="node-source-heading">
-          <h3 id="node-source-heading">Source at this stage</h3>
+          <h3 id="node-source-heading">Source at this substage</h3>
           <SourceSnapshot citation={snapshot} document={document} />
         </section>
 
         <section className="node-section" aria-labelledby="node-fields-heading">
           <h3 id="node-fields-heading">Extraction snapshot</h3>
-          <p className="node-section-note">Latest field readings through this stage.</p>
+          <p className="node-section-note">Latest field readings through this substage.</p>
           <SnapshotFields citation={snapshot} />
           <SnapshotRelationships citation={snapshot} />
         </section>
 
         <section className="node-section" aria-labelledby="node-changes-heading">
-          <div className="node-changes-title"><h3 id="node-changes-heading">Added at this stage</h3><span>{changes.length} {changes.length === 1 ? "record" : "records"}</span></div>
+          <div className="node-changes-title"><h3 id="node-changes-heading">Added at this substage</h3><span>{changes.length} {changes.length === 1 ? "record" : "records"}</span></div>
           {changes.length ? (
             <div className="node-change-list">
               {changes.map(({ name, record, path }, index) => (
@@ -292,7 +294,7 @@ function SnapshotFields({ citation }: { citation: CitationView }) {
 function SnapshotRelationships({ citation }: { citation: CitationView }) {
   const relationships = [
     { key: "root_id", label: "Root", absent: "No assignment yet", empty: "Unattached" },
-    { key: "routes", label: "Next stage", absent: "No route recorded", empty: "No stage queued" },
+    { key: "routes", label: "Next substage", absent: "No route recorded", empty: "No substage queued" },
     { key: "colocation_id", label: "Colocation", absent: "No assignment yet", empty: "None assigned" },
   ].filter(({ key }) => Object.hasOwn(citation.raw, key));
   return <dl className="node-relationships">
@@ -381,7 +383,7 @@ function FieldSpan({ field }: { field: JsonObject }) {
 }
 
 function RelationshipValue({ name, value }: { name: string; value: JsonValue }) {
-  if (value === null) return <span>{name === "routes" ? "No stage queued" : name === "root_id" ? "Unattached" : "None assigned"} (null)</span>;
+  if (value === null) return <span>{name === "routes" ? "No substage queued" : name === "root_id" ? "Unattached" : "None assigned"} (null)</span>;
   if (name === "root_id" && value === "__withdrawn__") return <span>Withdrawn (__withdrawn__)</span>;
   return <StructuredValue value={value} />;
 }
@@ -460,10 +462,6 @@ function recordCount(additions: Record<string, JsonValue>) {
 
 function asObject(value: JsonValue | undefined): JsonObject | null {
   return value && typeof value === "object" && !Array.isArray(value) ? value : null;
-}
-
-function stageLabel(stage: string) {
-  return humanize(stage.replace(/^\d+(?:\.\d+)?_/, ""));
 }
 
 function humanize(value: string) {

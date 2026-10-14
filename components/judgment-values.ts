@@ -32,7 +32,7 @@ export function nodePosition(citation: CitationView, record: JsonObject): number
 export function nodeLabel(citation: CitationView, record: JsonObject | null): string | null {
   if (!record) return null;
   const node = citation.nodes.find(item => item.id === record.node_id);
-  return node ? label(node.stage) : string(record.node_id);
+  return node ? label(node.substage.split(".").at(-1)!) : string(record.node_id);
 }
 
 export function targets(value: JsonValue | undefined): string {

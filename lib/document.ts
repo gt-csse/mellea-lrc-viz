@@ -6,7 +6,7 @@ export interface Span { start: number; end: number }
 export interface NodeView {
   raw: JsonObject;
   id: string;
-  stage: string;
+  substage: string;
   index: number;
   /** Citation-level records written by this node; native Nodes own no records. */
   additions: Record<string, JsonValue>;
@@ -22,12 +22,16 @@ export interface CitationView {
   siteSpan: Span | null;
 }
 
+export interface CheckpointRun { kind: "stage" | "substage"; name: string }
+
 export interface DocumentView {
   raw: JsonObject;
   sourceRaw: JsonObject;
   text: string;
   citations: CitationView[];
+  runs: CheckpointRun[];
   stageRuns: string[];
+  substageRuns: string[];
   siteReviews: JsonObject[];
   indexSpans: Span[];
   sourceMetadata: JsonObject | null;
@@ -125,7 +129,7 @@ function projectCitation(raw: JsonObject, sourceRaw = raw): CitationView {
   if (typeof raw.kind !== "string" || !raw.kind) throw new Error(`Citation ${raw.id} needs a kind.`);
   if (!Array.isArray(raw.nodes)) throw new Error(`Citation ${raw.id} needs a nodes array.`);
   const nodes = raw.nodes.map((item, index): NodeView => {
-    if (!isJsonObject(item) || typeof item.id !== "string" || !item.id || typeof item.stage !== "string" || !item.stage) {
+    if (!isJsonObject(item) || typeof item.id !== "string" || !item.id || typeof item.substage !== "string" || !item.substage) {
       throw new Error(`Citation ${raw.id} has an invalid node at index ${index}.`);
     }
     const additions: Record<string, JsonValue> = {};
@@ -134,7 +138,7 @@ function projectCitation(raw: JsonObject, sourceRaw = raw): CitationView {
       const selected = selectRecords(value, item.id);
       if (selected !== absent) additions[key] = selected;
     }
-    return { raw: item, id: item.id, stage: item.stage, index, additions };
+    return { raw: item, id: item.id, substage: item.substage, index, additions };
   });
   const citation: CitationView = { raw, sourceRaw, id: raw.id, kind: raw.kind, nodes, siteSpan: null };
   const siteField = siteFields[citation.kind];
@@ -151,9 +155,20 @@ function projectCitation(raw: JsonObject, sourceRaw = raw): CitationView {
 function projectDocument(raw: JsonObject, sourceRaw = raw): DocumentView {
   if (typeof raw.text !== "string") throw new Error("Native Document JSON needs a text string.");
   if (!Array.isArray(raw.citations)) throw new Error("Native Document JSON needs a citations array.");
-  if (raw.stage_runs !== undefined && (!Array.isArray(raw.stage_runs) || raw.stage_runs.some((stage) => typeof stage !== "string"))) {
-    throw new Error("Native Document stage_runs must be an array of stage names.");
-  }
+  if (raw.stage_runs !== undefined) throw new Error("Obsolete stage_runs format. Open a current native Document with runs.");
+  if (!Array.isArray(raw.runs)) throw new Error("Native Document JSON needs a runs array.");
+  const runs = raw.runs.map((run, index): CheckpointRun => {
+    if (!isJsonObject(run) || (run.kind !== "stage" && run.kind !== "substage") || typeof run.name !== "string" || !run.name) {
+      throw new Error(`Native Document has an invalid checkpoint event at index ${index}.`);
+    }
+    return { kind: run.kind, name: run.name };
+  });
+  if (new Set(runs.map(run => `${run.kind}:${run.name}`)).size !== runs.length) throw new Error("Duplicate native checkpoint event.");
+  if (!Array.isArray(raw.site_reviews)) throw new Error("Native Document JSON needs a site_reviews array.");
+  const siteReviews = raw.site_reviews.map((review, index) => {
+    if (!isJsonObject(review) || typeof review.substage !== "string" || !review.substage) throw new Error(`Invalid site review at index ${index}.`);
+    return review;
+  });
   const citations = raw.citations.map((item, index) => {
     if (!isJsonObject(item)) throw new Error(`Citation at index ${index} must be an object.`);
     const original = Array.isArray(sourceRaw.citations)
@@ -180,8 +195,9 @@ function projectDocument(raw: JsonObject, sourceRaw = raw): DocumentView {
   }
   return {
     raw, sourceRaw, text: raw.text, citations,
-    stageRuns: Array.isArray(raw.stage_runs) ? raw.stage_runs as string[] : [],
-    siteReviews: Array.isArray(raw.site_reviews) ? raw.site_reviews.filter(isJsonObject) : [],
+    runs, stageRuns: runs.filter(run => run.kind === "stage").map(run => run.name),
+    substageRuns: runs.filter(run => run.kind === "substage").map(run => run.name),
+    siteReviews,
     indexSpans: Array.isArray(raw.index_spans) ? raw.index_spans.map(readSpan).filter((span): span is Span => span !== null) : [],
     sourceMetadata: isJsonObject(raw.source_metadata) ? raw.source_metadata : null,
     preprocessingMetadata: isJsonObject(raw.preprocessing_metadata) ? raw.preprocessing_metadata : null,
@@ -266,23 +282,40 @@ export function getCitationAtNode(citation: CitationView, nodeId: string): Citat
   return projectCitation(raw, citation.sourceRaw);
 }
 
-/** Native Document.get_stage: completed stage prefix, local node prefix, reviews. */
-export function getDocumentAtStage(document: DocumentView, stage: string): DocumentView {
-  const cutoff = document.stageRuns.indexOf(stage);
-  if (cutoff < 0) throw new Error(`Stage has not run: ${stage}.`);
-  const stageRuns = document.stageRuns.slice(0, cutoff + 1);
-  const included = new Set(stageRuns);
+/** The same event prefix and citation-local cutoff as native Document recovery. */
+function getDocumentAtCheckpoint(document: DocumentView, kind: CheckpointRun["kind"], name: string): DocumentView {
+  const cutoff = document.runs.findIndex(run => run.kind === kind && run.name === name);
+  if (cutoff < 0) throw new Error(`${kind === "stage" ? "Stage" : "Substage"} has not run: ${name}.`);
+  const runs = (document.raw.runs as JsonObject[]).slice(0, cutoff + 1);
+  const included = new Set(runs.filter(run => run.kind === "substage").map(run => run.name));
   const citations = document.citations.flatMap((citation) => {
     let count = 0;
-    while (count < citation.nodes.length && included.has(citation.nodes[count].stage)) count++;
+    while (count < citation.nodes.length && included.has(citation.nodes[count].substage)) count++;
     return count ? [getCitationAtNode(citation, citation.nodes[count - 1].id)] : [];
   }).sort((left, right) => (left.siteSpan?.start ?? Infinity) - (right.siteSpan?.start ?? Infinity) ||
     (left.id < right.id ? -1 : left.id > right.id ? 1 : 0)).map((citation) => citation.raw);
   const raw: JsonObject = {
-    ...document.raw, citations, stage_runs: stageRuns,
-    site_reviews: document.siteReviews.filter((review) => typeof review.stage === "string" && included.has(review.stage)),
+    ...document.raw, citations, runs,
+    site_reviews: document.siteReviews.filter(review => included.has(review.substage)),
   };
   return projectDocument(raw, document.sourceRaw);
+}
+
+export function getDocumentAtStage(document: DocumentView, stage: string): DocumentView {
+  return getDocumentAtCheckpoint(document, "stage", stage);
+}
+
+export function getDocumentAtSubstage(document: DocumentView, substage: string): DocumentView {
+  return getDocumentAtCheckpoint(document, "substage", substage);
+}
+
+export function isToa(citation: CitationView): boolean {
+  return Array.isArray(citation.raw.tags) && citation.raw.tags.some(tag => isJsonObject(tag) && tag.kind === "table_of_authorities");
+}
+
+/** A concise operation label; its full workflow path remains available beside it. */
+export function checkpointLabel(name: string): string {
+  return name.split(".").at(-1)!.replaceAll("_", " ").replace(/^./, letter => letter.toUpperCase());
 }
 
 export function getIdentityJudgment(citation: CitationView): JsonObject | null {

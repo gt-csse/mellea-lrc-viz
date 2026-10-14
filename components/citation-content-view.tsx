@@ -1,7 +1,7 @@
 "use client";
 
 import type { CitationView, DocumentView, JsonObject, JsonValue } from "../lib/document";
-import { getField, getLatestRecord, getRootId, readSpan, sliceSpan } from "../lib/document";
+import { getField, getLatestRecord, getRootId, isToa, readSpan, sliceSpan } from "../lib/document";
 import { RawDialog, StatusBadge } from "./primitives";
 import { at, formatValue, GroundedQuote, index, label, nodeLabel, object, objects, recordUrl, SourceLink, string, targets } from "./judgment-utils";
 
@@ -73,7 +73,12 @@ function PageEvidence({ reference, root, document, position }: { reference: Json
   </details>;
 }
 
-export function SupportView({ citation, root, document }: Props) {
+export function CitationContentView({ citation, root, document }: Props) {
+  if (isToa(citation)) return <div className="judgement-view">
+    <section className="result-banner"><div><p className="result-banner__eyebrow">Citation content · this occurrence</p><h2 className="result-banner__title">Table of authorities</h2><p className="result-banner__meta">{citation.id}</p></div><StatusBadge value="skipped" /></section>
+    <section className="toa-notice"><h3>Identity still applies</h3><p>This occurrence identifies an authority without making an argument. Citation content review is skipped. Its case identity remains available in the Identity tab.</p></section>
+    <div className="raw-actions"><RawDialog title="Source component tags" value={citation.raw.tags ?? []} triggerLabel="TOA source tags" /><RawDialog title={`Complete occurrence ${citation.id}`} value={citation.raw} triggerLabel="Complete occurrence JSON" /></div>
+  </div>;
   const judgment = getLatestRecord(citation, "reporter_pinpoint_judgments");
   const latestReview = getLatestRecord(citation, "reporter_support_reviews");
   const review = referencedRecord(citation, "reporter_support_reviews", judgment, "review_index");
@@ -101,9 +106,9 @@ export function SupportView({ citation, root, document }: Props) {
   const verdict = string(judgment?.verdict);
   const rawRecords = Object.fromEntries(["pin_cite", "reporter_page_resolutions", "reporter_opinion_reviews", "reporter_propositions", "reporter_pinpoint_evidence", "reporter_support_reviews", "reporter_opinion_evidence", "reporter_pinpoint_judgments"].filter(key => citation.raw[key] !== undefined).map(key => [key, citation.raw[key]])) as JsonObject;
 
-  return <div className="judgement-view support-view">
-    <section className="result-banner"><div><p className="result-banner__eyebrow">Citation support · this occurrence</p><h2 className="result-banner__title">Does the opinion support this use?</h2><p className="result-banner__meta">{citation.id} · written pinpoint: {string(pin?.quote) ?? "No pinpoint reading"}{string(review?.scope) ? ` · ${label(string(review?.scope)!)}` : ""}</p></div><div className="panel-actions"><StatusBadge value={verdict} />{judgment && <RawDialog title="Saved final citation support judgment" value={judgment} triggerLabel="Judgment details" />}</div></section>
-    {!judgment && <div className="empty-state"><h3>No final support judgment recorded</h3><p>{citation.kind === "docket" ? "This checkpoint has no reporter support review for the docket occurrence." : "The pipeline has not saved a final citation support judgment for this occurrence at this checkpoint."}</p></div>}
+  return <div className="judgement-view citation-content-view">
+    <section className="result-banner"><div><p className="result-banner__eyebrow">Citation content · this occurrence</p><h2 className="result-banner__title">Does the opinion support this use?</h2><p className="result-banner__meta">{citation.id} · written pinpoint: {string(pin?.quote) ?? "No pinpoint reading"}{string(review?.scope) ? ` · ${label(string(review?.scope)!)}` : ""}</p></div><div className="panel-actions"><StatusBadge value={verdict} />{judgment && <RawDialog title="Saved final citation content judgment" value={judgment} triggerLabel="Judgment details" />}</div></section>
+    {!judgment && <div className="empty-state"><h3>No final citation content judgment recorded</h3><p>{citation.kind === "docket" ? "This checkpoint has no reporter support review for the docket occurrence." : "The pipeline has not saved a final citation content judgment for this occurrence at this checkpoint."}</p></div>}
 
     <section className="panel"><header className="panel-header"><div><h3 className="panel-title">Support and page placement</h3><p className="panel-subtitle">The recorded support verdict and page precision are separate assessments</p></div><RawDialog title="All occurrence support records" value={rawRecords} triggerLabel="All support records" /></header>
       <dl className="metadata-list support-assessment"><div><dt>Content support review</dt><dd><StatusBadge value={string(decision?.result)} />{review && <span className="detail-note">{nodeLabel(citation, review)}</span>}</dd></div><div><dt>Pagination</dt><dd>{pagination.pagination}</dd></div><div><dt>Written page placement</dt><dd><StatusBadge value={judgment || decision ? pagination.status : null} /><span className="detail-note">{judgment || decision ? pagination.placement : "No page assessment saved"}</span></dd></div><div><dt>Recovered locations</dt><dd>{pagination.found || (judgment || decision ? "No locations recorded" : "Not assessed")}</dd></div></dl>

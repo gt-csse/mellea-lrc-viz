@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import {
-  parseDocument, groupCitations, getCitationAtNode, getDocumentAtStage,
+  parseDocument, groupCitations, getCitationAtNode, getDocumentAtStage, getDocumentAtSubstage, isToa, checkpointLabel,
   getField, getLatestRecord, getRootId, getRootCitation, getIdentityJudgment,
   getFieldVerdict, citationLabel, locatorLabel, displayValue, caseNameLabel,
   discoverRecords, readSpan, sliceCodePoints, sliceSpan, toUtf16Offset,
@@ -16,6 +16,7 @@ const fixture = JSON.parse(readFileSync(new URL("./fixtures/native-document.json
   document: JsonObject; snapshots: Record<string, JsonObject>;
   emptyDocument: JsonObject; emptyCompleted: JsonObject;
   pendingCreation: JsonObject; pendingDocument: JsonObject;
+  substageSnapshots: Record<string, JsonObject>; stageSnapshots: Record<string, JsonObject>;
 };
 const fresh = () => parseDocument(structuredClone(fixture.document));
 
@@ -35,16 +36,53 @@ test("native JSON is retained intact alongside useful projections", () => {
   assert.deepEqual(parseDocument(JSON.stringify(input)).raw, input);
 });
 
-test("every synthetic native checkpoint matches Python Document.get_stage exactly", () => {
+test("every synthetic atomic checkpoint matches Python Document.get_substage exactly", () => {
   const document = fresh();
-  for (const [stage, expected] of Object.entries(fixture.snapshots)) {
-    const checkpoint = getDocumentAtStage(document, stage);
+  for (const [stage, expected] of Object.entries(fixture.substageSnapshots)) {
+    const checkpoint = getDocumentAtSubstage(document, stage);
     assert.deepEqual(checkpoint.raw, expected, stage);
     assert.deepEqual(checkpoint.warnings, [], stage);
     assert.deepEqual(parseDocument(expected).raw, expected, stage);
     assert.equal(checkpoint.sourceRaw, document.sourceRaw);
   }
   assert.throws(() => getDocumentAtStage(document, "stage_that_did_not_run"), /Stage has not run/);
+});
+
+test("semantic group recovery matches Python and includes unchanged earlier citations", () => {
+  const document = fresh();
+  for (const [stage, expected] of Object.entries(fixture.stageSnapshots)) {
+    const checkpoint = getDocumentAtStage(document, stage);
+    assert.deepEqual(checkpoint.raw, expected);
+    assert.equal(checkpoint.citations.length, 2);
+    assert.deepEqual(checkpoint.runs.at(-1), { kind: "stage", name: stage });
+    assert.deepEqual(checkpoint.raw.index_spans, document.raw.index_spans);
+    assert.deepEqual(checkpoint.raw.source_metadata, document.raw.source_metadata);
+  }
+  assert.throws(() => getDocumentAtStage(document, "1_locators"), /Stage has not run/);
+  assert.throws(() => getDocumentAtSubstage(document, "grow_roots.discover_root_locators"), /Substage has not run/);
+});
+
+test("TOA is occurrence metadata, retained in native snapshots without tagging body leaves", () => {
+  const document = fresh();
+  assert.equal(isToa(document.citations[0]), true);
+  assert.ok(groupCitations(document).roots[0].leaves.every(leaf => !isToa(leaf)));
+  const creation = getCitationAtNode(document.citations[0], document.citations[0].nodes[0].id);
+  assert.equal(isToa(creation), true);
+  assert.deepEqual(creation.raw.tags, document.citations[0].raw.tags);
+  assert.equal(checkpointLabel("validate_all_citation_content.review_citation_content.review_cited_pages_llm"), "Review cited pages llm");
+});
+
+test("obsolete node and checkpoint shapes are rejected without aliases", () => {
+  const oldNode = structuredClone(fixture.document);
+  const node = ((oldNode.citations as JsonObject[])[0].nodes as JsonObject[])[0];
+  node.stage = node.substage; delete node.substage;
+  assert.throws(() => parseDocument(oldNode), /invalid node/);
+  const oldRuns = structuredClone(fixture.emptyDocument);
+  oldRuns.stage_runs = []; delete oldRuns.runs;
+  assert.throws(() => parseDocument(oldRuns), /Obsolete stage_runs/);
+  const duplicate = structuredClone(fixture.document);
+  (duplicate.runs as JsonObject[]).push((duplicate.runs as JsonObject[])[0]);
+  assert.throws(() => parseDocument(duplicate), /Duplicate/);
 });
 
 test("source-only native Documents and stages with no citations render without invented outcomes", () => {
@@ -58,8 +96,8 @@ test("source-only native Documents and stages with no citations render without i
   assert.deepEqual(groupCitations(empty), { roots: [], unassigned: [], withdrawn: [], unknown: [] });
   assert.throws(() => getDocumentAtStage(empty, "not_started"), /Stage has not run/);
   const complete = parseDocument(fixture.emptyCompleted);
-  assert.deepEqual(complete.stageRuns, ["empty_extraction"]);
-  assert.deepEqual(getDocumentAtStage(complete, "empty_extraction").raw, fixture.emptyCompleted);
+  assert.deepEqual(complete.substageRuns, ["empty_extraction"]);
+  assert.deepEqual(getDocumentAtSubstage(complete, "empty_extraction").raw, fixture.emptyCompleted);
 });
 
 test("the first native citation save is retained while its creation stage is pending", () => {
@@ -67,7 +105,7 @@ test("the first native citation save is retained while its creation stage is pen
   assert.deepEqual(pending.stageRuns, []);
   assert.equal(pending.citations.length, 1);
   assert.equal(pending.citations[0].nodes.length, 1);
-  assert.equal(pending.citations[0].nodes[0].stage, "pending_creation");
+  assert.equal(pending.citations[0].nodes[0].substage, "pending_creation");
   assert.equal(locatorLabel(pending.citations[0]), "436 U.S. 658");
   assert.equal(getRootId(pending.citations[0]), null);
   assert.equal(getIdentityJudgment(pending.citations[0]), null);
@@ -86,18 +124,18 @@ test("native saves during a pending stage retain every latest update and recover
   assert.deepEqual(pending.stageRuns, original.stageRuns);
   assert.equal(pending.citations.length, original.citations.length + 1);
   const newlyCreated = pending.citations.find((item) => !original.citations.some((prior) => prior.id === item.id))!;
-  assert.equal(newlyCreated.nodes[0].stage, "pending_update");
+  assert.equal(newlyCreated.nodes[0].substage, "pending_update");
   assert.equal(groupCitations(pending).unassigned[0], newlyCreated);
   assert.equal(citation.nodes.length, previous.nodes.length + 2);
-  assert.equal(citation.nodes[citation.nodes.length - 1].stage, "pending_update");
+  assert.equal(citation.nodes[citation.nodes.length - 1].substage, "pending_update");
   assert.equal(getIdentityJudgment(citation)?.verdict, "wrong_identity");
-  assert.equal(getLatestRecord(citation, "routes")?.value, "99_pending_followup");
+  assert.equal(getLatestRecord(citation, "routes")?.value, "pending_followup");
   const firstUpdate = getCitationAtNode(citation, citation.nodes[citation.nodes.length - 2].id);
   assert.equal(getIdentityJudgment(firstUpdate)?.verdict, "wrong_identity");
   assert.equal(getLatestRecord(firstUpdate, "routes"), null);
   assert.deepEqual(pending.warnings, []);
-  for (const [stage, expected] of Object.entries(fixture.snapshots)) {
-    assert.deepEqual(getDocumentAtStage(pending, stage).raw, expected, stage);
+  for (const [stage, expected] of Object.entries(fixture.substageSnapshots)) {
+    assert.deepEqual(getDocumentAtSubstage(pending, stage).raw, expected, stage);
   }
   assert.throws(() => getDocumentAtStage(pending, "pending_update"), /Stage has not run/);
 });
@@ -106,7 +144,7 @@ test("node snapshots isolate successive decisions within the same stage", () => 
   const reporter = fresh().citations[0];
   const firstFields = getCitationAtNode(reporter, reporter.nodes[1].id);
   assert.equal(firstFields.nodes.length, 2);
-  assert.equal(firstFields.nodes[1].stage, reporter.nodes[2].stage);
+  assert.equal(firstFields.nodes[1].substage, reporter.nodes[2].substage);
   assert.equal(getField(firstFields, "case_name")?.quote, "Alpha v. Beta");
   assert.equal(getField(firstFields, "date"), null);
   assert.equal(getRootId(firstFields), null);
@@ -120,11 +158,11 @@ test("node snapshots isolate successive decisions within the same stage", () => 
   assert.throws(() => getCitationAtNode(reporter, "missing"), /has no node/);
 });
 
-test("Nodes contain only id/stage and derive every addition from citation ownership", () => {
+test("Nodes contain only id/substage and derive every addition from citation ownership", () => {
   const document = fresh();
   for (const citation of document.citations) {
     for (const node of citation.nodes) {
-      assert.deepEqual(Object.keys(node.raw).sort(), ["id", "stage"]);
+      assert.deepEqual(Object.keys(node.raw).sort(), ["id", "substage"]);
       const additions = discoverRecords(node.additions);
       assert.ok(additions.every((record) => record.nodeId === node.id));
       assert.equal(additions.length, discoverRecords(citation.raw).filter((record) => record.nodeId === node.id).length);
@@ -170,7 +208,7 @@ test("future records, nested unknown records, and arbitrary provider responses a
 });
 
 test("missing fields and stages stay absent, and all five case-name forms render", () => {
-  const document = getDocumentAtStage(fresh(), "1_locators");
+  const document = getDocumentAtSubstage(fresh(), "1_locators");
   const reporter = document.citations[0];
   assert.equal(getRootId(reporter), null);
   assert.equal(getIdentityJudgment(reporter), null);
@@ -220,7 +258,7 @@ test("root navigation nests attached occurrences and keeps dummy and unassigned 
   assert.equal(new Set(flattened.map((citation) => citation.id)).size, document.citations.length);
   assert.equal(getRootCitation(document, groups.roots[0].leaves[0]), groups.roots[0].root);
   assert.equal(getRootCitation(document, groups.withdrawn[0]), null);
-  assert.equal(groupCitations(getDocumentAtStage(document, "1_locators")).unassigned.length, 2);
+  assert.equal(groupCitations(getDocumentAtSubstage(document, "1_locators")).unassigned.length, 2);
   const input = structuredClone(fixture.document);
   const leaf = (input.citations as JsonObject[]).find((citation) => citation.kind === "id")!;
   (leaf.root_id as JsonObject[])[0].value = "root-that-is-not-present";
@@ -246,7 +284,7 @@ test("native errors are informative and unfamiliar kinds or records remain inspe
   assert.throws(() => parseDocument("{broken"), /not valid JSON/);
   assert.throws(() => parseDocument({ schema_version: 2, documents: [] }), /text string/);
   assert.throws(() => parseDocument({ text: "source" }), /citations array/);
-  assert.throws(() => parseDocument({ text: "source", citations: [null] }), /must be an object/);
+  assert.throws(() => parseDocument({ ...fixture.emptyDocument, citations: [null] }), /must be an object/);
   const input = structuredClone(fixture.document);
   const unknown = (input.citations as JsonObject[])[0];
   unknown.kind = "future_kind";
@@ -306,17 +344,17 @@ test("every durable native checkpoint matches Python projections when corpus man
   skip: !process.env.MELLEA_NATIVE_CORPUS_MANIFEST,
 }, () => {
   const manifest = JSON.parse(readFileSync(process.env.MELLEA_NATIVE_CORPUS_MANIFEST!, "utf8")) as {
-    documents: Array<{ path: string; stages: Array<{ stage: string; fingerprint: string }>; nodes: Array<{ citationId: string; nodeId: string; fingerprint: string }> }>;
+    documents: Array<{ path: string; checkpoints: Array<{ kind: "stage" | "substage"; name: string; fingerprint: string }>; nodes: Array<{ citationId: string; nodeId: string; fingerprint: string }> }>;
   };
   let stages = 0;
   let nodes = 0;
   for (const entry of manifest.documents) {
     const document = parseDocument(readFileSync(entry.path, "utf8"));
     assert.deepEqual(document.warnings, [], entry.path);
-    for (const expected of entry.stages) {
-      const checkpoint = getDocumentAtStage(document, expected.stage);
-      assert.equal(fingerprint(checkpoint.raw), expected.fingerprint, `${entry.path}: ${expected.stage}`);
-      assert.deepEqual(checkpoint.warnings, [], `${entry.path}: ${expected.stage}`);
+    for (const expected of entry.checkpoints) {
+      const checkpoint = expected.kind === "stage" ? getDocumentAtStage(document, expected.name) : getDocumentAtSubstage(document, expected.name);
+      assert.equal(fingerprint(checkpoint.raw), expected.fingerprint, `${entry.path}: ${expected.name}`);
+      assert.deepEqual(checkpoint.warnings, [], `${entry.path}: ${expected.name}`);
       stages++;
     }
     for (const expected of entry.nodes) {

@@ -4,7 +4,7 @@ import Nav from "./nav";
 
 export const metadata: Metadata = {
   title: "Mellea · Legal citation review",
-  description: "Review legal authorities, citation support, and the complete history of a saved Document."
+  description: "Review legal authorities, citation content, and the complete history of a saved Document."
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
