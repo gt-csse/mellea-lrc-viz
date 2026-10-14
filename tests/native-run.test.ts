@@ -7,6 +7,7 @@ import { gzipSync, gunzipSync } from "node:zlib";
 import test from "node:test";
 import { buildNativeRun } from "../scripts/build-native-run.mjs";
 import { decodeRunDocument, parseNativeRun, RUN_SCHEMA, WORKFLOWS, type NativeRun, type RunDocument } from "../lib/native-run.ts";
+import { getDocumentAtStage } from "../lib/document.ts";
 
 const fixture = JSON.parse(readFileSync(new URL("./fixtures/native-document.json", import.meta.url), "utf8"));
 const timestamp = "2026-10-14T15-59-55Z";
@@ -97,4 +98,26 @@ test("static run index requires one entry per document and all four workflow rep
     assert.throws(() => parseNativeRun(corrupt(index => { index.documents[0].url = "https://external.example/run.json.gz"; })), /Invalid built-in document/);
     assert.throws(() => parseNativeRun(corrupt(index => { index.reports.pop(); })), /four workflow reports/);
   } finally { rmSync(fixture.root, { recursive: true, force: true }); }
+});
+
+test("the built-in primary corpus opens all 26 native Documents and their stage checkpoints", async () => {
+  const index = parseNativeRun(JSON.parse(readFileSync(new URL("../public/runs/primary/index.json", import.meta.url), "utf8")));
+  assert.equal(index.documents.length, 26);
+  for (const entry of index.documents) {
+    const compressed = readFileSync(new URL(`../public${entry.url}`, import.meta.url));
+    const document = await decodeRunDocument(compressed, entry);
+    assert.deepEqual(document.warnings, [], entry.id);
+    assert.equal(document.citations.length, entry.citations, entry.id);
+    assert.equal(document.stageRuns.length, entry.stages, entry.id);
+    assert.equal(document.substageRuns.length, entry.substages, entry.id);
+    for (const stage of document.stageRuns) {
+      const checkpoint = getDocumentAtStage(document, stage);
+      assert.deepEqual(checkpoint.warnings, [], `${entry.id}: ${stage}`);
+      assert.equal(checkpoint.runs.at(-1)?.name, stage);
+    }
+  }
+  for (const report of index.reports) {
+    assert.ok(readFileSync(new URL(`../public${report.markdown}`, import.meta.url), "utf8").trim());
+    JSON.parse(readFileSync(new URL(`../public${report.json}`, import.meta.url), "utf8"));
+  }
 });

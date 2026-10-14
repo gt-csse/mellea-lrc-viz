@@ -1,0 +1,464 @@
+{
+  "set": "primary",
+  "workflow": "grow_roots",
+  "stages": [
+    {
+      "stage": "grow_roots.discover_root_locators",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "grow_roots.discover_root_locators.find_full_reporter_locators",
+          "metrics": {
+            "span": {
+              "correct": 589,
+              "total": 589,
+              "precision": 1.0
+            },
+            "normalization": {
+              "correct": 589,
+              "total": 589,
+              "precision": 1.0
+            }
+          }
+        },
+        {
+          "substage": "grow_roots.discover_root_locators.find_docket_locators",
+          "metrics": {
+            "span": {
+              "correct": 19,
+              "total": 19,
+              "precision": 1.0
+            },
+            "normalization": {
+              "correct": 19,
+              "total": 19,
+              "precision": 1.0
+            }
+          }
+        },
+        {
+          "substage": "grow_roots.discover_root_locators.hunt_docket_locators",
+          "metrics": {
+            "span": {
+              "correct": 38,
+              "total": 38,
+              "precision": 1.0
+            },
+            "normalization": {
+              "correct": 37,
+              "total": 38,
+              "precision": 0.9736842105263158
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "grow_roots.read_root_fields",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "grow_roots.read_root_fields.resolve_docket_entries",
+          "metrics": {
+            "span": {
+              "correct": 57,
+              "total": 57,
+              "precision": 1.0
+            },
+            "normalization": {
+              "correct": 57,
+              "total": 57,
+              "precision": 1.0
+            }
+          }
+        },
+        {
+          "substage": "grow_roots.read_root_fields.resolve_colocations",
+          "metrics": {
+            "groups": {
+              "correct": 44,
+              "total": 44,
+              "precision": 1.0
+            }
+          }
+        },
+        {
+          "substage": "grow_roots.read_root_fields.resolve_case_names",
+          "metrics": {
+            "span": {
+              "correct": 581,
+              "total": 646,
+              "precision": 0.8993808049535603
+            },
+            "normalization": {
+              "correct": 581,
+              "total": 646,
+              "precision": 0.8993808049535603
+            }
+          }
+        },
+        {
+          "substage": "grow_roots.read_root_fields.resolve_courts",
+          "metrics": {
+            "span": {
+              "correct": 625,
+              "total": 646,
+              "precision": 0.9674922600619195
+            },
+            "normalization": {
+              "correct": 620,
+              "total": 646,
+              "precision": 0.9597523219814241
+            }
+          }
+        },
+        {
+          "substage": "grow_roots.read_root_fields.resolve_dates",
+          "metrics": {
+            "span": {
+              "correct": 632,
+              "total": 646,
+              "precision": 0.978328173374613
+            },
+            "normalization": {
+              "correct": 632,
+              "total": 646,
+              "precision": 0.978328173374613
+            }
+          }
+        },
+        {
+          "substage": "grow_roots.read_root_fields.resolve_pin_cites",
+          "metrics": {
+            "span": {
+              "correct": 641,
+              "total": 646,
+              "precision": 0.9922600619195047
+            },
+            "normalization": {
+              "correct": 641,
+              "total": 646,
+              "precision": 0.9922600619195047
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "grow_roots.form_root_groups",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "grow_roots.form_root_groups.form_roots",
+          "metrics": {
+            "root_assignment": {
+              "correct": 641,
+              "total": 646,
+              "precision": 0.9922600619195047
+            }
+          }
+        },
+        {
+          "substage": "grow_roots.form_root_groups.reassign_docket_roots_llm",
+          "metrics": {
+            "root_assignment": {
+              "correct": 27,
+              "total": 28,
+              "precision": 0.9642857142857143
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "root_fields": {
+    "full_reporter_locator": {
+      "span": {
+        "correct": 392,
+        "predicted": 392,
+        "gold": 393,
+        "precision": 1.0,
+        "recall": 0.9974554707379135
+      },
+      "span_overlap": {
+        "correct": 392,
+        "gold": 393,
+        "recall": 0.9974554707379135
+      },
+      "normalization": {
+        "correct": 392,
+        "predicted": 392,
+        "gold": 393,
+        "precision": 1.0,
+        "recall": 0.9974554707379135
+      }
+    },
+    "docket_locator": {
+      "span": {
+        "correct": 47,
+        "predicted": 48,
+        "gold": 47,
+        "precision": 0.9791666666666666,
+        "recall": 1.0
+      },
+      "span_overlap": {
+        "correct": 47,
+        "gold": 47,
+        "recall": 1.0
+      },
+      "normalization": {
+        "correct": 46,
+        "predicted": 48,
+        "gold": 47,
+        "precision": 0.9583333333333334,
+        "recall": 0.9787234042553191
+      }
+    },
+    "overall_locator": {
+      "span": {
+        "correct": 439,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9977272727272727,
+        "recall": 0.9977272727272727
+      },
+      "span_overlap": {
+        "correct": 439,
+        "gold": 440,
+        "recall": 0.9977272727272727
+      },
+      "normalization": {
+        "correct": 438,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9954545454545455,
+        "recall": 0.9954545454545455
+      }
+    },
+    "docket_entry": {
+      "span": {
+        "correct": 47,
+        "predicted": 48,
+        "gold": 47,
+        "precision": 0.9791666666666666,
+        "recall": 1.0
+      },
+      "span_overlap": {
+        "correct": 47,
+        "gold": 47,
+        "recall": 1.0
+      },
+      "normalization": {
+        "correct": 47,
+        "predicted": 48,
+        "gold": 47,
+        "precision": 0.9791666666666666,
+        "recall": 1.0
+      }
+    },
+    "case_name": {
+      "span": {
+        "correct": 392,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.8909090909090909,
+        "recall": 0.8909090909090909
+      },
+      "span_overlap": {
+        "correct": 436,
+        "gold": 440,
+        "recall": 0.990909090909091
+      },
+      "normalization": {
+        "correct": 392,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.8909090909090909,
+        "recall": 0.8909090909090909
+      }
+    },
+    "court": {
+      "span": {
+        "correct": 431,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9795454545454545,
+        "recall": 0.9795454545454545
+      },
+      "span_overlap": {
+        "correct": 432,
+        "gold": 440,
+        "recall": 0.9818181818181818
+      },
+      "normalization": {
+        "correct": 427,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9704545454545455,
+        "recall": 0.9704545454545455
+      }
+    },
+    "date": {
+      "span": {
+        "correct": 433,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9840909090909091,
+        "recall": 0.9840909090909091
+      },
+      "span_overlap": {
+        "correct": 434,
+        "gold": 440,
+        "recall": 0.9863636363636363
+      },
+      "normalization": {
+        "correct": 433,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9840909090909091,
+        "recall": 0.9840909090909091
+      }
+    },
+    "pin_cite": {
+      "span": {
+        "correct": 439,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9977272727272727,
+        "recall": 0.9977272727272727
+      },
+      "span_overlap": {
+        "correct": 439,
+        "gold": 440,
+        "recall": 0.9977272727272727
+      },
+      "normalization": {
+        "correct": 439,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9977272727272727,
+        "recall": 0.9977272727272727
+      }
+    }
+  },
+  "validated_root_fields": {
+    "case_name": {
+      "span": {
+        "correct": 414,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9409090909090909,
+        "recall": 0.9409090909090909
+      },
+      "span_overlap": {
+        "correct": 436,
+        "gold": 440,
+        "recall": 0.990909090909091
+      },
+      "normalization": {
+        "correct": 396,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9,
+        "recall": 0.9
+      }
+    },
+    "court": {
+      "span": {
+        "correct": 434,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9863636363636363,
+        "recall": 0.9863636363636363
+      },
+      "span_overlap": {
+        "correct": 435,
+        "gold": 440,
+        "recall": 0.9886363636363636
+      },
+      "normalization": {
+        "correct": 431,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.9795454545454545,
+        "recall": 0.9795454545454545
+      }
+    },
+    "date": {
+      "span": {
+        "correct": 436,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.990909090909091,
+        "recall": 0.990909090909091
+      },
+      "span_overlap": {
+        "correct": 436,
+        "gold": 440,
+        "recall": 0.990909090909091
+      },
+      "normalization": {
+        "correct": 436,
+        "predicted": 440,
+        "gold": 440,
+        "precision": 0.990909090909091,
+        "recall": 0.990909090909091
+      }
+    }
+  },
+  "llm_usage": {
+    "rows": [
+      {
+        "substage": "grow_roots.discover_root_locators.hunt_docket_locators",
+        "model": "openai/gpt-6-luna",
+        "endpoint": "https://openrouter.ai/api/v1",
+        "attempts": 61,
+        "usage_reported_attempts": 61,
+        "cache_reported_attempts": 61,
+        "cache_rate_attempts": 61,
+        "input_tokens": 27994,
+        "output_tokens": 4841,
+        "total_tokens": 32835,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "reasoning_output_tokens": 1229,
+        "cache_rate_input_tokens": 27994,
+        "cache_rate_cached_input_tokens": 0,
+        "cache_rate": 0.0
+      },
+      {
+        "substage": "grow_roots.form_root_groups.reassign_docket_roots_llm",
+        "model": "openai/gpt-6-luna",
+        "endpoint": "https://openrouter.ai/api/v1",
+        "attempts": 9,
+        "usage_reported_attempts": 9,
+        "cache_reported_attempts": 9,
+        "cache_rate_attempts": 9,
+        "input_tokens": 8639,
+        "output_tokens": 588,
+        "total_tokens": 9227,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 2822,
+        "reasoning_output_tokens": 0,
+        "cache_rate_input_tokens": 8639,
+        "cache_rate_cached_input_tokens": 0,
+        "cache_rate": 0.0
+      }
+    ],
+    "total": {
+      "attempts": 70,
+      "usage_reported_attempts": 70,
+      "cache_reported_attempts": 70,
+      "cache_rate_attempts": 70,
+      "input_tokens": 36633,
+      "output_tokens": 5429,
+      "total_tokens": 42062,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 2822,
+      "reasoning_output_tokens": 1229,
+      "cache_rate_input_tokens": 36633,
+      "cache_rate_cached_input_tokens": 0,
+      "cache_rate": 0.0
+    }
+  }
+}

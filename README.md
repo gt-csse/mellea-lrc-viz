@@ -6,7 +6,8 @@ serif typography for legal text. Imported documents stay in the browser.
 
 ## Built-in primary corpus
 
-This branch includes one completed primary-corpus run. Visiting `/` opens the
+The included run is `2026-10-14T15-59-55Z`: 26 primary filings, completed through
+all four workflows, with their saved Markdown and JSON reports. Visiting `/` opens the
 first filing; choose another from the filing selector, or link directly with
 `/?document=005`. Documents are fetched individually as compressed native JSON,
 verified against the saved SHA-256, and then reviewed in the browser. The four
@@ -21,6 +22,7 @@ npm run bundle:run -- /absolute/path/to/evaluations/results/primary/TIMESTAMP
 The builder refuses unfinished runs. Compression preserves the original Document
 bytes, including every field reading, retrieved source, judgment, and model repair.
 It copies documents and workflow reports, without copying private run configuration.
+Unsuccessful review attempts remain in the saved history alongside accepted judgments.
 
 ## Run
 
