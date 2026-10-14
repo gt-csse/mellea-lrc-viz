@@ -1,0 +1,647 @@
+{
+  "set": "primary",
+  "dataset": {
+    "scope": "Native citation annotations only; each leaf uses its root's gold identity",
+    "all_annotations": {
+      "total_pincites": 468,
+      "settled": 309,
+      "CORRECT_PINCITE": 191,
+      "WRONG_PINCITE": 118,
+      "SKIPPED_UNSETTLED": 58,
+      "SKIPPED_TOA": 44,
+      "SKIPPED_IDENTITY_WRONG": 57,
+      "missing_pin_label": 0
+    },
+    "under_gold_correct_identity_roots": {
+      "total_pincites": 399,
+      "settled": 299,
+      "CORRECT_PINCITE": 186,
+      "WRONG_PINCITE": 113,
+      "SKIPPED_UNSETTLED": 57,
+      "SKIPPED_TOA": 43,
+      "SKIPPED_IDENTITY_WRONG": 0,
+      "missing_pin_label": 0
+    },
+    "settled_judgments": {
+      "reporter_roots": {
+        "all_annotations": {
+          "WRONG_PINCITE": 60,
+          "CORRECT_PINCITE": 108
+        },
+        "under_gold_correct_identity_roots": {
+          "WRONG_PINCITE": 56,
+          "CORRECT_PINCITE": 105
+        }
+      },
+      "reporter_leaves": {
+        "all_annotations": {
+          "WRONG_PINCITE": 58,
+          "CORRECT_PINCITE": 82
+        },
+        "under_gold_correct_identity_roots": {
+          "WRONG_PINCITE": 57,
+          "CORRECT_PINCITE": 80
+        }
+      },
+      "docket_roots": {
+        "all_annotations": {
+          "WRONG_PINCITE": 0,
+          "CORRECT_PINCITE": 0
+        },
+        "under_gold_correct_identity_roots": {
+          "WRONG_PINCITE": 0,
+          "CORRECT_PINCITE": 0
+        }
+      },
+      "docket_leaves": {
+        "all_annotations": {
+          "WRONG_PINCITE": 0,
+          "CORRECT_PINCITE": 1
+        },
+        "under_gold_correct_identity_roots": {
+          "WRONG_PINCITE": 0,
+          "CORRECT_PINCITE": 1
+        }
+      }
+    },
+    "known_page_locations_under_gold_correct_identity_roots": {
+      "reporter_roots": 136,
+      "reporter_leaves": 106,
+      "docket_roots": 0,
+      "docket_leaves": 0,
+      "total": 242
+    }
+  },
+  "workflow": "validate_all_citation_content",
+  "stages": [
+    {
+      "stage": "validate_all_citation_content.prepare_root_opinions",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "validate_all_citation_content.prepare_root_opinions.retrieve_opinions",
+          "reporter_roots_opinion_retrievals": 268,
+          "reporter_roots_correct_identity": 268,
+          "ratio": 1.0
+        },
+        {
+          "substage": "validate_all_citation_content.prepare_root_opinions.index_pages",
+          "counts": {
+            "roots_indexed": 268,
+            "opinions_indexed": 447
+          }
+        }
+      ]
+    },
+    {
+      "stage": "validate_all_citation_content.prepare_citation_evidence",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "validate_all_citation_content.prepare_citation_evidence.resolve_pages",
+          "counts": {
+            "unlocated": 87,
+            "resolved": 130,
+            "ambiguous": 83,
+            "no_pin": 132
+          }
+        },
+        {
+          "substage": "validate_all_citation_content.prepare_citation_evidence.select_opinions_llm",
+          "counts": {
+            "decisions": 74
+          }
+        },
+        {
+          "substage": "validate_all_citation_content.prepare_citation_evidence.read_propositions",
+          "counts": {
+            "no_proposition": 32,
+            "decisions": 300
+          }
+        },
+        {
+          "substage": "validate_all_citation_content.prepare_citation_evidence.prepare_evidence",
+          "counts": {
+            "missing_pages": 76,
+            "no_pincite": 92,
+            "no_proposition": 72,
+            "ready": 192
+          }
+        }
+      ]
+    },
+    {
+      "stage": "validate_all_citation_content.review_citation_content",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "validate_all_citation_content.review_citation_content.review_cited_pages_llm",
+          "counts": {
+            "failures": 10,
+            "contradicted": 16,
+            "unavailable": 59,
+            "supported": 107
+          },
+          "judgments": {
+            "reporter_roots": {
+              "correct": 54,
+              "predicted": 59,
+              "undetermined": 43,
+              "precision": 0.9152542372881356
+            },
+            "reporter_leaves": {
+              "correct": 36,
+              "predicted": 41,
+              "undetermined": 40,
+              "precision": 0.8780487804878049
+            },
+            "docket_roots": {
+              "correct": 0,
+              "predicted": 0,
+              "undetermined": 0,
+              "precision": null
+            },
+            "docket_leaves": {
+              "correct": 0,
+              "predicted": 0,
+              "undetermined": 0,
+              "precision": null
+            },
+            "total": {
+              "correct": 90,
+              "predicted": 100,
+              "undetermined": 83,
+              "precision": 0.9
+            }
+          },
+          "unscored_definitive": 7
+        },
+        {
+          "substage": "validate_all_citation_content.review_citation_content.review_full_opinions_llm",
+          "counts": {
+            "failures": 16,
+            "contradicted": 25,
+            "not_found": 69,
+            "supported": 84
+          },
+          "judgments": {
+            "reporter_roots": {
+              "correct": 83,
+              "predicted": 90,
+              "undetermined": 9,
+              "precision": 0.9222222222222223
+            },
+            "reporter_leaves": {
+              "correct": 61,
+              "predicted": 73,
+              "undetermined": 6,
+              "precision": 0.8356164383561644
+            },
+            "docket_roots": {
+              "correct": 0,
+              "predicted": 0,
+              "undetermined": 0,
+              "precision": null
+            },
+            "docket_leaves": {
+              "correct": 0,
+              "predicted": 0,
+              "undetermined": 0,
+              "precision": null
+            },
+            "total": {
+              "correct": 144,
+              "predicted": 163,
+              "undetermined": 15,
+              "precision": 0.8834355828220859
+            }
+          },
+          "unscored_definitive": 15,
+          "page_precision": {
+            "reporter_roots": {
+              "correct": 24,
+              "predicted": 29,
+              "unlocated": 55,
+              "unscored": 6,
+              "precision": 0.8275862068965517
+            },
+            "reporter_leaves": {
+              "correct": 22,
+              "predicted": 24,
+              "unlocated": 43,
+              "unscored": 6,
+              "precision": 0.9166666666666666
+            },
+            "docket_roots": {
+              "correct": 0,
+              "predicted": 0,
+              "unlocated": 0,
+              "unscored": 0,
+              "precision": null
+            },
+            "docket_leaves": {
+              "correct": 0,
+              "predicted": 0,
+              "unlocated": 0,
+              "unscored": 0,
+              "precision": null
+            },
+            "total": {
+              "correct": 46,
+              "predicted": 53,
+              "unlocated": 98,
+              "unscored": 27,
+              "precision": 0.8679245283018868
+            }
+          },
+          "found_page_precision": {
+            "reporter_roots": {
+              "correct": 16,
+              "predicted": 17,
+              "unlocated": 61,
+              "unscored": 12,
+              "reference_agreement": 0.9411764705882353
+            },
+            "reporter_leaves": {
+              "correct": 16,
+              "predicted": 19,
+              "unlocated": 39,
+              "unscored": 15,
+              "reference_agreement": 0.8421052631578947
+            },
+            "docket_roots": {
+              "correct": 0,
+              "predicted": 0,
+              "unlocated": 0,
+              "unscored": 0,
+              "reference_agreement": null
+            },
+            "docket_leaves": {
+              "correct": 0,
+              "predicted": 0,
+              "unlocated": 0,
+              "unscored": 0,
+              "reference_agreement": null
+            },
+            "total": {
+              "correct": 32,
+              "predicted": 36,
+              "unlocated": 100,
+              "unscored": 42,
+              "reference_agreement": 0.8888888888888888
+            }
+          }
+        },
+        {
+          "substage": "validate_all_citation_content.review_citation_content.judge_citation_content",
+          "counts": {
+            "UNDETERMINED": 13,
+            "WRONG_PINCITE": 94,
+            "CORRECT_PINCITE": 161
+          },
+          "judgments": {
+            "reporter_roots": {
+              "correct": 122,
+              "predicted": 134,
+              "undetermined": 7,
+              "precision": 0.9104477611940298
+            },
+            "reporter_leaves": {
+              "correct": 86,
+              "predicted": 103,
+              "undetermined": 5,
+              "precision": 0.8349514563106796
+            },
+            "docket_roots": {
+              "correct": 0,
+              "predicted": 0,
+              "undetermined": 0,
+              "precision": null
+            },
+            "docket_leaves": {
+              "correct": 0,
+              "predicted": 0,
+              "undetermined": 0,
+              "precision": null
+            },
+            "total": {
+              "correct": 208,
+              "predicted": 237,
+              "undetermined": 12,
+              "precision": 0.8776371308016878
+            }
+          },
+          "unscored_definitive": 18,
+          "page_precision": {
+            "reporter_roots": {
+              "correct": 67,
+              "predicted": 72,
+              "unlocated": 62,
+              "unscored": 7,
+              "precision": 0.9305555555555556
+            },
+            "reporter_leaves": {
+              "correct": 50,
+              "predicted": 53,
+              "unlocated": 49,
+              "unscored": 6,
+              "precision": 0.9433962264150944
+            },
+            "docket_roots": {
+              "correct": 0,
+              "predicted": 0,
+              "unlocated": 0,
+              "unscored": 0,
+              "precision": null
+            },
+            "docket_leaves": {
+              "correct": 0,
+              "predicted": 0,
+              "unlocated": 0,
+              "unscored": 0,
+              "precision": null
+            },
+            "total": {
+              "correct": 117,
+              "predicted": 125,
+              "unlocated": 111,
+              "unscored": 32,
+              "precision": 0.936
+            }
+          },
+          "found_page_precision": {
+            "reporter_roots": {
+              "correct": 57,
+              "predicted": 58,
+              "unlocated": 68,
+              "unscored": 15,
+              "reference_agreement": 0.9827586206896551
+            },
+            "reporter_leaves": {
+              "correct": 44,
+              "predicted": 48,
+              "unlocated": 45,
+              "unscored": 15,
+              "reference_agreement": 0.9166666666666666
+            },
+            "docket_roots": {
+              "correct": 0,
+              "predicted": 0,
+              "unlocated": 0,
+              "unscored": 0,
+              "reference_agreement": null
+            },
+            "docket_leaves": {
+              "correct": 0,
+              "predicted": 0,
+              "unlocated": 0,
+              "unscored": 0,
+              "reference_agreement": null
+            },
+            "total": {
+              "correct": 101,
+              "predicted": 106,
+              "unlocated": 113,
+              "unscored": 49,
+              "reference_agreement": 0.9528301886792453
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "gold_cohort": {
+    "scope": "Native settled pin cites under gold CORRECT_IDENTITY roots, including reporter and docket roots and leaves",
+    "labels": [
+      "CORRECT_PINCITE",
+      "WRONG_PINCITE"
+    ],
+    "reporter_roots": 161,
+    "reporter_leaves": 137,
+    "docket_roots": 0,
+    "docket_leaves": 1,
+    "total": 299
+  },
+  "citation_content": {
+    "reporter_roots": {
+      "correct": 122,
+      "predicted": 134,
+      "gold": 161,
+      "wrong": 12,
+      "undetermined": 7,
+      "missing_judgments": 20,
+      "missing_opinions": 20,
+      "precision": 0.9104477611940298,
+      "recall": 0.7577639751552795
+    },
+    "reporter_leaves": {
+      "correct": 86,
+      "predicted": 103,
+      "gold": 137,
+      "wrong": 17,
+      "undetermined": 5,
+      "missing_judgments": 29,
+      "missing_opinions": 29,
+      "precision": 0.8349514563106796,
+      "recall": 0.6277372262773723
+    },
+    "docket_roots": {
+      "correct": 0,
+      "predicted": 0,
+      "gold": 0,
+      "wrong": 0,
+      "undetermined": 0,
+      "missing_judgments": 0,
+      "missing_opinions": 0,
+      "precision": null,
+      "recall": null
+    },
+    "docket_leaves": {
+      "correct": 0,
+      "predicted": 0,
+      "gold": 1,
+      "wrong": 0,
+      "undetermined": 0,
+      "missing_judgments": 1,
+      "missing_opinions": 1,
+      "precision": null,
+      "recall": 0.0
+    },
+    "total": {
+      "correct": 208,
+      "predicted": 237,
+      "gold": 299,
+      "wrong": 29,
+      "undetermined": 12,
+      "missing_judgments": 50,
+      "missing_opinions": 50,
+      "precision": 0.8776371308016878,
+      "recall": 0.6956521739130435
+    }
+  },
+  "page_precision": {
+    "reporter_roots": {
+      "correct": 67,
+      "predicted": 72,
+      "unlocated": 62,
+      "unscored": 7,
+      "precision": 0.9305555555555556
+    },
+    "reporter_leaves": {
+      "correct": 50,
+      "predicted": 53,
+      "unlocated": 49,
+      "unscored": 6,
+      "precision": 0.9433962264150944
+    },
+    "docket_roots": {
+      "correct": 0,
+      "predicted": 0,
+      "unlocated": 0,
+      "unscored": 0,
+      "precision": null
+    },
+    "docket_leaves": {
+      "correct": 0,
+      "predicted": 0,
+      "unlocated": 0,
+      "unscored": 0,
+      "precision": null
+    },
+    "total": {
+      "correct": 117,
+      "predicted": 125,
+      "unlocated": 111,
+      "unscored": 32,
+      "precision": 0.936
+    }
+  },
+  "found_page_precision": {
+    "reporter_roots": {
+      "correct": 57,
+      "predicted": 58,
+      "unlocated": 68,
+      "unscored": 15,
+      "reference_agreement": 0.9827586206896551
+    },
+    "reporter_leaves": {
+      "correct": 44,
+      "predicted": 48,
+      "unlocated": 45,
+      "unscored": 15,
+      "reference_agreement": 0.9166666666666666
+    },
+    "docket_roots": {
+      "correct": 0,
+      "predicted": 0,
+      "unlocated": 0,
+      "unscored": 0,
+      "reference_agreement": null
+    },
+    "docket_leaves": {
+      "correct": 0,
+      "predicted": 0,
+      "unlocated": 0,
+      "unscored": 0,
+      "reference_agreement": null
+    },
+    "total": {
+      "correct": 101,
+      "predicted": 106,
+      "unlocated": 113,
+      "unscored": 49,
+      "reference_agreement": 0.9528301886792453
+    }
+  },
+  "llm_usage": {
+    "rows": [
+      {
+        "substage": "validate_all_citation_content.prepare_citation_evidence.select_opinions_llm",
+        "model": "openai/gpt-6-luna",
+        "endpoint": "https://openrouter.ai/api/v1",
+        "attempts": 74,
+        "usage_reported_attempts": 74,
+        "cache_reported_attempts": 74,
+        "cache_rate_attempts": 74,
+        "input_tokens": 2412194,
+        "output_tokens": 7755,
+        "total_tokens": 2419949,
+        "cached_input_tokens": 1047786,
+        "cache_write_input_tokens": 1364186,
+        "reasoning_output_tokens": 346,
+        "cache_rate_input_tokens": 2412194,
+        "cache_rate_cached_input_tokens": 1047786,
+        "cache_rate": 0.4343705357031814
+      },
+      {
+        "substage": "validate_all_citation_content.prepare_citation_evidence.read_propositions",
+        "model": "openai/gpt-6-luna",
+        "endpoint": "https://openrouter.ai/api/v1",
+        "attempts": 274,
+        "usage_reported_attempts": 274,
+        "cache_reported_attempts": 274,
+        "cache_rate_attempts": 274,
+        "input_tokens": 271406,
+        "output_tokens": 65625,
+        "total_tokens": 337031,
+        "cached_input_tokens": 3235,
+        "cache_write_input_tokens": 59257,
+        "reasoning_output_tokens": 31309,
+        "cache_rate_input_tokens": 271406,
+        "cache_rate_cached_input_tokens": 3235,
+        "cache_rate": 0.011919412245860446
+      },
+      {
+        "substage": "validate_all_citation_content.review_citation_content.review_cited_pages_llm",
+        "model": "glm-5",
+        "endpoint": "https://ellm.nrp-nautilus.io/v1",
+        "attempts": 257,
+        "usage_reported_attempts": 248,
+        "cache_reported_attempts": 0,
+        "cache_rate_attempts": 0,
+        "input_tokens": 870445,
+        "output_tokens": 144967,
+        "total_tokens": 1015412,
+        "cached_input_tokens": null,
+        "cache_write_input_tokens": null,
+        "reasoning_output_tokens": 40572,
+        "cache_rate_input_tokens": null,
+        "cache_rate_cached_input_tokens": null,
+        "cache_rate": null
+      },
+      {
+        "substage": "validate_all_citation_content.review_citation_content.review_full_opinions_llm",
+        "model": "glm-5",
+        "endpoint": "https://ellm.nrp-nautilus.io/v1",
+        "attempts": 235,
+        "usage_reported_attempts": 222,
+        "cache_reported_attempts": 0,
+        "cache_rate_attempts": 0,
+        "input_tokens": 4768287,
+        "output_tokens": 180928,
+        "total_tokens": 4949215,
+        "cached_input_tokens": null,
+        "cache_write_input_tokens": null,
+        "reasoning_output_tokens": 55228,
+        "cache_rate_input_tokens": null,
+        "cache_rate_cached_input_tokens": null,
+        "cache_rate": null
+      }
+    ],
+    "total": {
+      "attempts": 840,
+      "usage_reported_attempts": 818,
+      "cache_reported_attempts": 348,
+      "cache_rate_attempts": 348,
+      "input_tokens": 8322332,
+      "output_tokens": 399275,
+      "total_tokens": 8721607,
+      "cached_input_tokens": 1051021,
+      "cache_write_input_tokens": 1423443,
+      "reasoning_output_tokens": 127455,
+      "cache_rate_input_tokens": 2683600,
+      "cache_rate_cached_input_tokens": 1051021,
+      "cache_rate": 0.39164592338649573
+    }
+  }
+}

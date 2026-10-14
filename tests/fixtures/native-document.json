@@ -1,0 +1,5484 @@
+{
+  "document": {
+    "source_metadata": {
+      "path": null,
+      "format": "text"
+    },
+    "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+    "preprocessing_metadata": {
+      "backend": "plain_text",
+      "backend_version": null,
+      "rules": []
+    },
+    "index_spans": [
+      {
+        "start": 2,
+        "end": 36,
+        "kind": "table_of_authorities"
+      }
+    ],
+    "citations": [
+      {
+        "id": "reporter:17:29",
+        "kind": "reporter",
+        "nodes": [
+          {
+            "id": "reporter:17:29:node:0",
+            "substage": "1_locators"
+          },
+          {
+            "id": "reporter:17:29:node:1",
+            "substage": "10_fields"
+          },
+          {
+            "id": "reporter:17:29:node:2",
+            "substage": "10_fields"
+          },
+          {
+            "id": "reporter:17:29:node:3",
+            "substage": "2_identity"
+          }
+        ],
+        "tags": [
+          {
+            "node_id": "reporter:17:29:node:0",
+            "kind": "table_of_authorities",
+            "component_index": 0
+          }
+        ],
+        "case_name": [
+          {
+            "node_id": "reporter:17:29:node:1",
+            "normalizable": true,
+            "normalized": {
+              "kind": "adversarial",
+              "plaintiff": "Alpha",
+              "defendant": "Beta",
+              "subject": null,
+              "partial": null
+            },
+            "normalization_error": null,
+            "quote": "Alpha v. Beta",
+            "span": {
+              "start": 2,
+              "end": 15
+            },
+            "normalized_by": "rule"
+          }
+        ],
+        "root_id": [
+          {
+            "value": "reporter:17:29",
+            "node_id": "reporter:17:29:node:2"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "court": [],
+        "date": [
+          {
+            "node_id": "reporter:17:29:node:2",
+            "normalizable": true,
+            "normalized": {
+              "year": 1969,
+              "month": null,
+              "day": null
+            },
+            "normalization_error": null,
+            "quote": "1969",
+            "span": {
+              "start": 31,
+              "end": 35
+            }
+          }
+        ],
+        "colocation_id": [],
+        "case_name_judgments": [],
+        "court_judgments": [],
+        "date_judgments": [],
+        "identity_judgments": [
+          {
+            "node_id": "reporter:17:29:node:3",
+            "verdict": "correct_identity",
+            "basis": null
+          }
+        ],
+        "body_searches": [],
+        "body_reviews": [],
+        "field_body_searches": [],
+        "intended_case_reviews": [],
+        "locator": [
+          {
+            "node_id": "reporter:17:29:node:0",
+            "normalizable": true,
+            "normalized": {
+              "volume": 436,
+              "reporter": {
+                "short_name": "U.S.",
+                "name": "United States Supreme Court Reports",
+                "cite_type": "federal",
+                "source": "reporters",
+                "is_scotus": true
+              },
+              "edition": "U.S.",
+              "page": "658"
+            },
+            "normalization_error": null,
+            "quote": "436 U.S. 658",
+            "span": {
+              "start": 17,
+              "end": 29
+            }
+          }
+        ],
+        "reporter_exact_lookup": null,
+        "reporter_exact_docket": null,
+        "reporter_exact_candidate_dockets": [],
+        "reporter_exact_ambiguity_resolution": null,
+        "reporter_unique_review": null,
+        "reporter_ambiguous_review": null,
+        "reporter_root_opinion_source": null,
+        "reporter_root_opinion_retrieval": null,
+        "reporter_root_opinion_page_index": null
+      },
+      {
+        "id": "docket:38:53",
+        "kind": "docket",
+        "nodes": [
+          {
+            "id": "docket:38:53:node:0",
+            "substage": "1_locators"
+          },
+          {
+            "id": "docket:38:53:node:1",
+            "substage": "10_fields"
+          }
+        ],
+        "tags": [],
+        "case_name": [],
+        "root_id": [
+          {
+            "value": "docket:38:53",
+            "node_id": "docket:38:53:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "court": [],
+        "date": [],
+        "colocation_id": [],
+        "case_name_judgments": [],
+        "court_judgments": [],
+        "date_judgments": [],
+        "identity_judgments": [],
+        "body_searches": [],
+        "body_reviews": [],
+        "field_body_searches": [],
+        "intended_case_reviews": [],
+        "locator": [
+          {
+            "node_id": "docket:38:53:node:0",
+            "normalizable": true,
+            "normalized": {
+              "docket_number": "1:24-cv-77"
+            },
+            "normalization_error": null,
+            "quote": "No. 1:24-cv-77",
+            "span": {
+              "start": 38,
+              "end": 52
+            },
+            "number_span": {
+              "start": 42,
+              "end": 52
+            }
+          }
+        ],
+        "docket_entry": [
+          {
+            "node_id": "docket:38:53:node:1",
+            "normalizable": true,
+            "normalized": "4",
+            "normalization_error": null,
+            "quote": "Doc. 4",
+            "span": {
+              "start": 54,
+              "end": 60
+            }
+          }
+        ],
+        "docket_root_reviews": [],
+        "docket_lookup": null,
+        "docket_lookup_review": null,
+        "govinfo_docket_lookup": null,
+        "govinfo_docket_review": null
+      },
+      {
+        "id": "short:69",
+        "kind": "short_reporter",
+        "nodes": [
+          {
+            "id": "short:69:node:0",
+            "substage": "short_creation"
+          },
+          {
+            "id": "short:69:node:1",
+            "substage": "assignments"
+          }
+        ],
+        "tags": [],
+        "case_name": [],
+        "root_id": [
+          {
+            "value": "reporter:17:29",
+            "node_id": "short:69:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": [
+          {
+            "node_id": "short:69:node:0",
+            "normalizable": true,
+            "normalized": [
+              {
+                "first": 665,
+                "last": 665,
+                "kind": "page",
+                "footnote": null
+              }
+            ],
+            "normalization_error": null,
+            "quote": "665",
+            "span": {
+              "start": 85,
+              "end": 88
+            }
+          }
+        ],
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "short_locator": [
+          {
+            "node_id": "short:69:node:0",
+            "normalizable": true,
+            "normalized": {
+              "volume": 436,
+              "reporter": {
+                "short_name": "U.S.",
+                "name": "United States Supreme Court Reports",
+                "cite_type": "federal",
+                "source": "reporters",
+                "is_scotus": true
+              },
+              "edition": "U.S."
+            },
+            "normalization_error": null,
+            "quote": "436 U.S. at 665",
+            "span": {
+              "start": 73,
+              "end": 88
+            }
+          }
+        ],
+        "colocation_id": []
+      },
+      {
+        "id": "id:90:100",
+        "kind": "id",
+        "nodes": [
+          {
+            "id": "id:90:100:node:0",
+            "substage": "short_creation"
+          },
+          {
+            "id": "id:90:100:node:1",
+            "substage": "assignments"
+          }
+        ],
+        "tags": [],
+        "case_name": [],
+        "root_id": [
+          {
+            "value": "reporter:17:29",
+            "node_id": "id:90:100:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "id_reference": [
+          {
+            "node_id": "id:90:100:node:0",
+            "normalizable": true,
+            "normalized": {
+              "keyword": "id"
+            },
+            "normalization_error": null,
+            "quote": "Id. at 665",
+            "span": {
+              "start": 90,
+              "end": 100
+            }
+          }
+        ]
+      },
+      {
+        "id": "supra:102:122",
+        "kind": "supra",
+        "nodes": [
+          {
+            "id": "supra:102:122:node:0",
+            "substage": "short_creation"
+          },
+          {
+            "id": "supra:102:122:node:1",
+            "substage": "assignments"
+          }
+        ],
+        "tags": [],
+        "case_name": [],
+        "root_id": [
+          {
+            "value": "reporter:17:29",
+            "node_id": "supra:102:122:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "supra_reference": [
+          {
+            "node_id": "supra:102:122:node:0",
+            "normalizable": true,
+            "normalized": {
+              "antecedent": "Alpha",
+              "volume": null
+            },
+            "normalization_error": null,
+            "quote": "Alpha, supra, at 665",
+            "span": {
+              "start": 102,
+              "end": 122
+            }
+          }
+        ]
+      },
+      {
+        "id": "reference:124:129",
+        "kind": "reference",
+        "nodes": [
+          {
+            "id": "reference:124:129:node:0",
+            "substage": "short_creation"
+          },
+          {
+            "id": "reference:124:129:node:1",
+            "substage": "assignments"
+          }
+        ],
+        "tags": [],
+        "case_name": [
+          {
+            "node_id": "reference:124:129:node:0",
+            "normalizable": true,
+            "normalized": {
+              "kind": "partial",
+              "plaintiff": null,
+              "defendant": null,
+              "subject": null,
+              "partial": "Alpha"
+            },
+            "normalization_error": null,
+            "quote": "Alpha",
+            "span": {
+              "start": 124,
+              "end": 129
+            },
+            "normalized_by": "rule"
+          }
+        ],
+        "root_id": [
+          {
+            "value": "__withdrawn__",
+            "node_id": "reference:124:129:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "reference_name": [
+          {
+            "node_id": "reference:124:129:node:0",
+            "normalizable": true,
+            "normalized": {
+              "kind": "partial",
+              "plaintiff": null,
+              "defendant": null,
+              "subject": null,
+              "partial": "Alpha"
+            },
+            "normalization_error": null,
+            "quote": "Alpha",
+            "span": {
+              "start": 124,
+              "end": 129
+            },
+            "normalized_by": "rule"
+          }
+        ]
+      }
+    ],
+    "site_reviews": [
+      {
+        "substage": "10_fields",
+        "candidate_span": {
+          "start": 124,
+          "end": 136
+        },
+        "candidate_text": "Alpha at 665",
+        "outcome": "declined",
+        "reason": "Small native fixture site review",
+        "proposed_locator": null,
+        "proposed_identifier": null,
+        "citation_id": null,
+        "ivr": null
+      }
+    ],
+    "runs": [
+      {
+        "kind": "substage",
+        "name": "1_locators"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.discover_root_locators.find_docket_locators"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_roots.discover_root_locators"
+      },
+      {
+        "kind": "substage",
+        "name": "10_fields"
+      },
+      {
+        "kind": "substage",
+        "name": "2_identity"
+      },
+      {
+        "kind": "substage",
+        "name": "short_creation"
+      },
+      {
+        "kind": "substage",
+        "name": "assignments"
+      }
+    ]
+  },
+  "snapshots": {
+    "1_locators": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        }
+      ]
+    },
+    "10_fields": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "reporter:17:29:node:1",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:2",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [
+            {
+              "node_id": "reporter:17:29:node:1",
+              "normalizable": true,
+              "normalized": {
+                "kind": "adversarial",
+                "plaintiff": "Alpha",
+                "defendant": "Beta",
+                "subject": null,
+                "partial": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha v. Beta",
+              "span": {
+                "start": 2,
+                "end": 15
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "reporter:17:29:node:2"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [
+            {
+              "node_id": "reporter:17:29:node:2",
+              "normalizable": true,
+              "normalized": {
+                "year": 1969,
+                "month": null,
+                "day": null
+              },
+              "normalization_error": null,
+              "quote": "1969",
+              "span": {
+                "start": 31,
+                "end": 35
+              }
+            }
+          ],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "docket:38:53:node:1",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "docket:38:53",
+              "node_id": "docket:38:53:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [
+            {
+              "node_id": "docket:38:53:node:1",
+              "normalizable": true,
+              "normalized": "4",
+              "normalization_error": null,
+              "quote": "Doc. 4",
+              "span": {
+                "start": 54,
+                "end": 60
+              }
+            }
+          ],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [
+        {
+          "substage": "10_fields",
+          "candidate_span": {
+            "start": 124,
+            "end": 136
+          },
+          "candidate_text": "Alpha at 665",
+          "outcome": "declined",
+          "reason": "Small native fixture site review",
+          "proposed_locator": null,
+          "proposed_identifier": null,
+          "citation_id": null,
+          "ivr": null
+        }
+      ],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "10_fields"
+        }
+      ]
+    },
+    "2_identity": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "reporter:17:29:node:1",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:2",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:3",
+              "substage": "2_identity"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [
+            {
+              "node_id": "reporter:17:29:node:1",
+              "normalizable": true,
+              "normalized": {
+                "kind": "adversarial",
+                "plaintiff": "Alpha",
+                "defendant": "Beta",
+                "subject": null,
+                "partial": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha v. Beta",
+              "span": {
+                "start": 2,
+                "end": 15
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "reporter:17:29:node:2"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [
+            {
+              "node_id": "reporter:17:29:node:2",
+              "normalizable": true,
+              "normalized": {
+                "year": 1969,
+                "month": null,
+                "day": null
+              },
+              "normalization_error": null,
+              "quote": "1969",
+              "span": {
+                "start": 31,
+                "end": 35
+              }
+            }
+          ],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [
+            {
+              "node_id": "reporter:17:29:node:3",
+              "verdict": "correct_identity",
+              "basis": null
+            }
+          ],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "docket:38:53:node:1",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "docket:38:53",
+              "node_id": "docket:38:53:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [
+            {
+              "node_id": "docket:38:53:node:1",
+              "normalizable": true,
+              "normalized": "4",
+              "normalization_error": null,
+              "quote": "Doc. 4",
+              "span": {
+                "start": 54,
+                "end": 60
+              }
+            }
+          ],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [
+        {
+          "substage": "10_fields",
+          "candidate_span": {
+            "start": 124,
+            "end": 136
+          },
+          "candidate_text": "Alpha at 665",
+          "outcome": "declined",
+          "reason": "Small native fixture site review",
+          "proposed_locator": null,
+          "proposed_identifier": null,
+          "citation_id": null,
+          "ivr": null
+        }
+      ],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "10_fields"
+        },
+        {
+          "kind": "substage",
+          "name": "2_identity"
+        }
+      ]
+    },
+    "short_creation": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "reporter:17:29:node:1",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:2",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:3",
+              "substage": "2_identity"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [
+            {
+              "node_id": "reporter:17:29:node:1",
+              "normalizable": true,
+              "normalized": {
+                "kind": "adversarial",
+                "plaintiff": "Alpha",
+                "defendant": "Beta",
+                "subject": null,
+                "partial": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha v. Beta",
+              "span": {
+                "start": 2,
+                "end": 15
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "reporter:17:29:node:2"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [
+            {
+              "node_id": "reporter:17:29:node:2",
+              "normalizable": true,
+              "normalized": {
+                "year": 1969,
+                "month": null,
+                "day": null
+              },
+              "normalization_error": null,
+              "quote": "1969",
+              "span": {
+                "start": 31,
+                "end": 35
+              }
+            }
+          ],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [
+            {
+              "node_id": "reporter:17:29:node:3",
+              "verdict": "correct_identity",
+              "basis": null
+            }
+          ],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "docket:38:53:node:1",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "docket:38:53",
+              "node_id": "docket:38:53:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [
+            {
+              "node_id": "docket:38:53:node:1",
+              "normalizable": true,
+              "normalized": "4",
+              "normalization_error": null,
+              "quote": "Doc. 4",
+              "span": {
+                "start": 54,
+                "end": 60
+              }
+            }
+          ],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        },
+        {
+          "id": "short:69",
+          "kind": "short_reporter",
+          "nodes": [
+            {
+              "id": "short:69:node:0",
+              "substage": "short_creation"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": [
+            {
+              "node_id": "short:69:node:0",
+              "normalizable": true,
+              "normalized": [
+                {
+                  "first": 665,
+                  "last": 665,
+                  "kind": "page",
+                  "footnote": null
+                }
+              ],
+              "normalization_error": null,
+              "quote": "665",
+              "span": {
+                "start": 85,
+                "end": 88
+              }
+            }
+          ],
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "short_locator": [
+            {
+              "node_id": "short:69:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S."
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. at 665",
+              "span": {
+                "start": 73,
+                "end": 88
+              }
+            }
+          ],
+          "colocation_id": []
+        },
+        {
+          "id": "id:90:100",
+          "kind": "id",
+          "nodes": [
+            {
+              "id": "id:90:100:node:0",
+              "substage": "short_creation"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "id_reference": [
+            {
+              "node_id": "id:90:100:node:0",
+              "normalizable": true,
+              "normalized": {
+                "keyword": "id"
+              },
+              "normalization_error": null,
+              "quote": "Id. at 665",
+              "span": {
+                "start": 90,
+                "end": 100
+              }
+            }
+          ]
+        },
+        {
+          "id": "supra:102:122",
+          "kind": "supra",
+          "nodes": [
+            {
+              "id": "supra:102:122:node:0",
+              "substage": "short_creation"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "supra_reference": [
+            {
+              "node_id": "supra:102:122:node:0",
+              "normalizable": true,
+              "normalized": {
+                "antecedent": "Alpha",
+                "volume": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha, supra, at 665",
+              "span": {
+                "start": 102,
+                "end": 122
+              }
+            }
+          ]
+        },
+        {
+          "id": "reference:124:129",
+          "kind": "reference",
+          "nodes": [
+            {
+              "id": "reference:124:129:node:0",
+              "substage": "short_creation"
+            }
+          ],
+          "tags": [],
+          "case_name": [
+            {
+              "node_id": "reference:124:129:node:0",
+              "normalizable": true,
+              "normalized": {
+                "kind": "partial",
+                "plaintiff": null,
+                "defendant": null,
+                "subject": null,
+                "partial": "Alpha"
+              },
+              "normalization_error": null,
+              "quote": "Alpha",
+              "span": {
+                "start": 124,
+                "end": 129
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "reference_name": [
+            {
+              "node_id": "reference:124:129:node:0",
+              "normalizable": true,
+              "normalized": {
+                "kind": "partial",
+                "plaintiff": null,
+                "defendant": null,
+                "subject": null,
+                "partial": "Alpha"
+              },
+              "normalization_error": null,
+              "quote": "Alpha",
+              "span": {
+                "start": 124,
+                "end": 129
+              },
+              "normalized_by": "rule"
+            }
+          ]
+        }
+      ],
+      "site_reviews": [
+        {
+          "substage": "10_fields",
+          "candidate_span": {
+            "start": 124,
+            "end": 136
+          },
+          "candidate_text": "Alpha at 665",
+          "outcome": "declined",
+          "reason": "Small native fixture site review",
+          "proposed_locator": null,
+          "proposed_identifier": null,
+          "citation_id": null,
+          "ivr": null
+        }
+      ],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "10_fields"
+        },
+        {
+          "kind": "substage",
+          "name": "2_identity"
+        },
+        {
+          "kind": "substage",
+          "name": "short_creation"
+        }
+      ]
+    },
+    "assignments": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "reporter:17:29:node:1",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:2",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:3",
+              "substage": "2_identity"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [
+            {
+              "node_id": "reporter:17:29:node:1",
+              "normalizable": true,
+              "normalized": {
+                "kind": "adversarial",
+                "plaintiff": "Alpha",
+                "defendant": "Beta",
+                "subject": null,
+                "partial": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha v. Beta",
+              "span": {
+                "start": 2,
+                "end": 15
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "reporter:17:29:node:2"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [
+            {
+              "node_id": "reporter:17:29:node:2",
+              "normalizable": true,
+              "normalized": {
+                "year": 1969,
+                "month": null,
+                "day": null
+              },
+              "normalization_error": null,
+              "quote": "1969",
+              "span": {
+                "start": 31,
+                "end": 35
+              }
+            }
+          ],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [
+            {
+              "node_id": "reporter:17:29:node:3",
+              "verdict": "correct_identity",
+              "basis": null
+            }
+          ],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "docket:38:53:node:1",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "docket:38:53",
+              "node_id": "docket:38:53:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [
+            {
+              "node_id": "docket:38:53:node:1",
+              "normalizable": true,
+              "normalized": "4",
+              "normalization_error": null,
+              "quote": "Doc. 4",
+              "span": {
+                "start": 54,
+                "end": 60
+              }
+            }
+          ],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        },
+        {
+          "id": "short:69",
+          "kind": "short_reporter",
+          "nodes": [
+            {
+              "id": "short:69:node:0",
+              "substage": "short_creation"
+            },
+            {
+              "id": "short:69:node:1",
+              "substage": "assignments"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "short:69:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": [
+            {
+              "node_id": "short:69:node:0",
+              "normalizable": true,
+              "normalized": [
+                {
+                  "first": 665,
+                  "last": 665,
+                  "kind": "page",
+                  "footnote": null
+                }
+              ],
+              "normalization_error": null,
+              "quote": "665",
+              "span": {
+                "start": 85,
+                "end": 88
+              }
+            }
+          ],
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "short_locator": [
+            {
+              "node_id": "short:69:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S."
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. at 665",
+              "span": {
+                "start": 73,
+                "end": 88
+              }
+            }
+          ],
+          "colocation_id": []
+        },
+        {
+          "id": "id:90:100",
+          "kind": "id",
+          "nodes": [
+            {
+              "id": "id:90:100:node:0",
+              "substage": "short_creation"
+            },
+            {
+              "id": "id:90:100:node:1",
+              "substage": "assignments"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "id:90:100:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "id_reference": [
+            {
+              "node_id": "id:90:100:node:0",
+              "normalizable": true,
+              "normalized": {
+                "keyword": "id"
+              },
+              "normalization_error": null,
+              "quote": "Id. at 665",
+              "span": {
+                "start": 90,
+                "end": 100
+              }
+            }
+          ]
+        },
+        {
+          "id": "supra:102:122",
+          "kind": "supra",
+          "nodes": [
+            {
+              "id": "supra:102:122:node:0",
+              "substage": "short_creation"
+            },
+            {
+              "id": "supra:102:122:node:1",
+              "substage": "assignments"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "supra:102:122:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "supra_reference": [
+            {
+              "node_id": "supra:102:122:node:0",
+              "normalizable": true,
+              "normalized": {
+                "antecedent": "Alpha",
+                "volume": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha, supra, at 665",
+              "span": {
+                "start": 102,
+                "end": 122
+              }
+            }
+          ]
+        },
+        {
+          "id": "reference:124:129",
+          "kind": "reference",
+          "nodes": [
+            {
+              "id": "reference:124:129:node:0",
+              "substage": "short_creation"
+            },
+            {
+              "id": "reference:124:129:node:1",
+              "substage": "assignments"
+            }
+          ],
+          "tags": [],
+          "case_name": [
+            {
+              "node_id": "reference:124:129:node:0",
+              "normalizable": true,
+              "normalized": {
+                "kind": "partial",
+                "plaintiff": null,
+                "defendant": null,
+                "subject": null,
+                "partial": "Alpha"
+              },
+              "normalization_error": null,
+              "quote": "Alpha",
+              "span": {
+                "start": 124,
+                "end": 129
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "__withdrawn__",
+              "node_id": "reference:124:129:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "reference_name": [
+            {
+              "node_id": "reference:124:129:node:0",
+              "normalizable": true,
+              "normalized": {
+                "kind": "partial",
+                "plaintiff": null,
+                "defendant": null,
+                "subject": null,
+                "partial": "Alpha"
+              },
+              "normalization_error": null,
+              "quote": "Alpha",
+              "span": {
+                "start": 124,
+                "end": 129
+              },
+              "normalized_by": "rule"
+            }
+          ]
+        }
+      ],
+      "site_reviews": [
+        {
+          "substage": "10_fields",
+          "candidate_span": {
+            "start": 124,
+            "end": 136
+          },
+          "candidate_text": "Alpha at 665",
+          "outcome": "declined",
+          "reason": "Small native fixture site review",
+          "proposed_locator": null,
+          "proposed_identifier": null,
+          "citation_id": null,
+          "ivr": null
+        }
+      ],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "10_fields"
+        },
+        {
+          "kind": "substage",
+          "name": "2_identity"
+        },
+        {
+          "kind": "substage",
+          "name": "short_creation"
+        },
+        {
+          "kind": "substage",
+          "name": "assignments"
+        }
+      ]
+    }
+  },
+  "substageSnapshots": {
+    "1_locators": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        }
+      ]
+    },
+    "grow_roots.discover_root_locators.find_full_reporter_locators": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        }
+      ]
+    },
+    "grow_roots.discover_root_locators.find_docket_locators": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        }
+      ]
+    },
+    "10_fields": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "reporter:17:29:node:1",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:2",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [
+            {
+              "node_id": "reporter:17:29:node:1",
+              "normalizable": true,
+              "normalized": {
+                "kind": "adversarial",
+                "plaintiff": "Alpha",
+                "defendant": "Beta",
+                "subject": null,
+                "partial": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha v. Beta",
+              "span": {
+                "start": 2,
+                "end": 15
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "reporter:17:29:node:2"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [
+            {
+              "node_id": "reporter:17:29:node:2",
+              "normalizable": true,
+              "normalized": {
+                "year": 1969,
+                "month": null,
+                "day": null
+              },
+              "normalization_error": null,
+              "quote": "1969",
+              "span": {
+                "start": 31,
+                "end": 35
+              }
+            }
+          ],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "docket:38:53:node:1",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "docket:38:53",
+              "node_id": "docket:38:53:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [
+            {
+              "node_id": "docket:38:53:node:1",
+              "normalizable": true,
+              "normalized": "4",
+              "normalization_error": null,
+              "quote": "Doc. 4",
+              "span": {
+                "start": 54,
+                "end": 60
+              }
+            }
+          ],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [
+        {
+          "substage": "10_fields",
+          "candidate_span": {
+            "start": 124,
+            "end": 136
+          },
+          "candidate_text": "Alpha at 665",
+          "outcome": "declined",
+          "reason": "Small native fixture site review",
+          "proposed_locator": null,
+          "proposed_identifier": null,
+          "citation_id": null,
+          "ivr": null
+        }
+      ],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "10_fields"
+        }
+      ]
+    },
+    "2_identity": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "reporter:17:29:node:1",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:2",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:3",
+              "substage": "2_identity"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [
+            {
+              "node_id": "reporter:17:29:node:1",
+              "normalizable": true,
+              "normalized": {
+                "kind": "adversarial",
+                "plaintiff": "Alpha",
+                "defendant": "Beta",
+                "subject": null,
+                "partial": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha v. Beta",
+              "span": {
+                "start": 2,
+                "end": 15
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "reporter:17:29:node:2"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [
+            {
+              "node_id": "reporter:17:29:node:2",
+              "normalizable": true,
+              "normalized": {
+                "year": 1969,
+                "month": null,
+                "day": null
+              },
+              "normalization_error": null,
+              "quote": "1969",
+              "span": {
+                "start": 31,
+                "end": 35
+              }
+            }
+          ],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [
+            {
+              "node_id": "reporter:17:29:node:3",
+              "verdict": "correct_identity",
+              "basis": null
+            }
+          ],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "docket:38:53:node:1",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "docket:38:53",
+              "node_id": "docket:38:53:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [
+            {
+              "node_id": "docket:38:53:node:1",
+              "normalizable": true,
+              "normalized": "4",
+              "normalization_error": null,
+              "quote": "Doc. 4",
+              "span": {
+                "start": 54,
+                "end": 60
+              }
+            }
+          ],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [
+        {
+          "substage": "10_fields",
+          "candidate_span": {
+            "start": 124,
+            "end": 136
+          },
+          "candidate_text": "Alpha at 665",
+          "outcome": "declined",
+          "reason": "Small native fixture site review",
+          "proposed_locator": null,
+          "proposed_identifier": null,
+          "citation_id": null,
+          "ivr": null
+        }
+      ],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "10_fields"
+        },
+        {
+          "kind": "substage",
+          "name": "2_identity"
+        }
+      ]
+    },
+    "short_creation": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "reporter:17:29:node:1",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:2",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:3",
+              "substage": "2_identity"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [
+            {
+              "node_id": "reporter:17:29:node:1",
+              "normalizable": true,
+              "normalized": {
+                "kind": "adversarial",
+                "plaintiff": "Alpha",
+                "defendant": "Beta",
+                "subject": null,
+                "partial": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha v. Beta",
+              "span": {
+                "start": 2,
+                "end": 15
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "reporter:17:29:node:2"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [
+            {
+              "node_id": "reporter:17:29:node:2",
+              "normalizable": true,
+              "normalized": {
+                "year": 1969,
+                "month": null,
+                "day": null
+              },
+              "normalization_error": null,
+              "quote": "1969",
+              "span": {
+                "start": 31,
+                "end": 35
+              }
+            }
+          ],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [
+            {
+              "node_id": "reporter:17:29:node:3",
+              "verdict": "correct_identity",
+              "basis": null
+            }
+          ],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "docket:38:53:node:1",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "docket:38:53",
+              "node_id": "docket:38:53:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [
+            {
+              "node_id": "docket:38:53:node:1",
+              "normalizable": true,
+              "normalized": "4",
+              "normalization_error": null,
+              "quote": "Doc. 4",
+              "span": {
+                "start": 54,
+                "end": 60
+              }
+            }
+          ],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        },
+        {
+          "id": "short:69",
+          "kind": "short_reporter",
+          "nodes": [
+            {
+              "id": "short:69:node:0",
+              "substage": "short_creation"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": [
+            {
+              "node_id": "short:69:node:0",
+              "normalizable": true,
+              "normalized": [
+                {
+                  "first": 665,
+                  "last": 665,
+                  "kind": "page",
+                  "footnote": null
+                }
+              ],
+              "normalization_error": null,
+              "quote": "665",
+              "span": {
+                "start": 85,
+                "end": 88
+              }
+            }
+          ],
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "short_locator": [
+            {
+              "node_id": "short:69:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S."
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. at 665",
+              "span": {
+                "start": 73,
+                "end": 88
+              }
+            }
+          ],
+          "colocation_id": []
+        },
+        {
+          "id": "id:90:100",
+          "kind": "id",
+          "nodes": [
+            {
+              "id": "id:90:100:node:0",
+              "substage": "short_creation"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "id_reference": [
+            {
+              "node_id": "id:90:100:node:0",
+              "normalizable": true,
+              "normalized": {
+                "keyword": "id"
+              },
+              "normalization_error": null,
+              "quote": "Id. at 665",
+              "span": {
+                "start": 90,
+                "end": 100
+              }
+            }
+          ]
+        },
+        {
+          "id": "supra:102:122",
+          "kind": "supra",
+          "nodes": [
+            {
+              "id": "supra:102:122:node:0",
+              "substage": "short_creation"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "supra_reference": [
+            {
+              "node_id": "supra:102:122:node:0",
+              "normalizable": true,
+              "normalized": {
+                "antecedent": "Alpha",
+                "volume": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha, supra, at 665",
+              "span": {
+                "start": 102,
+                "end": 122
+              }
+            }
+          ]
+        },
+        {
+          "id": "reference:124:129",
+          "kind": "reference",
+          "nodes": [
+            {
+              "id": "reference:124:129:node:0",
+              "substage": "short_creation"
+            }
+          ],
+          "tags": [],
+          "case_name": [
+            {
+              "node_id": "reference:124:129:node:0",
+              "normalizable": true,
+              "normalized": {
+                "kind": "partial",
+                "plaintiff": null,
+                "defendant": null,
+                "subject": null,
+                "partial": "Alpha"
+              },
+              "normalization_error": null,
+              "quote": "Alpha",
+              "span": {
+                "start": 124,
+                "end": 129
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "reference_name": [
+            {
+              "node_id": "reference:124:129:node:0",
+              "normalizable": true,
+              "normalized": {
+                "kind": "partial",
+                "plaintiff": null,
+                "defendant": null,
+                "subject": null,
+                "partial": "Alpha"
+              },
+              "normalization_error": null,
+              "quote": "Alpha",
+              "span": {
+                "start": 124,
+                "end": 129
+              },
+              "normalized_by": "rule"
+            }
+          ]
+        }
+      ],
+      "site_reviews": [
+        {
+          "substage": "10_fields",
+          "candidate_span": {
+            "start": 124,
+            "end": 136
+          },
+          "candidate_text": "Alpha at 665",
+          "outcome": "declined",
+          "reason": "Small native fixture site review",
+          "proposed_locator": null,
+          "proposed_identifier": null,
+          "citation_id": null,
+          "ivr": null
+        }
+      ],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "10_fields"
+        },
+        {
+          "kind": "substage",
+          "name": "2_identity"
+        },
+        {
+          "kind": "substage",
+          "name": "short_creation"
+        }
+      ]
+    },
+    "assignments": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "reporter:17:29:node:1",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:2",
+              "substage": "10_fields"
+            },
+            {
+              "id": "reporter:17:29:node:3",
+              "substage": "2_identity"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [
+            {
+              "node_id": "reporter:17:29:node:1",
+              "normalizable": true,
+              "normalized": {
+                "kind": "adversarial",
+                "plaintiff": "Alpha",
+                "defendant": "Beta",
+                "subject": null,
+                "partial": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha v. Beta",
+              "span": {
+                "start": 2,
+                "end": 15
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "reporter:17:29:node:2"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [
+            {
+              "node_id": "reporter:17:29:node:2",
+              "normalizable": true,
+              "normalized": {
+                "year": 1969,
+                "month": null,
+                "day": null
+              },
+              "normalization_error": null,
+              "quote": "1969",
+              "span": {
+                "start": 31,
+                "end": 35
+              }
+            }
+          ],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [
+            {
+              "node_id": "reporter:17:29:node:3",
+              "verdict": "correct_identity",
+              "basis": null
+            }
+          ],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            },
+            {
+              "id": "docket:38:53:node:1",
+              "substage": "10_fields"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "docket:38:53",
+              "node_id": "docket:38:53:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [
+            {
+              "node_id": "docket:38:53:node:1",
+              "normalizable": true,
+              "normalized": "4",
+              "normalization_error": null,
+              "quote": "Doc. 4",
+              "span": {
+                "start": 54,
+                "end": 60
+              }
+            }
+          ],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        },
+        {
+          "id": "short:69",
+          "kind": "short_reporter",
+          "nodes": [
+            {
+              "id": "short:69:node:0",
+              "substage": "short_creation"
+            },
+            {
+              "id": "short:69:node:1",
+              "substage": "assignments"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "short:69:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": [
+            {
+              "node_id": "short:69:node:0",
+              "normalizable": true,
+              "normalized": [
+                {
+                  "first": 665,
+                  "last": 665,
+                  "kind": "page",
+                  "footnote": null
+                }
+              ],
+              "normalization_error": null,
+              "quote": "665",
+              "span": {
+                "start": 85,
+                "end": 88
+              }
+            }
+          ],
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "short_locator": [
+            {
+              "node_id": "short:69:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S."
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. at 665",
+              "span": {
+                "start": 73,
+                "end": 88
+              }
+            }
+          ],
+          "colocation_id": []
+        },
+        {
+          "id": "id:90:100",
+          "kind": "id",
+          "nodes": [
+            {
+              "id": "id:90:100:node:0",
+              "substage": "short_creation"
+            },
+            {
+              "id": "id:90:100:node:1",
+              "substage": "assignments"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "id:90:100:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "id_reference": [
+            {
+              "node_id": "id:90:100:node:0",
+              "normalizable": true,
+              "normalized": {
+                "keyword": "id"
+              },
+              "normalization_error": null,
+              "quote": "Id. at 665",
+              "span": {
+                "start": 90,
+                "end": 100
+              }
+            }
+          ]
+        },
+        {
+          "id": "supra:102:122",
+          "kind": "supra",
+          "nodes": [
+            {
+              "id": "supra:102:122:node:0",
+              "substage": "short_creation"
+            },
+            {
+              "id": "supra:102:122:node:1",
+              "substage": "assignments"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [
+            {
+              "value": "reporter:17:29",
+              "node_id": "supra:102:122:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "supra_reference": [
+            {
+              "node_id": "supra:102:122:node:0",
+              "normalizable": true,
+              "normalized": {
+                "antecedent": "Alpha",
+                "volume": null
+              },
+              "normalization_error": null,
+              "quote": "Alpha, supra, at 665",
+              "span": {
+                "start": 102,
+                "end": 122
+              }
+            }
+          ]
+        },
+        {
+          "id": "reference:124:129",
+          "kind": "reference",
+          "nodes": [
+            {
+              "id": "reference:124:129:node:0",
+              "substage": "short_creation"
+            },
+            {
+              "id": "reference:124:129:node:1",
+              "substage": "assignments"
+            }
+          ],
+          "tags": [],
+          "case_name": [
+            {
+              "node_id": "reference:124:129:node:0",
+              "normalizable": true,
+              "normalized": {
+                "kind": "partial",
+                "plaintiff": null,
+                "defendant": null,
+                "subject": null,
+                "partial": "Alpha"
+              },
+              "normalization_error": null,
+              "quote": "Alpha",
+              "span": {
+                "start": 124,
+                "end": 129
+              },
+              "normalized_by": "rule"
+            }
+          ],
+          "root_id": [
+            {
+              "value": "__withdrawn__",
+              "node_id": "reference:124:129:node:1"
+            }
+          ],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "attributions": [],
+          "reviews": [],
+          "reference_name": [
+            {
+              "node_id": "reference:124:129:node:0",
+              "normalizable": true,
+              "normalized": {
+                "kind": "partial",
+                "plaintiff": null,
+                "defendant": null,
+                "subject": null,
+                "partial": "Alpha"
+              },
+              "normalization_error": null,
+              "quote": "Alpha",
+              "span": {
+                "start": 124,
+                "end": 129
+              },
+              "normalized_by": "rule"
+            }
+          ]
+        }
+      ],
+      "site_reviews": [
+        {
+          "substage": "10_fields",
+          "candidate_span": {
+            "start": 124,
+            "end": 136
+          },
+          "candidate_text": "Alpha at 665",
+          "outcome": "declined",
+          "reason": "Small native fixture site review",
+          "proposed_locator": null,
+          "proposed_identifier": null,
+          "citation_id": null,
+          "ivr": null
+        }
+      ],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "10_fields"
+        },
+        {
+          "kind": "substage",
+          "name": "2_identity"
+        },
+        {
+          "kind": "substage",
+          "name": "short_creation"
+        },
+        {
+          "kind": "substage",
+          "name": "assignments"
+        }
+      ]
+    }
+  },
+  "stageSnapshots": {
+    "grow_roots.discover_root_locators": {
+      "source_metadata": {
+        "path": null,
+        "format": "text"
+      },
+      "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+      "preprocessing_metadata": {
+        "backend": "plain_text",
+        "backend_version": null,
+        "rules": []
+      },
+      "index_spans": [
+        {
+          "start": 2,
+          "end": 36,
+          "kind": "table_of_authorities"
+        }
+      ],
+      "citations": [
+        {
+          "id": "reporter:17:29",
+          "kind": "reporter",
+          "nodes": [
+            {
+              "id": "reporter:17:29:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "kind": "table_of_authorities",
+              "component_index": 0
+            }
+          ],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "reporter:17:29:node:0",
+              "normalizable": true,
+              "normalized": {
+                "volume": 436,
+                "reporter": {
+                  "short_name": "U.S.",
+                  "name": "United States Supreme Court Reports",
+                  "cite_type": "federal",
+                  "source": "reporters",
+                  "is_scotus": true
+                },
+                "edition": "U.S.",
+                "page": "658"
+              },
+              "normalization_error": null,
+              "quote": "436 U.S. 658",
+              "span": {
+                "start": 17,
+                "end": 29
+              }
+            }
+          ],
+          "reporter_exact_lookup": null,
+          "reporter_exact_docket": null,
+          "reporter_exact_candidate_dockets": [],
+          "reporter_exact_ambiguity_resolution": null,
+          "reporter_unique_review": null,
+          "reporter_ambiguous_review": null,
+          "reporter_root_opinion_source": null,
+          "reporter_root_opinion_retrieval": null,
+          "reporter_root_opinion_page_index": null
+        },
+        {
+          "id": "docket:38:53",
+          "kind": "docket",
+          "nodes": [
+            {
+              "id": "docket:38:53:node:0",
+              "substage": "1_locators"
+            }
+          ],
+          "tags": [],
+          "case_name": [],
+          "root_id": [],
+          "routes": [],
+          "pin_cite": null,
+          "reporter_page_resolutions": [],
+          "reporter_opinion_reviews": [],
+          "reporter_propositions": [],
+          "reporter_pinpoint_evidence": [],
+          "reporter_opinion_evidence": [],
+          "reporter_support_reviews": [],
+          "reporter_pinpoint_judgments": [],
+          "leaf_field_correction_reviews": [],
+          "court": [],
+          "date": [],
+          "colocation_id": [],
+          "case_name_judgments": [],
+          "court_judgments": [],
+          "date_judgments": [],
+          "identity_judgments": [],
+          "body_searches": [],
+          "body_reviews": [],
+          "field_body_searches": [],
+          "intended_case_reviews": [],
+          "locator": [
+            {
+              "node_id": "docket:38:53:node:0",
+              "normalizable": true,
+              "normalized": {
+                "docket_number": "1:24-cv-77"
+              },
+              "normalization_error": null,
+              "quote": "No. 1:24-cv-77",
+              "span": {
+                "start": 38,
+                "end": 52
+              },
+              "number_span": {
+                "start": 42,
+                "end": 52
+              }
+            }
+          ],
+          "docket_entry": [],
+          "docket_root_reviews": [],
+          "docket_lookup": null,
+          "docket_lookup_review": null,
+          "govinfo_docket_lookup": null,
+          "govinfo_docket_review": null
+        }
+      ],
+      "site_reviews": [],
+      "runs": [
+        {
+          "kind": "substage",
+          "name": "1_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+        },
+        {
+          "kind": "substage",
+          "name": "grow_roots.discover_root_locators.find_docket_locators"
+        },
+        {
+          "kind": "stage",
+          "name": "grow_roots.discover_root_locators"
+        }
+      ]
+    }
+  },
+  "emptyDocument": {
+    "source_metadata": {
+      "path": null,
+      "format": "text"
+    },
+    "text": "😀 Source has no citations yet.",
+    "preprocessing_metadata": {
+      "backend": "plain_text",
+      "backend_version": null,
+      "rules": []
+    },
+    "index_spans": [],
+    "citations": [],
+    "site_reviews": [],
+    "runs": []
+  },
+  "emptyCompleted": {
+    "source_metadata": {
+      "path": null,
+      "format": "text"
+    },
+    "text": "😀 Source has no citations yet.",
+    "preprocessing_metadata": {
+      "backend": "plain_text",
+      "backend_version": null,
+      "rules": []
+    },
+    "index_spans": [],
+    "citations": [],
+    "site_reviews": [],
+    "runs": [
+      {
+        "kind": "substage",
+        "name": "empty_extraction"
+      }
+    ]
+  },
+  "pendingCreation": {
+    "source_metadata": {
+      "path": null,
+      "format": "text"
+    },
+    "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+    "preprocessing_metadata": {
+      "backend": "plain_text",
+      "backend_version": null,
+      "rules": []
+    },
+    "index_spans": [
+      {
+        "start": 2,
+        "end": 36,
+        "kind": "table_of_authorities"
+      }
+    ],
+    "citations": [
+      {
+        "id": "reporter:17:29",
+        "kind": "reporter",
+        "nodes": [
+          {
+            "id": "reporter:17:29:node:0",
+            "substage": "pending_creation"
+          }
+        ],
+        "tags": [
+          {
+            "node_id": "reporter:17:29:node:0",
+            "kind": "table_of_authorities",
+            "component_index": 0
+          }
+        ],
+        "case_name": [],
+        "root_id": [],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "court": [],
+        "date": [],
+        "colocation_id": [],
+        "case_name_judgments": [],
+        "court_judgments": [],
+        "date_judgments": [],
+        "identity_judgments": [],
+        "body_searches": [],
+        "body_reviews": [],
+        "field_body_searches": [],
+        "intended_case_reviews": [],
+        "locator": [
+          {
+            "node_id": "reporter:17:29:node:0",
+            "normalizable": true,
+            "normalized": {
+              "volume": 436,
+              "reporter": {
+                "short_name": "U.S.",
+                "name": "United States Supreme Court Reports",
+                "cite_type": "federal",
+                "source": "reporters",
+                "is_scotus": true
+              },
+              "edition": "U.S.",
+              "page": "658"
+            },
+            "normalization_error": null,
+            "quote": "436 U.S. 658",
+            "span": {
+              "start": 17,
+              "end": 29
+            }
+          }
+        ],
+        "reporter_exact_lookup": null,
+        "reporter_exact_docket": null,
+        "reporter_exact_candidate_dockets": [],
+        "reporter_exact_ambiguity_resolution": null,
+        "reporter_unique_review": null,
+        "reporter_ambiguous_review": null,
+        "reporter_root_opinion_source": null,
+        "reporter_root_opinion_retrieval": null,
+        "reporter_root_opinion_page_index": null
+      }
+    ],
+    "site_reviews": [],
+    "runs": []
+  },
+  "pendingDocument": {
+    "source_metadata": {
+      "path": null,
+      "format": "text"
+    },
+    "text": "😀 Alpha v. Beta, 436 U.S. 658 (1969). No. 1:24-cv-77, Doc. 4. See Alpha, 436 U.S. at 665. Id. at 665. Alpha, supra, at 665. Alpha at 665.",
+    "preprocessing_metadata": {
+      "backend": "plain_text",
+      "backend_version": null,
+      "rules": []
+    },
+    "index_spans": [
+      {
+        "start": 2,
+        "end": 36,
+        "kind": "table_of_authorities"
+      }
+    ],
+    "citations": [
+      {
+        "id": "reference:11:15",
+        "kind": "reference",
+        "nodes": [
+          {
+            "id": "reference:11:15:node:0",
+            "substage": "pending_update"
+          }
+        ],
+        "tags": [
+          {
+            "node_id": "reference:11:15:node:0",
+            "kind": "table_of_authorities",
+            "component_index": 0
+          }
+        ],
+        "case_name": [
+          {
+            "node_id": "reference:11:15:node:0",
+            "normalizable": true,
+            "normalized": {
+              "kind": "partial",
+              "plaintiff": null,
+              "defendant": null,
+              "subject": null,
+              "partial": "Beta"
+            },
+            "normalization_error": null,
+            "quote": "Beta",
+            "span": {
+              "start": 11,
+              "end": 15
+            },
+            "normalized_by": "rule"
+          }
+        ],
+        "root_id": [],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "reference_name": [
+          {
+            "node_id": "reference:11:15:node:0",
+            "normalizable": true,
+            "normalized": {
+              "kind": "partial",
+              "plaintiff": null,
+              "defendant": null,
+              "subject": null,
+              "partial": "Beta"
+            },
+            "normalization_error": null,
+            "quote": "Beta",
+            "span": {
+              "start": 11,
+              "end": 15
+            },
+            "normalized_by": "rule"
+          }
+        ]
+      },
+      {
+        "id": "reporter:17:29",
+        "kind": "reporter",
+        "nodes": [
+          {
+            "id": "reporter:17:29:node:0",
+            "substage": "1_locators"
+          },
+          {
+            "id": "reporter:17:29:node:1",
+            "substage": "10_fields"
+          },
+          {
+            "id": "reporter:17:29:node:2",
+            "substage": "10_fields"
+          },
+          {
+            "id": "reporter:17:29:node:3",
+            "substage": "2_identity"
+          },
+          {
+            "id": "reporter:17:29:node:4",
+            "substage": "pending_update"
+          },
+          {
+            "id": "reporter:17:29:node:5",
+            "substage": "pending_update"
+          }
+        ],
+        "tags": [
+          {
+            "node_id": "reporter:17:29:node:0",
+            "kind": "table_of_authorities",
+            "component_index": 0
+          }
+        ],
+        "case_name": [
+          {
+            "node_id": "reporter:17:29:node:1",
+            "normalizable": true,
+            "normalized": {
+              "kind": "adversarial",
+              "plaintiff": "Alpha",
+              "defendant": "Beta",
+              "subject": null,
+              "partial": null
+            },
+            "normalization_error": null,
+            "quote": "Alpha v. Beta",
+            "span": {
+              "start": 2,
+              "end": 15
+            },
+            "normalized_by": "rule"
+          }
+        ],
+        "root_id": [
+          {
+            "value": "reporter:17:29",
+            "node_id": "reporter:17:29:node:2"
+          }
+        ],
+        "routes": [
+          {
+            "value": "pending_followup",
+            "node_id": "reporter:17:29:node:5"
+          }
+        ],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "court": [],
+        "date": [
+          {
+            "node_id": "reporter:17:29:node:2",
+            "normalizable": true,
+            "normalized": {
+              "year": 1969,
+              "month": null,
+              "day": null
+            },
+            "normalization_error": null,
+            "quote": "1969",
+            "span": {
+              "start": 31,
+              "end": 35
+            }
+          }
+        ],
+        "colocation_id": [],
+        "case_name_judgments": [],
+        "court_judgments": [],
+        "date_judgments": [],
+        "identity_judgments": [
+          {
+            "node_id": "reporter:17:29:node:3",
+            "verdict": "correct_identity",
+            "basis": null
+          },
+          {
+            "node_id": "reporter:17:29:node:4",
+            "verdict": "wrong_identity",
+            "basis": null
+          }
+        ],
+        "body_searches": [],
+        "body_reviews": [],
+        "field_body_searches": [],
+        "intended_case_reviews": [],
+        "locator": [
+          {
+            "node_id": "reporter:17:29:node:0",
+            "normalizable": true,
+            "normalized": {
+              "volume": 436,
+              "reporter": {
+                "short_name": "U.S.",
+                "name": "United States Supreme Court Reports",
+                "cite_type": "federal",
+                "source": "reporters",
+                "is_scotus": true
+              },
+              "edition": "U.S.",
+              "page": "658"
+            },
+            "normalization_error": null,
+            "quote": "436 U.S. 658",
+            "span": {
+              "start": 17,
+              "end": 29
+            }
+          }
+        ],
+        "reporter_exact_lookup": null,
+        "reporter_exact_docket": null,
+        "reporter_exact_candidate_dockets": [],
+        "reporter_exact_ambiguity_resolution": null,
+        "reporter_unique_review": null,
+        "reporter_ambiguous_review": null,
+        "reporter_root_opinion_source": null,
+        "reporter_root_opinion_retrieval": null,
+        "reporter_root_opinion_page_index": null
+      },
+      {
+        "id": "docket:38:53",
+        "kind": "docket",
+        "nodes": [
+          {
+            "id": "docket:38:53:node:0",
+            "substage": "1_locators"
+          },
+          {
+            "id": "docket:38:53:node:1",
+            "substage": "10_fields"
+          }
+        ],
+        "tags": [],
+        "case_name": [],
+        "root_id": [
+          {
+            "value": "docket:38:53",
+            "node_id": "docket:38:53:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "court": [],
+        "date": [],
+        "colocation_id": [],
+        "case_name_judgments": [],
+        "court_judgments": [],
+        "date_judgments": [],
+        "identity_judgments": [],
+        "body_searches": [],
+        "body_reviews": [],
+        "field_body_searches": [],
+        "intended_case_reviews": [],
+        "locator": [
+          {
+            "node_id": "docket:38:53:node:0",
+            "normalizable": true,
+            "normalized": {
+              "docket_number": "1:24-cv-77"
+            },
+            "normalization_error": null,
+            "quote": "No. 1:24-cv-77",
+            "span": {
+              "start": 38,
+              "end": 52
+            },
+            "number_span": {
+              "start": 42,
+              "end": 52
+            }
+          }
+        ],
+        "docket_entry": [
+          {
+            "node_id": "docket:38:53:node:1",
+            "normalizable": true,
+            "normalized": "4",
+            "normalization_error": null,
+            "quote": "Doc. 4",
+            "span": {
+              "start": 54,
+              "end": 60
+            }
+          }
+        ],
+        "docket_root_reviews": [],
+        "docket_lookup": null,
+        "docket_lookup_review": null,
+        "govinfo_docket_lookup": null,
+        "govinfo_docket_review": null
+      },
+      {
+        "id": "short:69",
+        "kind": "short_reporter",
+        "nodes": [
+          {
+            "id": "short:69:node:0",
+            "substage": "short_creation"
+          },
+          {
+            "id": "short:69:node:1",
+            "substage": "assignments"
+          }
+        ],
+        "tags": [],
+        "case_name": [],
+        "root_id": [
+          {
+            "value": "reporter:17:29",
+            "node_id": "short:69:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": [
+          {
+            "node_id": "short:69:node:0",
+            "normalizable": true,
+            "normalized": [
+              {
+                "first": 665,
+                "last": 665,
+                "kind": "page",
+                "footnote": null
+              }
+            ],
+            "normalization_error": null,
+            "quote": "665",
+            "span": {
+              "start": 85,
+              "end": 88
+            }
+          }
+        ],
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "short_locator": [
+          {
+            "node_id": "short:69:node:0",
+            "normalizable": true,
+            "normalized": {
+              "volume": 436,
+              "reporter": {
+                "short_name": "U.S.",
+                "name": "United States Supreme Court Reports",
+                "cite_type": "federal",
+                "source": "reporters",
+                "is_scotus": true
+              },
+              "edition": "U.S."
+            },
+            "normalization_error": null,
+            "quote": "436 U.S. at 665",
+            "span": {
+              "start": 73,
+              "end": 88
+            }
+          }
+        ],
+        "colocation_id": []
+      },
+      {
+        "id": "id:90:100",
+        "kind": "id",
+        "nodes": [
+          {
+            "id": "id:90:100:node:0",
+            "substage": "short_creation"
+          },
+          {
+            "id": "id:90:100:node:1",
+            "substage": "assignments"
+          }
+        ],
+        "tags": [],
+        "case_name": [],
+        "root_id": [
+          {
+            "value": "reporter:17:29",
+            "node_id": "id:90:100:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "id_reference": [
+          {
+            "node_id": "id:90:100:node:0",
+            "normalizable": true,
+            "normalized": {
+              "keyword": "id"
+            },
+            "normalization_error": null,
+            "quote": "Id. at 665",
+            "span": {
+              "start": 90,
+              "end": 100
+            }
+          }
+        ]
+      },
+      {
+        "id": "supra:102:122",
+        "kind": "supra",
+        "nodes": [
+          {
+            "id": "supra:102:122:node:0",
+            "substage": "short_creation"
+          },
+          {
+            "id": "supra:102:122:node:1",
+            "substage": "assignments"
+          }
+        ],
+        "tags": [],
+        "case_name": [],
+        "root_id": [
+          {
+            "value": "reporter:17:29",
+            "node_id": "supra:102:122:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "supra_reference": [
+          {
+            "node_id": "supra:102:122:node:0",
+            "normalizable": true,
+            "normalized": {
+              "antecedent": "Alpha",
+              "volume": null
+            },
+            "normalization_error": null,
+            "quote": "Alpha, supra, at 665",
+            "span": {
+              "start": 102,
+              "end": 122
+            }
+          }
+        ]
+      },
+      {
+        "id": "reference:124:129",
+        "kind": "reference",
+        "nodes": [
+          {
+            "id": "reference:124:129:node:0",
+            "substage": "short_creation"
+          },
+          {
+            "id": "reference:124:129:node:1",
+            "substage": "assignments"
+          }
+        ],
+        "tags": [],
+        "case_name": [
+          {
+            "node_id": "reference:124:129:node:0",
+            "normalizable": true,
+            "normalized": {
+              "kind": "partial",
+              "plaintiff": null,
+              "defendant": null,
+              "subject": null,
+              "partial": "Alpha"
+            },
+            "normalization_error": null,
+            "quote": "Alpha",
+            "span": {
+              "start": 124,
+              "end": 129
+            },
+            "normalized_by": "rule"
+          }
+        ],
+        "root_id": [
+          {
+            "value": "__withdrawn__",
+            "node_id": "reference:124:129:node:1"
+          }
+        ],
+        "routes": [],
+        "pin_cite": null,
+        "reporter_page_resolutions": [],
+        "reporter_opinion_reviews": [],
+        "reporter_propositions": [],
+        "reporter_pinpoint_evidence": [],
+        "reporter_opinion_evidence": [],
+        "reporter_support_reviews": [],
+        "reporter_pinpoint_judgments": [],
+        "leaf_field_correction_reviews": [],
+        "attributions": [],
+        "reviews": [],
+        "reference_name": [
+          {
+            "node_id": "reference:124:129:node:0",
+            "normalizable": true,
+            "normalized": {
+              "kind": "partial",
+              "plaintiff": null,
+              "defendant": null,
+              "subject": null,
+              "partial": "Alpha"
+            },
+            "normalization_error": null,
+            "quote": "Alpha",
+            "span": {
+              "start": 124,
+              "end": 129
+            },
+            "normalized_by": "rule"
+          }
+        ]
+      }
+    ],
+    "site_reviews": [
+      {
+        "substage": "10_fields",
+        "candidate_span": {
+          "start": 124,
+          "end": 136
+        },
+        "candidate_text": "Alpha at 665",
+        "outcome": "declined",
+        "reason": "Small native fixture site review",
+        "proposed_locator": null,
+        "proposed_identifier": null,
+        "citation_id": null,
+        "ivr": null
+      }
+    ],
+    "runs": [
+      {
+        "kind": "substage",
+        "name": "1_locators"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.discover_root_locators.find_docket_locators"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_roots.discover_root_locators"
+      },
+      {
+        "kind": "substage",
+        "name": "10_fields"
+      },
+      {
+        "kind": "substage",
+        "name": "2_identity"
+      },
+      {
+        "kind": "substage",
+        "name": "short_creation"
+      },
+      {
+        "kind": "substage",
+        "name": "assignments"
+      }
+    ]
+  },
+  "completedWorkflowDocument": {
+    "source_metadata": {
+      "path": null,
+      "format": "text"
+    },
+    "text": "😀 Source has no citations yet.",
+    "preprocessing_metadata": {
+      "backend": "plain_text",
+      "backend_version": null,
+      "rules": []
+    },
+    "index_spans": [],
+    "citations": [],
+    "site_reviews": [],
+    "runs": [
+      {
+        "kind": "substage",
+        "name": "grow_roots.discover_root_locators.find_full_reporter_locators"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.discover_root_locators.find_docket_locators"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_roots.discover_root_locators"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.read_root_fields.resolve_docket_entries"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.read_root_fields.resolve_colocations"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.read_root_fields.resolve_case_names"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.read_root_fields.resolve_courts"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.read_root_fields.resolve_dates"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.read_root_fields.resolve_pin_cites"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_roots.read_root_fields"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_roots.form_root_groups.form_roots"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_roots.form_root_groups"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_reporter_roots.retrieve_clusters"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_reporter_roots.retrieve_dockets"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_reporter_roots.judge_unique_rule"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_reporter_roots.judge_ambiguous_rule"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_reporter_roots.review_unique_llm"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_reporter_roots.review_ambiguous_llm"
+      },
+      {
+        "kind": "stage",
+        "name": "validate_roots_citation_identity.lookup_reporter_roots"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_docket_roots.retrieve_courtlistener_dockets"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_docket_roots.review_courtlistener_dockets_llm"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_docket_roots.retrieve_govinfo_dockets"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_docket_roots.review_govinfo_dockets_llm"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.lookup_docket_roots.judge_identity_from_fields"
+      },
+      {
+        "kind": "stage",
+        "name": "validate_roots_citation_identity.lookup_docket_roots"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.corroborate_locator_bodies.retrieve_courtlistener_opinions"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.corroborate_locator_bodies.retrieve_courtlistener_filings"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.corroborate_locator_bodies.retrieve_govinfo_opinions"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_roots_citation_identity.corroborate_locator_bodies.review_locator_bodies_llm"
+      },
+      {
+        "kind": "stage",
+        "name": "validate_roots_citation_identity.corroborate_locator_bodies"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_short_reporter_leaves.find_short_reporter_citations"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_short_reporter_leaves.resolve_colocations"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_short_reporter_leaves.resolve_case_names"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_short_reporter_leaves.attribute_citations"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_leaves.grow_short_reporter_leaves"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_reference_leaves.find_reference_citations"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_reference_leaves.attribute_citations"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_leaves.grow_reference_leaves"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_id_leaves.find_id_citations"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_id_leaves.attribute_citations"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_leaves.grow_id_leaves"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_supra_leaves.find_supra_citations"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_supra_leaves.resolve_case_names"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_supra_leaves.resolve_pin_cites"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.grow_supra_leaves.attribute_citations_rule"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_leaves.grow_supra_leaves"
+      },
+      {
+        "kind": "substage",
+        "name": "grow_leaves.correct_leaf_readings.correct_leaf_fields"
+      },
+      {
+        "kind": "stage",
+        "name": "grow_leaves.correct_leaf_readings"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.prepare_root_opinions.retrieve_opinions"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.prepare_root_opinions.index_pages"
+      },
+      {
+        "kind": "stage",
+        "name": "validate_all_citation_content.prepare_root_opinions"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.prepare_citation_evidence.resolve_pages"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.prepare_citation_evidence.select_opinions_llm"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.prepare_citation_evidence.read_propositions"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.prepare_citation_evidence.prepare_evidence"
+      },
+      {
+        "kind": "stage",
+        "name": "validate_all_citation_content.prepare_citation_evidence"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.review_citation_content.review_cited_pages_llm"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.review_citation_content.review_full_opinions_llm"
+      },
+      {
+        "kind": "substage",
+        "name": "validate_all_citation_content.review_citation_content.judge_citation_content"
+      },
+      {
+        "kind": "stage",
+        "name": "validate_all_citation_content.review_citation_content"
+      }
+    ]
+  }
+}

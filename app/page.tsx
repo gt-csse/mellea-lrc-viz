@@ -1,695 +1,201 @@
 "use client";
 
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, type ChangeEvent, type DragEvent, type KeyboardEvent } from "react";
+import { checkpointLabel, citationLabel, getDocumentAtStage, getDocumentAtSubstage, getRootId, isToa, groupCitations, locatorLabel, parseDocument, type CitationView, type DocumentView } from "../lib/document";
+import { DocumentViewPanel } from "../components/document-view";
+import { IdentityView } from "../components/identity-view";
+import { CitationContentView } from "../components/citation-content-view";
+import { RunSelector } from "../components/run-selector";
+import { fetchRunDocument, parseNativeRun, PRIMARY_RUN_INDEX, type NativeRun, type RunDocument } from "../lib/native-run";
+import { NodesView } from "../components/nodes-view";
+import { Icon, RawDialog, downloadJson, humanize } from "../components/primitives";
 
-type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+type Tab = "document" | "content" | "identity" | "nodes";
+const TABS: { id: Tab; label: string; icon: "document" | "support" | "identity" | "nodes"; description: string }[] = [
+  { id: "document", label: "Document", icon: "document", description: "Read citation occurrences in the filing." },
+  { id: "content", label: "Citation content", icon: "support", description: "Review the proposition, opinion evidence, and page accuracy." },
+  { id: "identity", label: "Identity", icon: "identity", description: "Review the root authority and its field comparisons." },
+  { id: "nodes", label: "Nodes", icon: "nodes", description: "Follow how this occurrence was read and reviewed." },
+];
 
-type ValidationNode = {
-  node_type: string;
-  node_id: string;
-  status: string;
-  outcome: string;
-  depends_on: string[];
-  [key: string]: JsonValue;
-};
-
-type CandidateSummaryRow = {
-  provenance: string;
-  candidate_index: number;
-  assessment_node_id: string;
-  outcome: string;
-  extracted_citation: string | null;
-  extracted_case_name: string | null;
-  retrieved_case_name: string | null;
-  case_name_outcome: string;
-  case_name_evidence: string;
-  extracted_year: string | null;
-  retrieved_year: string | null;
-  year_outcome: string;
-  extracted_court_id: string | null;
-  retrieved_court_id: string | null;
-  court_outcome: string;
-  docket_id: string | null;
-  opinion_url?: string | null;
-  docket_url?: string | null;
-  pinpoint?: CitationSummaryPinpoint | null;
-};
-
-type CitationSummary = ValidationNode & {
-  candidates: CandidateSummaryRow[];
-  overall_outcome?: string | null;
-  pinpoint_requires_review?: boolean | null;
-};
-
-type TextSpan = { start: number; end: number };
-
-type CitationSummaryPinpoint = {
-  node_id: string;
-  status: string;
-  outcome: string;
-  reporter_citation: string | null;
-  pin_cite: string | null;
-  opinion_id: string | null;
-  opinion_type: string | null;
-  reporter_page_text: string | null;
-  citing_context_span: TextSpan;
-  citation_span: TextSpan | null;
-  proposition: string | null;
-  proposition_span: TextSpan | null;
-  reasoning: string | null;
-  evidence_quote: string | null;
-  evidence_span: TextSpan | null;
-  evidence_match_method: string | null;
-  evidence_match_score: number | null;
-  status_message: string | null;
-  outcome_message: string | null;
-  error: string | null;
-};
-
-type CompletePinpointEvidence = CitationSummaryPinpoint & {
-  reporter_page_text: string;
-  proposition: string;
-  proposition_span: TextSpan;
-  evidence_quote: string;
-  evidence_span: TextSpan;
-};
-
-type EvidenceHighlight = {
-  kind: "citation" | "proposition" | "evidence";
-  label: string;
-  span: TextSpan;
-};
-
-const EVIDENCE_EXCERPT_CHARS = 720;
-
-type ValidatedCitation = {
-  citation_id: string;
-  nodes: ValidationNode[];
-  aggregation?: CitationSummary | null;
-};
-
-type ValidatedDocumentPayload = {
-  schema_version: 2;
-  artifact_type: "validated_document";
-  source: {
-    text: string;
-    citations: Array<{
-      citation_id: string;
-      span: { start: number; end: number };
-      matched_text: string;
-      citation: { citation_type: string; [key: string]: JsonValue };
-    }>;
-  };
-  citations: ValidatedCitation[];
-};
-
-const STATUS_CLASS: Record<string, string> = {
-  succeeded: "status-succeeded",
-  skipped: "status-skipped",
-  failed: "status-failed"
-};
+function titleOf(document: DocumentView, filename: string) {
+  const metadata = document.sourceMetadata;
+  for (const key of ["title", "document_name", "name"]) if (typeof metadata?.[key] === "string") return metadata[key];
+  return filename.replace(/\.json$/, "").replace(/\.txt$/, "").replaceAll("__", " · ").replaceAll("_", " ").replaceAll("-", " ");
+}
+function kindLabel(kind: string) {
+  return ({ reporter: "Reporter", docket: "Docket", short_reporter: "Short reporter", reference: "Reference", supra: "Supra", id: "Id." } as Record<string, string>)[kind] ?? humanize(kind);
+}
 
 export default function Page() {
-  const [document, setDocument] = useState<ValidatedDocumentPayload | null>(null);
-  const [selectedCitationId, setSelectedCitationId] = useState<string | null>(null);
-  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [run, setRun] = useState<NativeRun | null>(null);
+  const [runError, setRunError] = useState<string | null>(null);
+  const [runDocumentId, setRunDocumentId] = useState("");
+  const [loadingDocumentId, setLoadingDocumentId] = useState("");
+  const [saved, setSaved] = useState<DocumentView | null>(null);
+  const [filename, setFilename] = useState("");
+  const [checkpoint, setCheckpoint] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<Tab>("document");
+  const [query, setQuery] = useState("");
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
-  const [activeView, setActiveView] = useState<"graph" | "bibliography" | "document">("bibliography");
+  const [loading, setLoading] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const [mobileNavigator, setMobileNavigator] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
+  const navigatorDialog = useRef<HTMLDialogElement>(null);
+  const importTicket = useRef(0);
+  const loadController = useRef<AbortController | null>(null);
+  const deferredQuery = useDeferredValue(query);
+  const document = useMemo(() => {
+    if (!saved || !checkpoint) return saved;
+    const colon = checkpoint.indexOf(":");
+    const kind = checkpoint.slice(0, colon);
+    const name = checkpoint.slice(colon + 1);
+    return kind === "stage" ? getDocumentAtStage(saved, name) : getDocumentAtSubstage(saved, name);
+  }, [saved, checkpoint]);
+  const groups = useMemo(() => document ? groupCitations(document) : null, [document]);
+  const selected = document?.citations.find(item => item.id === selectedId) ?? document?.citations[0] ?? null;
+  const rootId = selected ? getRootId(selected) : null;
+  const root = document?.citations.find(item => item.id === rootId) ?? null;
+  const filtered = useMemo(() => {
+    if (!groups) return null;
+    const search = deferredQuery.trim().toLowerCase();
+    const matches = (citation: CitationView) => !search || [citationLabel(citation), locatorLabel(citation), citation.id, citation.kind].join(" ").toLowerCase().includes(search);
+    return {
+      roots: groups.roots.filter(group => matches(group.root) || group.leaves.some(matches)),
+      unassigned: groups.unassigned.filter(matches),
+      withdrawn: groups.withdrawn.filter(matches),
+      unknown: groups.unknown.filter(matches),
+    };
+  }, [groups, deferredQuery]);
 
-  const selectedCitation = document?.citations.find(
-    (citation) => citation.citation_id === selectedCitationId
-  );
-  const selectedSourceCitation = document?.source.citations.find(
-    (citation) => citation.citation_id === selectedCitationId
-  );
-  const selectedNode = selectedCitation?.nodes.find((node) => node.node_id === selectedNodeId);
-  const graph = useMemo(
-    () => buildGraph(selectedCitation?.nodes ?? []),
-    [selectedCitation?.nodes]
-  );
+  useEffect(() => {
+    if (selected && root && selected.id !== root.id) setExpanded(current => new Set([...current, root.id]));
+  }, [selected?.id, root?.id]);
 
-  function selectCitation(citationId: string) {
-    const citation = document?.citations.find((item) => item.citation_id === citationId);
-    setSelectedCitationId(citationId);
-    setSelectedNodeId(citation?.nodes[0]?.node_id ?? null);
-  }
+  useEffect(() => {
+    const dialog = navigatorDialog.current;
+    if (!dialog) return;
+    if (mobileNavigator && !dialog.open) dialog.showModal();
+    if (!mobileNavigator && dialog.open) dialog.close();
+  }, [mobileNavigator]);
 
-  function loadFile(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
+  const acceptDocument = useCallback((data: DocumentView, name: string, demoId = "") => {
+    setSaved(data); setFilename(name); setCheckpoint(""); setRunDocumentId(demoId);
+    setSelectedId(data.citations[0]?.id ?? null); setExpanded(new Set()); setQuery("");
+    setActiveTab("document");
+  }, []);
+
+  const openBuiltIn = useCallback(async (entry: RunDocument) => {
+    loadController.current?.abort();
+    const controller = new AbortController();
+    loadController.current = controller;
+    const ticket = ++importTicket.current;
+    setLoading(true); setLoadingDocumentId(entry.id); setError(null);
+    try {
+      const data = await fetchRunDocument(entry, controller.signal);
+      if (ticket !== importTicket.current) return;
+      acceptDocument(data, entry.filename, entry.id);
+      const url = new URL(window.location.href); url.searchParams.set("document", entry.id);
+      window.history.replaceState(null, "", url);
+    } catch (reason) {
+      if (ticket === importTicket.current && !controller.signal.aborted) setError(reason instanceof Error ? reason.message : "Could not load this filing.");
+    } finally {
+      if (ticket === importTicket.current) { setLoading(false); setLoadingDocumentId(""); }
+    }
+  }, [acceptDocument]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let cancelled = false;
+    void (async () => {
       try {
-        const payload = parseValidatedDocument(reader.result);
-        setDocument(payload);
-        setSelectedCitationId(payload.citations[0]?.citation_id ?? null);
-        setSelectedNodeId(payload.citations[0]?.nodes[0]?.node_id ?? null);
-        setError(null);
+        const response = await fetch(PRIMARY_RUN_INDEX, { signal: controller.signal });
+        if (!response.ok) throw new Error(`The built-in primary corpus is unavailable (HTTP ${response.status}). You can still open a saved Document.`);
+        const index = parseNativeRun(await response.json());
+        if (cancelled) return;
+        setRun(index); setRunError(null);
+        if (importTicket.current === 0) {
+          const requested = new URL(window.location.href).searchParams.get("document");
+          const entry = index.documents.find(document => document.id === requested) ?? index.documents[0];
+          void openBuiltIn(entry);
+        }
       } catch (reason) {
-        setDocument(null);
-        setSelectedCitationId(null);
-        setSelectedNodeId(null);
-        setError(reason instanceof Error ? reason.message : "Could not read this JSON file.");
+        if (!cancelled) setRunError(reason instanceof Error ? reason.message : "The built-in run could not be loaded.");
       }
-    };
-    reader.readAsText(file);
+    })();
+    return () => { cancelled = true; controller.abort(); };
+  }, [openBuiltIn]);
+
+  async function openFile(file: File) {
+    loadController.current?.abort();
+    const ticket = ++importTicket.current;
+    setLoading(true); setLoadingDocumentId(""); setError(null);
+    try {
+      const data = parseDocument(JSON.parse(await file.text()));
+      if (ticket !== importTicket.current) return;
+      acceptDocument(data, file.name);
+      const url = new URL(window.location.href); url.searchParams.delete("document");
+      window.history.replaceState(null, "", url);
+    } catch (reason) {
+      if (ticket === importTicket.current) setError(reason instanceof Error ? reason.message : "Could not read this Document. Open a native Document JSON file.");
+    } finally {
+      if (ticket === importTicket.current) setLoading(false);
+      if (input.current) input.current.value = "";
+    }
   }
-
-  return (
-    <main id="main-content" className="app-shell">
-      <header className="header">
-        <div>
-          <p className="eyebrow">Citation validation workspace</p>
-          <h1>mellea-LRC</h1>
-        </div>
-        <label className="load-control">
-          <span>Open result JSON</span>
-          <input type="file" accept="application/json,.json" onChange={loadFile} />
-        </label>
-      </header>
-
-      {error ? <p className="error" role="alert">{error}</p> : null}
-
-      {!document ? (
-        <section className="empty-state" aria-labelledby="empty-title">
-          <h2 id="empty-title">No result loaded</h2>
-          <p>Open JSON produced by <code>serialize_validated_document</code>. This workspace never runs validation or calls an API.</p>
-        </section>
-      ) : (
-        <>
-        <div className="view-tabs" role="tablist" aria-label="Artifact view">
-          <button role="tab" aria-selected={activeView === "bibliography"} className={activeView === "bibliography" ? "active" : ""} onClick={() => setActiveView("bibliography")}>Citation Summary</button>
-          <button role="tab" aria-selected={activeView === "document"} className={activeView === "document" ? "active" : ""} onClick={() => setActiveView("document")}>Document</button>
-          <button role="tab" aria-selected={activeView === "graph"} className={activeView === "graph" ? "active" : ""} onClick={() => setActiveView("graph")}>Validation Viz</button>
-        </div>
-        <section className={`workspace${activeView !== "graph" ? " document-workspace" : ""}`} aria-label="Validation artifact">
-          <aside className="citation-list" aria-label="Extracted citations">
-            <div className="panel-heading">
-              <h2>Extracted citations</h2>
-              <span>{document.citations.length}</span>
-            </div>
-            {document.citations.map((citation) => {
-              const source = document.source.citations.find((item) => item.citation_id === citation.citation_id);
-              const selected = citation.citation_id === selectedCitationId;
-              const overallOutcome = citation.aggregation?.overall_outcome;
-              const pinpointRequiresReview =
-                overallOutcome === "match" && citation.aggregation?.pinpoint_requires_review === true;
-              return (
-                <button
-                  key={citation.citation_id}
-                  className={`citation-button${selected ? " selected" : ""}`}
-                  onClick={() => selectCitation(citation.citation_id)}
-                  aria-pressed={selected}
-                >
-                  <strong>{source?.matched_text ?? citation.citation_id}</strong>
-                  <span className="citation-button-meta">
-                    <span>{citation.nodes.length} node{citation.nodes.length === 1 ? "" : "s"}</span>
-                    {overallOutcome ? (
-                      <span className="citation-summary-indicator">
-                        {pinpointRequiresReview ? (
-                          <span
-                            className="pinpoint-review-flag"
-                            role="img"
-                            aria-label="Pinpoint citation requires review"
-                            title="Pinpoint citation did not support this match"
-                          >
-                            !
-                          </span>
-                        ) : null}
-                        <span className={`citation-outcome outcome outcome-${overallOutcome}`}>
-                          {formatOutcome(overallOutcome)}
-                        </span>
-                      </span>
-                    ) : null}
-                  </span>
-                </button>
-              );
-            })}
-          </aside>
-
-          <section className="graph-panel" aria-labelledby="graph-title">
-            <div className="panel-heading">
-              <div>
-                <h2 id="graph-title">{activeView === "graph" ? "Validation progression" : activeView === "bibliography" ? "Citation Summary" : "Source document"}</h2>
-                <p>{activeView === "graph" ? selectedSourceCitation?.matched_text ?? "Select a citation" : "Citation locations in the source text"}</p>
-              </div>
-              <span className="artifact-version">schema {document.schema_version}</span>
-            </div>
-            {activeView === "graph" ? <StaticGraph
-              graph={graph}
-              selectedNodeId={selectedNodeId}
-              onSelectNode={setSelectedNodeId}
-            /> : activeView === "bibliography" ? <Bibliography aggregation={selectedCitation?.aggregation} documentText={document.source.text} /> : <DocumentViewer text={document.source.text} citations={document.source.citations} selectedCitationId={selectedCitationId} onSelectCitation={(citationId) => { selectCitation(citationId); }} />}
-          </section>
-
-          {activeView === "graph" ? <aside className="details" aria-live="polite">
-            <div className="panel-heading"><h2>Validation node details</h2></div>
-            {selectedNode ? (
-              <>
-                <p className={`status ${STATUS_CLASS[selectedNode.status] ?? ""}`}>{selectedNode.status} · {selectedNode.outcome}</p>
-                <dl>
-                  {Object.entries(selectedNode)
-                    .filter(([key]) => !["node_type", "status", "outcome"].includes(key))
-                    .map(([key, value]) => (
-                      <div key={key}>
-                        <dt>{key}</dt>
-                        <dd><code>{formatValue(value)}</code></dd>
-                      </div>
-                    ))}
-                </dl>
-              </>
-            ) : <p className="muted">Select a node to inspect its serialized fields.</p>}
-          </aside> : null}
-        </section>
-        </>
-      )}
-    </main>
-  );
-}
-
-function Bibliography({ aggregation, documentText }: { aggregation: CitationSummary | null | undefined; documentText: string }) {
-  const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
-  const [openEvidence, setOpenEvidence] = useState<CompletePinpointEvidence | null>(null);
-  useEffect(() => {
-    setSelectedCandidateId(aggregation?.candidates[0]?.assessment_node_id ?? null);
-    setOpenEvidence(null);
-  }, [aggregation?.node_id]);
-
-  if (!aggregation) {
-    return <section className="bibliography-empty"><h3>No citation summary available</h3><p>This citation has not reached a route with a candidate assessment summary.</p></section>;
+  function onFile(event: ChangeEvent<HTMLInputElement>) { const file = event.target.files?.[0]; if (file) void openFile(file); }
+  function onDrop(event: DragEvent) { event.preventDefault(); setDragging(false); const file = event.dataTransfer.files[0]; if (file) void openFile(file); }
+  function select(id: string) { setSelectedId(id); setMobileNavigator(false); }
+  function toggleRoot(id: string) { setExpanded(current => { const next = new Set(current); next.has(id) ? next.delete(id) : next.add(id); return next; }); }
+  function tabKeys(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let next = index;
+    if (event.key === "ArrowRight") next = (index + 1) % TABS.length;
+    else if (event.key === "ArrowLeft") next = (index + TABS.length - 1) % TABS.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = TABS.length - 1;
+    else return;
+    event.preventDefault(); setActiveTab(TABS[next].id);
+    window.document.getElementById(`tab-${TABS[next].id}`)?.focus();
   }
-  const candidates = aggregation.candidates ?? [];
-  const selectedCandidate = candidates.find(
-    (candidate) => candidate.assessment_node_id === selectedCandidateId
-  ) ?? candidates[0];
-  const selectedOpinionUrl = selectedCandidate ? opinionUrl(selectedCandidate) : null;
-  const selectedDocketUrl = selectedCandidate ? docketUrl(selectedCandidate) : null;
-  const pinpoint = selectedCandidate?.pinpoint ?? null;
-  const completePinpoint = isCompletePinpointEvidence(pinpoint) ? pinpoint : null;
-  const presentedPinpoint = completePinpoint ?? (
-    pinpoint?.outcome === "inconclusive" ? pinpoint : null
-  );
+  const citationButton = (citation: CitationView, nested = false) => <button type="button" key={citation.id} className={`citation-item ${nested ? "citation-item--leaf" : ""} ${selected?.id === citation.id ? "selected" : ""}`} onClick={() => select(citation.id)} aria-current={selected?.id === citation.id ? "true" : undefined}>
+    <span className="citation-item-title">{nested ? locatorLabel(citation) || citationLabel(citation) : citationLabel(citation)}</span>
+    <span className="citation-item-subtitle">{nested || locatorLabel(citation) === citationLabel(citation) ? kindLabel(citation.kind) : locatorLabel(citation) || kindLabel(citation.kind)}</span>
+  </button>;
 
-  return <section className="bibliography" aria-label="Bibliographic comparison">
-    {selectedCandidate ? <>
-      <div className="candidate-tabs" role="tablist" aria-label="Candidate assessments">
-        {candidates.map((candidate) => {
-          const selected = candidate.assessment_node_id === selectedCandidate.assessment_node_id;
-          return <button
-            key={candidate.assessment_node_id}
-            id={candidateTabId(candidate.assessment_node_id)}
-            role="tab"
-            aria-selected={selected}
-            aria-controls="candidate-detail"
-            className={`candidate-tab candidate-tab-${candidateConclusionClass(candidate.outcome)}${selected ? " active" : ""}`}
-            onClick={() => setSelectedCandidateId(candidate.assessment_node_id)}
-          >
-            <span className="candidate-tab-outcome">{formatOutcome(candidate.outcome)}</span>
-            <strong>{candidate.retrieved_case_name ?? `Candidate ${candidate.candidate_index}`}</strong>
-          </button>;
-        })}
-      </div>
-      <article
-        id="candidate-detail"
-        className="candidate-detail"
-        role="tabpanel"
-        aria-labelledby={candidateTabId(selectedCandidate.assessment_node_id)}
-      >
-        <header className="candidate-detail-header">
-          <div>
-            <p className="candidate-kicker">{provenanceLabel(selectedCandidate.provenance)} candidate</p>
-            <h3 className="candidate-title">
-              {selectedCandidate.retrieved_case_name ?? "Unnamed candidate"}
-              {selectedOpinionUrl ? <a
-                className="opinion-link"
-                href={selectedOpinionUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View opinion <span aria-hidden="true">↗</span>
-              </a> : null}
-              {selectedDocketUrl ? <a
-                className="opinion-link"
-                href={selectedDocketUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View docket <span aria-hidden="true">↗</span>
-              </a> : null}
-            </h3>
+  const navigatorContents = <>
+    <header className="navigator-heading"><div><span className="eyebrow">CITATION INDEX</span><h2>Authorities</h2></div><button type="button" className="icon-button mobile-only" aria-label="Close citation navigator" onClick={() => setMobileNavigator(false)}><Icon name="close" /></button></header><label className="search-control navigator-search"><Icon name="search" size={16} /><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Find a case or locator…" aria-label="Find a citation" /></label><div className="navigation-scroll">
+          {filtered?.roots.map(({ root, leaves }, index) => <section key={root.id} className="root-group"><div className={`root-row ${selected?.id === root.id ? "selected" : ""}`}><span className="root-number">{String(index + 1).padStart(2, "0")}</span>{citationButton(root)}{leaves.length > 0 && <button type="button" className={`expand-root ${expanded.has(root.id) || !!query ? "is-expanded" : ""}`} aria-label={`${expanded.has(root.id) ? "Collapse" : "Expand"} ${leaves.length} occurrences for ${citationLabel(root)}`} aria-expanded={expanded.has(root.id) || !!query} onClick={() => toggleRoot(root.id)}><span>{leaves.length}</span><Icon name="chevron" size={13} /></button>}</div>{(expanded.has(root.id) || !!query) && leaves.length > 0 && <div className="leaf-list">{leaves.map(leaf => citationButton(leaf, true))}</div>}</section>)}
+          {filtered && ([{ label: "Awaiting root assignment", citations: filtered.unassigned }, { label: "Unattached / withdrawn", citations: filtered.withdrawn }, { label: "Unrecognized relationships", citations: filtered.unknown }]).map(group => group.citations.length ? <section className="unattached-group" key={group.label}><h3>{group.label}<span>{group.citations.length}</span></h3>{group.citations.map(item => citationButton(item))}</section> : null)}
+          {document?.citations.length === 0 ? <p className="navigation-empty">No citations have been created at this checkpoint.</p> : filtered && !filtered.roots.length && !filtered.unassigned.length && !filtered.withdrawn.length && !filtered.unknown.length ? <p className="navigation-empty">No citations match “{query}”.</p> : null}
+        </div><footer className="navigator-footer">Roots organize every occurrence.<br />Identity belongs to the authority.</footer>
+  </>;
+
+  return <main id="main-content" className={`review-workspace ${dragging ? "is-dragging" : ""}`} onDragOver={event => { event.preventDefault(); if (event.dataTransfer.types.includes("Files")) setDragging(true); }} onDragLeave={event => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragging(false); }} onDrop={onDrop}>
+    <input ref={input} className="visually-hidden" type="file" accept="application/json,.json" aria-label="Open Document JSON" onChange={onFile} />
+    {run && <RunSelector run={run} selectedId={loadingDocumentId || runDocumentId} loading={loading} onSelect={id => { const entry = run.documents.find(document => document.id === id); if (entry) void openBuiltIn(entry); }} />}
+    {runError && <p className="run-notice" role="status">{runError}</p>}
+    <header className="workspace-header"><div className="workspace-heading"><p className="eyebrow">Authority. Evidence. Provenance.</p><h1>{document ? titleOf(document, filename) : "Citation review"}</h1><p className="workspace-subtitle">{document ? `${document.citations.length.toLocaleString()} occurrences · ${groups?.roots.length.toLocaleString()} roots · ${document.stageRuns.length} completed stages` : "A considered view of legal citations and the evidence behind them."}</p></div><div className="workspace-actions">{document && <><RawDialog title="Complete saved Document" value={document.raw} triggerLabel="Document JSON" /><button type="button" className="icon-button" aria-label="Download displayed Document" title="Download displayed Document" onClick={() => downloadJson(document.raw, filename || "document.json")}><Icon name="download" /></button></>}<button type="button" className="primary-button" onClick={() => input.current?.click()} disabled={loading}><Icon name="upload" />{loading ? "Reading document…" : document ? "Open another document" : "Open Document"}</button></div></header>
+    {error && <div className="import-error" role="alert"><strong>Unable to open this document</strong><p>{error}</p><button type="button" className="text-button" onClick={() => input.current?.click()}>Choose another file</button></div>}
+    {!document ? <section className="welcome"><div className="welcome-copy"><span className="section-number">THE REVIEW WORKSPACE</span><h2>Read the record.<br />Understand the reasoning.</h2><p>Follow each citation from the source document to its authority, supporting evidence, and complete decision history.</p><button type="button" className="primary-button" onClick={() => input.current?.click()} disabled={loading}><Icon name="upload" />{loading ? "Reading document…" : "Open a saved Document"}</button><p className="local-note"><Icon name="lock" size={14} />Uploaded documents stay in this browser.</p><span className="drop-hint">or drop a Document JSON file anywhere</span></div><div className="welcome-outline"><p className="eyebrow">Four views. One record.</p>{TABS.map((tab, index) => <div key={tab.id} className="welcome-feature"><span className="feature-number">0{index + 1}</span><div><h3>{tab.label}</h3><p>{tab.description}</p></div><Icon name={tab.icon} size={22} /></div>)}<p className="welcome-footnote">Open an extraction checkpoint, a completed validation, or any stage in between.</p></div></section> : <>
+      <div className="checkpoint-bar"><div><span className="checkpoint-dot" /><span>{checkpoint ? "Historical checkpoint" : "Saved document"}</span><span className="checkpoint-filename">{filename}</span></div><label className="checkpoint-control">Checkpoint<select aria-label="Checkpoint" value={checkpoint} onChange={event => setCheckpoint(event.target.value)}><option value="">Latest saved state</option><optgroup label="Stages">{saved?.stageRuns.map(stage => <option key={stage} value={`stage:${stage}`}>{stage.split(".")[0].replaceAll("_", " ")} · {checkpointLabel(stage)}</option>)}</optgroup><optgroup label="Substages">{saved?.substageRuns.map(substage => <option key={substage} value={`substage:${substage}`}>{substage.split(".")[0].replaceAll("_", " ")} · {checkpointLabel(substage)}</option>)}</optgroup></select></label></div>
+      {document.warnings?.length ? <details className="document-warnings"><summary>{document.warnings.length} record {document.warnings.length === 1 ? "notice" : "notices"}</summary><ul>{document.warnings.map((warning, index) => <li key={index}>{warning}</li>)}</ul></details> : null}
+      <div className="review-grid">
+        <aside className="citation-navigator desktop-navigator" aria-label="Citation navigation">{navigatorContents}</aside>
+        <dialog ref={navigatorDialog} className="citation-drawer" aria-label="Citation navigation" onClose={() => setMobileNavigator(false)} onCancel={() => setMobileNavigator(false)}>
+          <aside className="citation-navigator">{navigatorContents}</aside>
+        </dialog>
+        <section className="review-main"><div className="selection-bar"><button className="secondary-button mobile-only" onClick={() => setMobileNavigator(true)} type="button">Citation index</button><div className="selection-info"><span className="selection-kind">{selected ? kindLabel(selected.kind) : "Document"}</span>{selected && isToa(selected) && <span className="toa-tag">Table of authorities</span>}<span className="selection-title">{selected ? citationLabel(selected) : "No citation selected"}</span>{selected && root && selected.id !== root.id && <span className="selection-root">↳ {citationLabel(root)}</span>}</div>{selected && <span className="selection-id" title={selected.id}>{selected.id}</span>}</div>
+          <div className="review-tabs" role="tablist" aria-label="Citation views">{TABS.map((tab, i) => <button type="button" key={tab.id} id={`tab-${tab.id}`} role="tab" aria-controls={`panel-${tab.id}`} aria-selected={activeTab === tab.id} tabIndex={activeTab === tab.id ? 0 : -1} className={activeTab === tab.id ? "active" : ""} onClick={() => setActiveTab(tab.id)} onKeyDown={event => tabKeys(event, i)}><Icon name={tab.icon} size={16} />{tab.label}{tab.id === "nodes" && selected && <span className="tab-count">{selected.nodes.length}</span>}</button>)}</div>
+          <div className={`review-content review-content--${activeTab}`} role="tabpanel" id={`panel-${activeTab}`} aria-labelledby={`tab-${activeTab}`} tabIndex={0}>
+            {activeTab === "document" ? <DocumentViewPanel document={document} citation={selected} onSelect={select} /> : selected ? activeTab === "identity" ? <IdentityView citation={selected} root={root} document={document} /> : activeTab === "content" ? <CitationContentView citation={selected} root={root} document={document} /> : <NodesView citation={selected} document={document} /> : <div className="empty-state"><h2>No citation selected</h2><p>Choose an occurrence from the index. A Document before extraction is still available in the Document tab.</p></div>}
           </div>
-          <span className={`outcome outcome-${selectedCandidate.outcome}`}>{selectedCandidate.outcome}</span>
-        </header>
-        <div className="candidate-fields">
-          <CandidateField label="Case name">
-            <Comparison extracted={selectedCandidate.extracted_case_name} retrieved={selectedCandidate.retrieved_case_name} outcome={selectedCandidate.case_name_outcome} evidence={selectedCandidate.case_name_evidence} />
-          </CandidateField>
-          <CandidateField label="Year">
-            <Comparison extracted={selectedCandidate.extracted_year} retrieved={selectedCandidate.retrieved_year} outcome={selectedCandidate.year_outcome} />
-          </CandidateField>
-          <CandidateField label="Court">
-            <Comparison extracted={selectedCandidate.extracted_court_id} retrieved={selectedCandidate.retrieved_court_id} outcome={selectedCandidate.court_outcome} />
-          </CandidateField>
-        </div>
-        {presentedPinpoint ? <section className={`pinpoint-summary pinpoint-summary-${presentedPinpoint.outcome}`} aria-labelledby="pinpoint-title">
-          <div className="pinpoint-conclusion" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px" }}>
-            <div>
-              <p className="candidate-kicker">Pinpoint citation</p>
-              <h3 id="pinpoint-title">{pinpointConclusion(presentedPinpoint.outcome)}</h3>
-            </div>
-            {completePinpoint ? (
-              <button
-                className="source-view-button"
-                onClick={() => setOpenEvidence(completePinpoint)}
-                style={{ whiteSpace: "nowrap", flexShrink: 0 }}
-              >
-                Source view
-              </button>
-            ) : null}
-          </div>
-          <dl className="pinpoint-preview">
-            <div><dt>Citing proposition</dt><dd>{presentedPinpoint.proposition ?? "Not found here"}</dd></div>
-            <div><dt>Opinion evidence</dt><dd>{presentedPinpoint.evidence_quote ?? "Not found here"}</dd></div>
-            <div><dt>Assessment</dt><dd>{presentedPinpoint.reasoning ?? "Not found here"}</dd></div>
-          </dl>
-        </section> : <section className="pinpoint-unavailable">
-          <strong>No pinpoint comparison available</strong>
-          <p>{pinpoint?.outcome_message ?? pinpoint?.status_message ?? "This candidate did not produce both a grounded citing proposition and reporter-page evidence."}</p>
-        </section>}
-      </article>
-    </> : <div className="candidate-empty"><p>No candidate assessments were serialized for this summary.</p></div>}
-    {openEvidence ? <EvidenceModal evidence={openEvidence} documentText={documentText} onClose={() => setOpenEvidence(null)} /> : null}
-  </section>;
-}
-
-function CandidateField({ label, children }: { label: string; children: React.ReactNode }) {
-  return <section className="candidate-field"><h4>{label}</h4>{children}</section>;
-}
-
-function Comparison({ extracted, retrieved, outcome, evidence }: { extracted: string | null; retrieved: string | null; outcome: string; evidence?: string }) {
-  return <div className="comparison">
-    <dl>
-      <div><dt>Extracted</dt><dd>{formatValue(extracted)}</dd></div>
-      <div><dt>Retrieved</dt><dd>{formatValue(retrieved)}</dd></div>
-    </dl>
-    <small><span className={`outcome outcome-${outcome}`}>{outcome}</span>{evidence ? ` · ${evidence.replaceAll("_", " ")}` : ""}</small>
-  </div>;
-}
-
-function EvidenceModal({ evidence, documentText, onClose }: { evidence: CompletePinpointEvidence; documentText: string; onClose: () => void }) {
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [onClose]);
-
-  return <div className="modal-backdrop" onMouseDown={(event) => {
-    if (event.currentTarget === event.target) onClose();
-  }}>
-    <section className="evidence-modal" role="dialog" aria-modal="true" aria-labelledby="evidence-modal-title">
-      <header className="evidence-modal-header">
-        <div style={{ textAlign: "center", flex: 1 }}>
-          <p className="candidate-kicker" style={{ fontSize: "1.25em", fontWeight: 500 }}>Pinpoint evidence</p>
-        </div>
-        <button className="modal-close" onClick={onClose} autoFocus>Close</button>
-      </header>
-      <div className="evidence-sources">
-        <EvidenceSource
-          label="Citing document"
-          description=""
-          text={documentText}
-          contextSpan={evidence.citing_context_span}
-          focusKind="proposition"
-          highlights={[
-            ...(evidence.citation_span ? [{ kind: "citation" as const, label: "Citation", span: evidence.citation_span }] : []),
-            { kind: "proposition", label: "Attributed proposition", span: evidence.proposition_span }
-          ]}
-        />
-        <EvidenceSource
-          label="Cited opinion"
-          description=""
-          text={evidence.reporter_page_text}
-          focusKind="evidence"
-          highlights={[{ kind: "evidence", label: "Cited reporter-page evidence", span: evidence.evidence_span }]}
-        />
+        </section>
       </div>
-      <div className={`evidence-assessment evidence-assessment-${evidence.outcome}`}>
-        <h4>{pinpointConclusion(evidence.outcome)}</h4>
-        <p>{evidence.reasoning ?? "Not found here"}</p>
-      </div>
-    </section>
-  </div>;
-}
-
-function EvidenceSource({ label, description, text, highlights, focusKind, contextSpan }: { label: string; description: string; text: string; highlights: EvidenceHighlight[]; focusKind: EvidenceHighlight["kind"]; contextSpan?: TextSpan }) {
-  const textPane = useRef<HTMLDivElement>(null);
-  const focusHighlight = useRef<HTMLElement>(null);
-  const focusSpan = highlights.find((highlight) => highlight.kind === focusKind)?.span ?? highlights[0]?.span;
-  useEffect(() => {
-    const pane = textPane.current;
-    const markedText = focusHighlight.current;
-    if (!pane || !markedText) return;
-    const paneBounds = pane.getBoundingClientRect();
-    const highlightBounds = markedText.getBoundingClientRect();
-    pane.scrollTop +=
-      highlightBounds.top -
-      paneBounds.top -
-      pane.clientHeight / 2 +
-      highlightBounds.height / 2;
-  }, [focusSpan?.start, focusSpan?.end]);
-  const validHighlights = [...highlights]
-    .filter((highlight) => validSpan(highlight.span, text.length))
-    .sort((left, right) => left.span.start - right.span.start || left.span.end - right.span.end);
-  const firstHighlight = validHighlights[0]?.span;
-  const lastHighlight = validHighlights.at(-1)?.span;
-  const availableContext = validSpan(contextSpan, text.length)
-    ? contextSpan
-    : {
-        start: Math.max(0, (firstHighlight?.start ?? 0) - 500),
-        end: Math.min(text.length, (lastHighlight?.end ?? text.length) + 500)
-      };
-  const context = balancedEvidenceExcerpt(availableContext, validHighlights);
-  return <article className="evidence-source">
-    <header>
-      <h3>{label}</h3>{description ? <p>{description}</p> : null}
-      <ul className="evidence-legend" aria-label={`${label} highlight legend`}>
-        {validHighlights.map((highlight) => <li key={highlight.kind}>
-          <span className={`evidence-legend-swatch evidence-highlight-${highlight.kind}`} aria-hidden="true" />
-          {highlight.label}
-        </li>)}
-      </ul>
-    </header>
-    <div className="evidence-text" ref={textPane}>
-      {context.start > 0 ? <span className="excerpt-boundary" aria-hidden="true">… </span> : null}
-      {renderEvidenceExcerpt(text, context, validHighlights, focusKind, focusHighlight)}
-      {context.end < text.length ? <span className="excerpt-boundary" aria-hidden="true"> …</span> : null}
-    </div>
-  </article>;
-}
-
-function renderEvidenceExcerpt(text: string, context: TextSpan, highlights: EvidenceHighlight[], focusKind: EvidenceHighlight["kind"], focusHighlight: React.RefObject<HTMLElement | null>) {
-  let cursor = context.start;
-  const fragments: React.ReactNode[] = [];
-  const ordered = highlights
-    .map((highlight) => ({ ...highlight, start: Math.max(context.start, highlight.span.start), end: Math.min(context.end, highlight.span.end) }))
-    .filter((highlight) => highlight.end > highlight.start)
-    .sort((left, right) => left.start - right.start || left.end - right.end);
-  for (const highlight of ordered) {
-    if (highlight.start < cursor) continue;
-    if (highlight.start > cursor) fragments.push(text.slice(cursor, highlight.start));
-    fragments.push(<mark key={`${highlight.kind}-${highlight.start}-${highlight.end}`} className={`evidence-highlight evidence-highlight-${highlight.kind}`} ref={highlight.kind === focusKind ? focusHighlight : undefined}>{text.slice(highlight.start, highlight.end)}</mark>);
-    cursor = highlight.end;
-  }
-  if (cursor < context.end) fragments.push(text.slice(cursor, context.end));
-  return fragments;
-}
-
-function balancedEvidenceExcerpt(availableContext: TextSpan, highlights: EvidenceHighlight[]): TextSpan {
-  const first = highlights[0]?.span;
-  const last = highlights.at(-1)?.span;
-  if (!first || !last || availableContext.end - availableContext.start <= EVIDENCE_EXCERPT_CHARS) {
-    return availableContext;
-  }
-  const focusStart = Math.max(availableContext.start, first.start);
-  const focusEnd = Math.min(availableContext.end, last.end);
-  const excerptLength = Math.max(EVIDENCE_EXCERPT_CHARS, focusEnd - focusStart);
-  const availableEnd = availableContext.end - excerptLength;
-  const desiredStart = focusStart - Math.floor((excerptLength - (focusEnd - focusStart)) / 2);
-  const start = Math.max(availableContext.start, Math.min(desiredStart, availableEnd));
-  return { start, end: start + excerptLength };
-}
-
-function provenanceLabel(provenance: string) {
-  if (provenance === "recap" || provenance === "recap_search") return "RECAP";
-  return "Opinion";
-}
-
-function candidateTabId(assessmentNodeId: string) {
-  return `candidate-tab-${assessmentNodeId.replaceAll(/[^a-zA-Z0-9_-]/g, "-")}`;
-}
-
-function candidateConclusionClass(outcome: string) {
-  if (outcome === "match") return "match";
-  if (outcome === "mismatch") return "mismatch";
-  return "possible-match";
-}
-
-function formatOutcome(outcome: string) {
-  return outcome.replaceAll("_", " ");
-}
-
-function pinpointConclusion(outcome: string) {
-  if (outcome === "supports") return "The cited evidence supports the proposition.";
-  return "The cited evidence is inconclusive for the proposition.";
-}
-
-function opinionUrl(candidate: CandidateSummaryRow) {
-  return candidate.provenance === "opinion" ? candidate.opinion_url ?? null : null;
-}
-
-function docketUrl(candidate: CandidateSummaryRow) {
-  return candidate.provenance === "recap" ? candidate.docket_url ?? null : null;
-}
-
-function isCompletePinpointEvidence(
-  pinpoint: CitationSummaryPinpoint | null
-): pinpoint is CompletePinpointEvidence {
-  return !!(
-    pinpoint?.reporter_page_text &&
-    pinpoint.proposition &&
-    pinpoint.proposition_span &&
-    pinpoint.evidence_quote &&
-    pinpoint.evidence_span
-  );
-}
-
-function validSpan(span: TextSpan | undefined, textLength: number): span is TextSpan {
-  return !!span && span.start >= 0 && span.end >= span.start && span.end <= textLength;
-}
-
-function DocumentViewer({ text, citations, selectedCitationId, onSelectCitation }: { text: string; citations: ValidatedDocumentPayload["source"]["citations"]; selectedCitationId: string | null; onSelectCitation: (citationId: string) => void }) {
-  const citationElements = useRef(new Map<string, HTMLButtonElement>());
-  useEffect(() => {
-    citationElements.current.get(selectedCitationId ?? "")?.scrollIntoView({ block: "center", behavior: "smooth" });
-  }, [selectedCitationId]);
-  const ordered = [...citations].sort((left, right) => left.span.start - right.span.start);
-  let cursor = 0;
-  return <article className="document-viewer" aria-label="Extracted document text">{ordered.flatMap((citation) => {
-    const before = text.slice(cursor, citation.span.start);
-    const content = text.slice(citation.span.start, citation.span.end);
-    cursor = citation.span.end;
-    return [before, <button key={citation.citation_id} ref={(element) => { if (element) citationElements.current.set(citation.citation_id, element); }} className={`citation-mark${citation.citation_id === selectedCitationId ? " selected" : ""}`} onClick={() => onSelectCitation(citation.citation_id)}>{content}</button>];
-  }).concat(text.slice(cursor))}</article>;
-}
-
-function parseValidatedDocument(value: string | ArrayBuffer | null): ValidatedDocumentPayload {
-  if (typeof value !== "string") throw new Error("The selected file was not readable as text.");
-  const payload: unknown = JSON.parse(value);
-  if (!isValidatedDocument(payload)) {
-    throw new Error("Expected a schema 2 validated_document serialization artifact.");
-  }
-  return payload;
-}
-
-function isValidatedDocument(value: unknown): value is ValidatedDocumentPayload {
-  if (!value || typeof value !== "object") return false;
-  const payload = value as Record<string, unknown>;
-  return payload.schema_version === 2 && payload.artifact_type === "validated_document" && Array.isArray(payload.citations) && !!payload.source;
-}
-
-type PositionedNode = { node: ValidationNode; x: number; y: number };
-type StaticGraphLayout = { nodes: PositionedNode[]; edges: Array<{ source: PositionedNode; target: PositionedNode }>; width: number; height: number };
-
-const GRAPH_NODE_WIDTH = 200;
-const GRAPH_NODE_HEIGHT = 76;
-const GRAPH_COLUMN_GAP = 24;
-const GRAPH_ROW_GAP = 56;
-const GRAPH_PADDING = 24;
-
-function buildGraph(validationNodes: ValidationNode[]): StaticGraphLayout {
-  const levelById = new Map<string, number>();
-  const byId = new Map(validationNodes.map((node) => [node.node_id, node]));
-  const levelFor = (node: ValidationNode): number => {
-    const known = levelById.get(node.node_id);
-    if (known !== undefined) return known;
-    const dependencies = node.depends_on
-      .map((id) => byId.get(id))
-      .filter((item): item is ValidationNode => item !== undefined);
-    const level = dependencies.length ? Math.max(...dependencies.map(levelFor)) + 1 : 0;
-    levelById.set(node.node_id, level);
-    return level;
-  };
-  validationNodes.forEach(levelFor);
-  const nodesByLevel = new Map<number, ValidationNode[]>();
-  validationNodes.forEach((node) => {
-    const level = levelById.get(node.node_id) ?? 0;
-    nodesByLevel.set(level, [...(nodesByLevel.get(level) ?? []), node]);
-  });
-  const widestLevel = Math.max(1, ...[...nodesByLevel.values()].map((nodes) => nodes.length));
-  const width =
-    widestLevel * GRAPH_NODE_WIDTH +
-    (widestLevel - 1) * GRAPH_COLUMN_GAP +
-    GRAPH_PADDING * 2;
-  const positions = new Map<string, PositionedNode>();
-  [...nodesByLevel.entries()].forEach(([level, nodes]) => {
-    const rowWidth =
-      nodes.length * GRAPH_NODE_WIDTH + (nodes.length - 1) * GRAPH_COLUMN_GAP;
-    const initialX = (width - rowWidth) / 2;
-    nodes.forEach((node, index) => {
-      positions.set(node.node_id, {
-        node,
-        x: initialX + index * (GRAPH_NODE_WIDTH + GRAPH_COLUMN_GAP),
-        y: GRAPH_PADDING + level * (GRAPH_NODE_HEIGHT + GRAPH_ROW_GAP),
-      });
-    });
-  });
-  const nodes = validationNodes.map((node) => positions.get(node.node_id) as PositionedNode);
-  const edges = nodes.flatMap((target) => target.node.depends_on.flatMap((dependency) => {
-    const source = positions.get(dependency);
-    return source ? [{ source, target }] : [];
-  }));
-  return {
-    nodes,
-    edges,
-    width,
-    height:
-      GRAPH_PADDING * 2 +
-      (Math.max(0, ...levelById.values()) + 1) * GRAPH_NODE_HEIGHT +
-      Math.max(0, ...levelById.values()) * GRAPH_ROW_GAP,
-  };
-}
-
-function StaticGraph({ graph, selectedNodeId, onSelectNode }: { graph: StaticGraphLayout; selectedNodeId: string | null; onSelectNode: (nodeId: string) => void }) {
-  return (
-    <div className="graph static-graph" aria-label="Validation node graph">
-      <div className="static-graph-inner" style={{ width: graph.width, height: graph.height }}>
-        <svg className="graph-edges" viewBox={`0 0 ${graph.width} ${graph.height}`} aria-hidden="true">
-          <defs><marker id="graph-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" /></marker></defs>
-          {graph.edges.map(({ source, target }) => {
-            const sourceX = source.x + GRAPH_NODE_WIDTH / 2;
-            const sourceY = source.y + GRAPH_NODE_HEIGHT;
-            const targetX = target.x + GRAPH_NODE_WIDTH / 2;
-            const targetY = target.y;
-            return <path key={`${source.node.node_id}-${target.node.node_id}`} d={`M ${sourceX} ${sourceY} C ${sourceX} ${sourceY + 34}, ${targetX} ${targetY - 34}, ${targetX} ${targetY}`} markerEnd="url(#graph-arrow)" />;
-          })}
-        </svg>
-        {graph.nodes.map(({ node, x, y }) => (
-          <button key={node.node_id} className={`graph-node ${STATUS_CLASS[node.status] ?? ""}${node.node_id === selectedNodeId ? " selected" : ""}`} style={{ left: x, top: y }} onClick={() => onSelectNode(node.node_id)} aria-pressed={node.node_id === selectedNodeId}>
-            <strong>{node.node_type}</strong><span>{node.outcome}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function formatValue(value: JsonValue): string {
-  return typeof value === "string" ? value : JSON.stringify(value);
+    </>}
+    <footer className="workspace-footer"><span>mellea · Legal reference checking</span><span><Icon name="lock" size={12} />Read-only citation review</span></footer>
+    {dragging && <div className="drop-overlay" aria-hidden="true"><Icon name="upload" size={40} /><h2>Open this Document</h2><p>Drop your saved JSON file to begin.</p></div>}
+  </main>;
 }

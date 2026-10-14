@@ -1,143 +1,114 @@
-# mellea-lrc-viz
+# Mellea citation review
 
-A viewer for [mellea-lrc](https://github.com/gt-csse/mellea-lrc) validation
-results. Open a `validated.json` and read what happened to each citation in a
-filing — whether the authority resolved, whether the case name, year and court
-agreed, and whether the cited page supports what it was cited for.
+A read-only workspace for the native `mellea_lrc.model.Document` JSON.
+The design uses navy, warm paper, restrained brass details, and self-hosted
+serif typography for legal text. Imported documents stay in the browser.
 
-It runs entirely in the browser. There is no server, no database, and no
-connection to mellea-lrc: you supply the file, it renders it. Nothing you open
-leaves your machine.
+## Built-in primary corpus
 
----
+The included run is `2026-10-14T15-59-55Z`: 26 primary filings, completed through
+all four workflows, with their saved Markdown and JSON reports. Visiting `/` opens the
+first filing; choose another from the filing selector, or link directly with
+`/?document=005`. Documents are fetched individually as compressed native JSON,
+verified against the saved SHA-256, and then reviewed in the browser. The four
+workflow reports are available beside the selector. No backend or upload is needed.
 
-## Requirements
-
-**Node.js 20.9 or newer**, which includes `npm`. Check what you have:
+To replace the built-in run after its four workflows and reports are complete:
 
 ```bash
-node --version
-npm --version
+npm run bundle:run -- /absolute/path/to/evaluations/results/primary/TIMESTAMP
 ```
 
-If you need it, install from [nodejs.org](https://nodejs.org/) or with a version
-manager:
+The builder refuses unfinished runs. Compression preserves the original Document
+bytes, including every field reading, retrieved source, judgment, and model repair.
+It copies documents and workflow reports, without copying private run configuration.
+Unsuccessful review attempts remain in the saved history alongside accepted judgments.
+
+## Run
 
 ```bash
-# macOS, via Homebrew
-brew install node
-
-# any platform, via nvm
-nvm install 20 && nvm use 20
-```
-
-Next.js 16 requires Node 20.9+; older versions fail at build with a message
-naming the version it wants.
-
----
-
-## Run it locally
-
-```bash
-git clone https://github.com/gt-csse/mellea-lrc-viz.git
-cd mellea-lrc-viz
-npm install
+npm ci
 npm run dev
 ```
 
-Open <http://localhost:3000>. Use **Open result JSON** in the header and pick a
-`validated.json`.
-
-| command | what it does |
-|---|---|
-| `npm run dev` | development server on port 3000, with hot reload |
-| `npm run build` | production build |
-| `npm start` | serve the production build (run `build` first) |
-| `npm run typecheck` | `tsc --noEmit`, no build output |
-
-To use another port: `npm run dev -- --port 4000`.
-
----
-
-## Getting a file to open
-
-The viewer reads the artifact `mellea-lrc` writes. From a mellea-lrc checkout:
+Open <http://localhost:3000> and choose **Open Document**, or drop a JSON file.
+Use Node.js 22.18 or newer for the native TypeScript test runner.
 
 ```bash
-uv run --env-file .env mellea-lrc validate \
-  --from-file examples/sample-filing.txt --output validated.json
+npm run typecheck
+npm test
+npm run build
 ```
 
-The file must be a schema 2 `validated_document` artifact — that is,
-`{"schema_version": 2, "artifact_type": "validated_document", "source": …,
-"citations": […]}`. Anything else is refused with *"Expected a schema 2
-validated_document serialization artifact."*
+## The four views
 
-An extraction-only artifact will not open. The viewer renders validation nodes,
-and extraction produces none.
+- **Document** preserves the original filing text and highlights the selected
+  occurrence and its field readings. Source offsets use Python Unicode code
+  points, including when the text contains supplementary characters.
+- **Citation content** shows the occurrence's final support verdict, proposition,
+  accepted opinion evidence, and independent page-placement assessment. A supported
+  proposition does not imply a correct written page. The saved pinpoint field and support verdict names remain unchanged.
+- **Identity** shows the authority's final saved verdict and independent field
+  comparisons. A leaf reads its root's identity, while retaining its own support
+  judgment. Comparisons use their recorded field reading and retrieved evidence.
+- **Nodes** shows a citation's ordered decision history. Selecting a node reveals
+  extraction state through that node and exactly which records it added. Full
+  original records, including provider responses and model repairs, open in a
+  searchable JSON dialog.
 
----
+The citation index groups occurrences under their assigned root. Unassigned,
+withdrawn, and unfamiliar relationships remain selectable. Before roots have been
+formed, citations appear under **Awaiting root assignment**.
 
-## What you get
+## Native checkpoints
 
-Three tabs, with the citation list on the left. Selecting a citation drives all
-three.
+Open a Document from any completed or in-progress stage, including preprocessing
+with no citations. The checkpoint selector reconstructs completed stages from
+citation-local node order and native `runs` events, matching `Document.get_stage`
+and `Document.get_substage`. Semantic stages and atomic substages are separate
+checkpoint choices. Nodes carry their `substage`; source reviews use the same
+identifier. Obsolete `stage_runs` and node `stage` payloads are rejected.
+No separate checkpoint files, backend connection, or invented judgments are needed.
 
-**Citation Summary** — the bibliographic comparison. What the filing claims
-against what the record says, field by field, with the disagreements marked.
-This is the view to start in.
+Table-of-authorities tags are shown per occurrence. Their citation content review
+is skipped, while identity remains available. A body leaf does not inherit its
+root's TOA tag.
 
-**Document** — the filing's own text with every citation highlighted in place.
-Click a highlight to select that citation; select a citation and the text
-scrolls to it.
+The native payload is retained intact. Unknown fields and records remain accessible
+in JSON dialogs and downloads; unfamiliar kinds are displayed with a record notice.
+The older `validated_document` schema is not supported.
 
-**Validation Viz** — the progression as a graph: each check that ran, in
-dependency order, with its outcome. Selecting a node shows what it asked, what
-came back, and why it concluded what it did. This is where a result is
-explained rather than just stated.
+## Structure
 
----
+| Location | Responsibility |
+| --- | --- |
+| `app/` | Routes, workspace state, typography and visual system |
+| `components/` | Source text, final judgments, node inspection, shared controls |
+| `lib/document.ts` | Lossless native Document projections and checkpoint recovery |
+| `lib/native-run.ts` | Built-in run index, verified decompression, and lazy document loading |
+| `scripts/build-native-run.mjs` | Completed-run packaging with byte-identical compressed documents |
+| `lib/bundle.ts` | Independent annotation-bundle reader |
+| `tests/` | Native-model fixtures and adapter regression checks |
 
-## Deploy to Vercel
-
-The app is static and needs no environment variables, so deployment is close to
-a no-op.
-
-### From the dashboard
-
-1. Push this repository to GitHub.
-2. At [vercel.com/new](https://vercel.com/new), import it.
-3. Take every default — Vercel detects Next.js and fills in the framework,
-   build command, and output directory.
-4. **Deploy.**
-
-Every push to the default branch redeploys; pushes to other branches get preview
-URLs.
-
-### From the CLI
+The fixture is invented text generated with the current Python models. It includes
+all six citation kinds and expected checkpoints produced by the backend. An optional
+corpus test compares the adapter with saved Python checkpoint fingerprints:
 
 ```bash
-npm install -g vercel
-vercel          # preview deployment
-vercel --prod   # production
+MELLEA_NATIVE_CORPUS_MANIFEST=/absolute/path/to/manifest.json npm test
 ```
 
-The first run asks which scope and project to use and writes `.vercel/`, which
-is gitignored.
+The supplied manifest records both checkpoint kinds and native node snapshots.
+The built-in primary corpus is packaged separately from the invented fixture.
 
-### Notes
+## Annotation workspace
 
-- **No environment variables.** Nothing here holds a key, so there is nothing to
-  configure in project settings.
-- **The build is `npm run build`.** If Vercel ever fails to detect it, set the
-  framework preset to Next.js and leave the rest blank.
-- **Node version** is set in Vercel's project settings under *General → Node.js
-  Version*. Pick 20.x or newer.
-- Any static host works — `npm run build` output is deployable anywhere that can
-  run a Next.js server, and Vercel is simply the least configuration.
+`/dataset` continues to open one annotation bundle. Build it from the independent
+annotation store:
 
----
+```bash
+npm run bundle -- --store ../mellea-lrc-datasets --document 005
+```
 
-## License
-
-MIT.
+The bundle builder checks source hashes before writing. Bundles and dataset files
+remain local and are not part of the application build.

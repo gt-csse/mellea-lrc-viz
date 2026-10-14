@@ -1,0 +1,366 @@
+{
+  "set": "primary",
+  "workflow": "validate_roots_citation_identity",
+  "stages": [
+    {
+      "stage": "validate_roots_citation_identity.lookup_reporter_roots",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "validate_roots_citation_identity.lookup_reporter_roots.retrieve_clusters",
+          "record_coverage": {
+            "citations_with_records": 308,
+            "citations_queried": 392,
+            "rate": 0.7857142857142857
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_reporter_roots.retrieve_dockets",
+          "record_coverage": {
+            "citations_with_records": 299,
+            "citations_queried": 299,
+            "rate": 1.0
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_reporter_roots.judge_unique_rule",
+          "metrics": {
+            "case_name": {
+              "correct": 216,
+              "total": 255,
+              "precision": 0.8470588235294118
+            },
+            "court": {
+              "correct": 244,
+              "total": 250,
+              "precision": 0.976
+            },
+            "date": {
+              "correct": 251,
+              "total": 254,
+              "precision": 0.9881889763779528
+            }
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_reporter_roots.judge_ambiguous_rule",
+          "metrics": {
+            "case_name": {
+              "correct": 9,
+              "total": 9,
+              "precision": 1.0
+            },
+            "court": {
+              "correct": 8,
+              "total": 8,
+              "precision": 1.0
+            },
+            "date": {
+              "correct": 9,
+              "total": 9,
+              "precision": 1.0
+            }
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_reporter_roots.review_unique_llm",
+          "metrics": {
+            "case_name": {
+              "correct": 68,
+              "total": 70,
+              "precision": 0.9714285714285714
+            },
+            "court": {
+              "correct": 65,
+              "total": 70,
+              "precision": 0.9285714285714286
+            },
+            "date": {
+              "correct": 66,
+              "total": 70,
+              "precision": 0.9428571428571428
+            }
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_reporter_roots.review_ambiguous_llm",
+          "metrics": {
+            "case_name": {
+              "correct": 42,
+              "total": 42,
+              "precision": 1.0
+            },
+            "court": {
+              "correct": 41,
+              "total": 42,
+              "precision": 0.9761904761904762
+            },
+            "date": {
+              "correct": 42,
+              "total": 42,
+              "precision": 1.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "validate_roots_citation_identity.lookup_docket_roots",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "validate_roots_citation_identity.lookup_docket_roots.retrieve_courtlistener_dockets",
+          "record_coverage": {
+            "citations_with_records": 43,
+            "citations_queried": 48,
+            "rate": 0.8958333333333334
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_docket_roots.review_courtlistener_dockets_llm",
+          "metrics": {
+            "case_name": {
+              "correct": 33,
+              "total": 34,
+              "precision": 0.9705882352941176
+            },
+            "court": {
+              "correct": 33,
+              "total": 34,
+              "precision": 0.9705882352941176
+            },
+            "date": {
+              "correct": 31,
+              "total": 34,
+              "precision": 0.9117647058823529
+            }
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_docket_roots.retrieve_govinfo_dockets",
+          "record_coverage": {
+            "citations_with_records": 5,
+            "citations_queried": 14,
+            "rate": 0.35714285714285715
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_docket_roots.review_govinfo_dockets_llm",
+          "metrics": {
+            "case_name": {
+              "correct": 4,
+              "total": 4,
+              "precision": 1.0
+            },
+            "court": {
+              "correct": 4,
+              "total": 4,
+              "precision": 1.0
+            },
+            "date": {
+              "correct": 4,
+              "total": 4,
+              "precision": 1.0
+            }
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.lookup_docket_roots.judge_identity_from_fields",
+          "verdict_counts": {
+            "correct_identity": 29,
+            "undetermined": 1,
+            "wrong_identity": 8
+          }
+        }
+      ]
+    },
+    {
+      "stage": "validate_roots_citation_identity.corroborate_locator_bodies",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "validate_roots_citation_identity.corroborate_locator_bodies.retrieve_courtlistener_opinions",
+          "record_coverage": {
+            "citations_with_records": 18,
+            "citations_queried": 97,
+            "rate": 0.18556701030927836
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.corroborate_locator_bodies.retrieve_courtlistener_filings",
+          "record_coverage": {
+            "citations_with_records": 64,
+            "citations_queried": 97,
+            "rate": 0.6597938144329897
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.corroborate_locator_bodies.retrieve_govinfo_opinions",
+          "record_coverage": {
+            "citations_with_records": 51,
+            "citations_queried": 97,
+            "rate": 0.5257731958762887
+          }
+        },
+        {
+          "substage": "validate_roots_citation_identity.corroborate_locator_bodies.review_locator_bodies_llm",
+          "verdict_counts": {
+            "correct_identity": 39,
+            "partially_corroborated": 1,
+            "undetermined": 1,
+            "wrong_identity": 7
+          }
+        }
+      ]
+    }
+  ],
+  "fields": {
+    "case_name": {
+      "correct": 342,
+      "predicted": 345,
+      "gold": 440,
+      "precision": 0.991304347826087,
+      "recall": 0.7772727272727272
+    },
+    "court": {
+      "correct": 332,
+      "predicted": 339,
+      "gold": 440,
+      "precision": 0.9793510324483776,
+      "recall": 0.7545454545454545
+    },
+    "date": {
+      "correct": 336,
+      "predicted": 343,
+      "gold": 440,
+      "precision": 0.9795918367346939,
+      "recall": 0.7636363636363637
+    }
+  },
+  "identity": {
+    "correct": 378,
+    "predicted": 389,
+    "gold": 440,
+    "undetermined": 4,
+    "precision": 0.9717223650385605,
+    "recall": 0.8590909090909091
+  },
+  "checkpoint": "validate_roots_citation_identity.corroborate_locator_bodies.review_locator_bodies_llm",
+  "identity_with_partial": {
+    "correct": 379,
+    "predicted": 390,
+    "gold": 440,
+    "undetermined": 3,
+    "precision": 0.9717948717948718,
+    "recall": 0.8613636363636363
+  },
+  "llm_usage": {
+    "rows": [
+      {
+        "substage": "validate_roots_citation_identity.lookup_reporter_roots.review_unique_llm",
+        "model": "glm-5",
+        "endpoint": "https://ellm.nrp-nautilus.io/v1",
+        "attempts": 72,
+        "usage_reported_attempts": 72,
+        "cache_reported_attempts": 0,
+        "cache_rate_attempts": 0,
+        "input_tokens": 82370,
+        "output_tokens": 31075,
+        "total_tokens": 113445,
+        "cached_input_tokens": null,
+        "cache_write_input_tokens": null,
+        "reasoning_output_tokens": 5972,
+        "cache_rate_input_tokens": null,
+        "cache_rate_cached_input_tokens": null,
+        "cache_rate": null
+      },
+      {
+        "substage": "validate_roots_citation_identity.lookup_reporter_roots.review_ambiguous_llm",
+        "model": "glm-5",
+        "endpoint": "https://ellm.nrp-nautilus.io/v1",
+        "attempts": 47,
+        "usage_reported_attempts": 47,
+        "cache_reported_attempts": 0,
+        "cache_rate_attempts": 0,
+        "input_tokens": 82010,
+        "output_tokens": 18585,
+        "total_tokens": 100595,
+        "cached_input_tokens": null,
+        "cache_write_input_tokens": null,
+        "reasoning_output_tokens": 1920,
+        "cache_rate_input_tokens": null,
+        "cache_rate_cached_input_tokens": null,
+        "cache_rate": null
+      },
+      {
+        "substage": "validate_roots_citation_identity.lookup_docket_roots.review_courtlistener_dockets_llm",
+        "model": "glm-5",
+        "endpoint": "https://ellm.nrp-nautilus.io/v1",
+        "attempts": 41,
+        "usage_reported_attempts": 41,
+        "cache_reported_attempts": 0,
+        "cache_rate_attempts": 0,
+        "input_tokens": 521512,
+        "output_tokens": 26969,
+        "total_tokens": 548481,
+        "cached_input_tokens": null,
+        "cache_write_input_tokens": null,
+        "reasoning_output_tokens": 4880,
+        "cache_rate_input_tokens": null,
+        "cache_rate_cached_input_tokens": null,
+        "cache_rate": null
+      },
+      {
+        "substage": "validate_roots_citation_identity.lookup_docket_roots.review_govinfo_dockets_llm",
+        "model": "glm-5",
+        "endpoint": "https://ellm.nrp-nautilus.io/v1",
+        "attempts": 8,
+        "usage_reported_attempts": 8,
+        "cache_reported_attempts": 0,
+        "cache_rate_attempts": 0,
+        "input_tokens": 11079,
+        "output_tokens": 4811,
+        "total_tokens": 15890,
+        "cached_input_tokens": null,
+        "cache_write_input_tokens": null,
+        "reasoning_output_tokens": 1224,
+        "cache_rate_input_tokens": null,
+        "cache_rate_cached_input_tokens": null,
+        "cache_rate": null
+      },
+      {
+        "substage": "validate_roots_citation_identity.corroborate_locator_bodies.review_locator_bodies_llm",
+        "model": "glm-5",
+        "endpoint": "https://ellm.nrp-nautilus.io/v1",
+        "attempts": 106,
+        "usage_reported_attempts": 106,
+        "cache_reported_attempts": 0,
+        "cache_rate_attempts": 0,
+        "input_tokens": 930314,
+        "output_tokens": 88664,
+        "total_tokens": 1018978,
+        "cached_input_tokens": null,
+        "cache_write_input_tokens": null,
+        "reasoning_output_tokens": 21429,
+        "cache_rate_input_tokens": null,
+        "cache_rate_cached_input_tokens": null,
+        "cache_rate": null
+      }
+    ],
+    "total": {
+      "attempts": 274,
+      "usage_reported_attempts": 274,
+      "cache_reported_attempts": 0,
+      "cache_rate_attempts": 0,
+      "input_tokens": 1627285,
+      "output_tokens": 170104,
+      "total_tokens": 1797389,
+      "cached_input_tokens": null,
+      "cache_write_input_tokens": null,
+      "reasoning_output_tokens": 35425,
+      "cache_rate_input_tokens": null,
+      "cache_rate_cached_input_tokens": null,
+      "cache_rate": null
+    }
+  }
+}

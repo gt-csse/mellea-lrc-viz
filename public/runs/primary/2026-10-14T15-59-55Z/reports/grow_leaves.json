@@ -1,0 +1,440 @@
+{
+  "set": "primary",
+  "workflow": "grow_leaves",
+  "stages": [
+    {
+      "stage": "grow_leaves.grow_short_reporter_leaves",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "grow_leaves.grow_short_reporter_leaves.find_short_reporter_citations",
+          "metrics": {
+            "locator_span": {
+              "correct": 40,
+              "total": 41,
+              "precision": 0.975609756097561
+            },
+            "locator_normalization": {
+              "correct": 40,
+              "total": 41,
+              "precision": 0.975609756097561
+            },
+            "pin_cite_span": {
+              "correct": 40,
+              "total": 41,
+              "precision": 0.975609756097561
+            },
+            "pin_cite_normalization": {
+              "correct": 40,
+              "total": 41,
+              "precision": 0.975609756097561
+            }
+          }
+        },
+        {
+          "substage": "grow_leaves.grow_short_reporter_leaves.resolve_colocations",
+          "metrics": {}
+        },
+        {
+          "substage": "grow_leaves.grow_short_reporter_leaves.resolve_case_names",
+          "metrics": {
+            "case_name_span": {
+              "correct": 38,
+              "total": 41,
+              "precision": 0.926829268292683
+            },
+            "case_name_normalization": {
+              "correct": 38,
+              "total": 41,
+              "precision": 0.926829268292683
+            }
+          }
+        },
+        {
+          "substage": "grow_leaves.grow_short_reporter_leaves.attribute_citations",
+          "metrics": {
+            "attribution": {
+              "correct": 40,
+              "total": 40,
+              "precision": 1.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "grow_leaves.grow_reference_leaves",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "grow_leaves.grow_reference_leaves.find_reference_citations",
+          "metrics": {
+            "case_name_span": {
+              "correct": 8,
+              "total": 8,
+              "precision": 1.0
+            },
+            "case_name_normalization": {
+              "correct": 8,
+              "total": 8,
+              "precision": 1.0
+            },
+            "pin_cite_span": {
+              "correct": 8,
+              "total": 8,
+              "precision": 1.0
+            },
+            "pin_cite_normalization": {
+              "correct": 8,
+              "total": 8,
+              "precision": 1.0
+            }
+          }
+        },
+        {
+          "substage": "grow_leaves.grow_reference_leaves.attribute_citations",
+          "metrics": {
+            "attribution": {
+              "correct": 8,
+              "total": 8,
+              "precision": 1.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "grow_leaves.grow_id_leaves",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "grow_leaves.grow_id_leaves.find_id_citations",
+          "metrics": {
+            "citation_span": {
+              "correct": 34,
+              "total": 61,
+              "precision": 0.5573770491803278
+            },
+            "pin_cite_span": {
+              "correct": 34,
+              "total": 61,
+              "precision": 0.5573770491803278
+            },
+            "pin_cite_normalization": {
+              "correct": 34,
+              "total": 61,
+              "precision": 0.5573770491803278
+            }
+          }
+        },
+        {
+          "substage": "grow_leaves.grow_id_leaves.attribute_citations",
+          "metrics": {
+            "attribution": {
+              "correct": 33,
+              "total": 34,
+              "precision": 0.9705882352941176
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "grow_leaves.grow_supra_leaves",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "grow_leaves.grow_supra_leaves.find_supra_citations",
+          "metrics": {
+            "span": {
+              "correct": 0,
+              "total": 0,
+              "precision": null
+            },
+            "normalization": {
+              "correct": 0,
+              "total": 0,
+              "precision": null
+            }
+          }
+        },
+        {
+          "substage": "grow_leaves.grow_supra_leaves.resolve_case_names",
+          "metrics": {
+            "span": {
+              "correct": 0,
+              "total": 0,
+              "precision": null
+            },
+            "normalization": {
+              "correct": 0,
+              "total": 0,
+              "precision": null
+            }
+          }
+        },
+        {
+          "substage": "grow_leaves.grow_supra_leaves.resolve_pin_cites",
+          "metrics": {
+            "span": {
+              "correct": 0,
+              "total": 0,
+              "precision": null
+            },
+            "normalization": {
+              "correct": 0,
+              "total": 0,
+              "precision": null
+            }
+          }
+        },
+        {
+          "substage": "grow_leaves.grow_supra_leaves.attribute_citations_rule",
+          "metrics": {
+            "attribution": {
+              "correct": 0,
+              "total": 0,
+              "precision": null
+            }
+          }
+        },
+        {
+          "substage": "grow_leaves.grow_supra_leaves.review_attributions_llm",
+          "metrics": {
+            "attribution": {
+              "correct": 0,
+              "total": 0,
+              "precision": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "grow_leaves.correct_leaf_readings",
+      "completed": true,
+      "substages": [
+        {
+          "substage": "grow_leaves.correct_leaf_readings.correct_leaf_fields",
+          "metrics": {
+            "case_name_span": {
+              "correct": 250,
+              "total": 254,
+              "precision": 0.984251968503937
+            },
+            "case_name_normalization": {
+              "correct": 246,
+              "total": 254,
+              "precision": 0.968503937007874
+            },
+            "pin_cite_span": {
+              "correct": 284,
+              "total": 288,
+              "precision": 0.9861111111111112
+            },
+            "pin_cite_normalization": {
+              "correct": 284,
+              "total": 288,
+              "precision": 0.9861111111111112
+            },
+            "court_span": {
+              "correct": 200,
+              "total": 206,
+              "precision": 0.970873786407767
+            },
+            "court_normalization": {
+              "correct": 198,
+              "total": 206,
+              "precision": 0.9611650485436893
+            },
+            "date_span": {
+              "correct": 205,
+              "total": 206,
+              "precision": 0.9951456310679612
+            },
+            "date_normalization": {
+              "correct": 204,
+              "total": 206,
+              "precision": 0.9902912621359223
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "leaf_spans": {
+    "FullCaseCitation": {
+      "correct": 197,
+      "predicted": 197,
+      "gold": 197,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "DocketCitation": {
+      "correct": 9,
+      "predicted": 9,
+      "gold": 10,
+      "precision": 1.0,
+      "recall": 0.9
+    },
+    "ShortCaseCitation": {
+      "correct": 40,
+      "predicted": 40,
+      "gold": 40,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "ReferenceCitation": {
+      "correct": 8,
+      "predicted": 8,
+      "gold": 8,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "IdCitation": {
+      "correct": 34,
+      "predicted": 34,
+      "gold": 34,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "SupraCitation": {
+      "correct": 0,
+      "predicted": 0,
+      "gold": 0,
+      "precision": null,
+      "recall": null
+    },
+    "all_leaves": {
+      "correct": 288,
+      "predicted": 288,
+      "gold": 289,
+      "precision": 1.0,
+      "recall": 0.9965397923875432
+    }
+  },
+  "leaf_attribution": {
+    "FullCaseCitation": {
+      "correct": 197,
+      "predicted": 197,
+      "gold": 197,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "DocketCitation": {
+      "correct": 9,
+      "predicted": 9,
+      "gold": 10,
+      "precision": 1.0,
+      "recall": 0.9
+    },
+    "ShortCaseCitation": {
+      "correct": 40,
+      "predicted": 40,
+      "gold": 40,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "ReferenceCitation": {
+      "correct": 8,
+      "predicted": 8,
+      "gold": 8,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "IdCitation": {
+      "correct": 33,
+      "predicted": 34,
+      "gold": 34,
+      "precision": 0.9705882352941176,
+      "recall": 0.9705882352941176
+    },
+    "SupraCitation": {
+      "correct": 0,
+      "predicted": 0,
+      "gold": 0,
+      "precision": null,
+      "recall": null
+    },
+    "all_leaves": {
+      "correct": 287,
+      "predicted": 288,
+      "gold": 289,
+      "precision": 0.9965277777777778,
+      "recall": 0.9930795847750865
+    }
+  },
+  "llm_usage": {
+    "rows": [
+      {
+        "substage": "grow_leaves.grow_short_reporter_leaves.attribute_citations",
+        "model": "openai/gpt-6-luna",
+        "endpoint": "https://openrouter.ai/api/v1",
+        "attempts": 2,
+        "usage_reported_attempts": 2,
+        "cache_reported_attempts": 2,
+        "cache_rate_attempts": 2,
+        "input_tokens": 19120,
+        "output_tokens": 117,
+        "total_tokens": 19237,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 19114,
+        "reasoning_output_tokens": 0,
+        "cache_rate_input_tokens": 19120,
+        "cache_rate_cached_input_tokens": 0,
+        "cache_rate": 0.0
+      },
+      {
+        "substage": "grow_leaves.grow_id_leaves.attribute_citations",
+        "model": "openai/gpt-6-luna",
+        "endpoint": "https://openrouter.ai/api/v1",
+        "attempts": 61,
+        "usage_reported_attempts": 61,
+        "cache_reported_attempts": 61,
+        "cache_rate_attempts": 61,
+        "input_tokens": 681818,
+        "output_tokens": 5749,
+        "total_tokens": 687567,
+        "cached_input_tokens": 534079,
+        "cache_write_input_tokens": 147556,
+        "reasoning_output_tokens": 2510,
+        "cache_rate_input_tokens": 681818,
+        "cache_rate_cached_input_tokens": 534079,
+        "cache_rate": 0.7833160755509535
+      },
+      {
+        "substage": "grow_leaves.correct_leaf_readings.correct_leaf_fields",
+        "model": "openai/gpt-6-luna",
+        "endpoint": "https://openrouter.ai/api/v1",
+        "attempts": 313,
+        "usage_reported_attempts": 313,
+        "cache_reported_attempts": 313,
+        "cache_rate_attempts": 313,
+        "input_tokens": 772930,
+        "output_tokens": 80985,
+        "total_tokens": 853915,
+        "cached_input_tokens": 250989,
+        "cache_write_input_tokens": 521002,
+        "reasoning_output_tokens": 21233,
+        "cache_rate_input_tokens": 772930,
+        "cache_rate_cached_input_tokens": 250989,
+        "cache_rate": 0.32472410179447037
+      }
+    ],
+    "total": {
+      "attempts": 376,
+      "usage_reported_attempts": 376,
+      "cache_reported_attempts": 376,
+      "cache_rate_attempts": 376,
+      "input_tokens": 1473868,
+      "output_tokens": 86851,
+      "total_tokens": 1560719,
+      "cached_input_tokens": 785068,
+      "cache_write_input_tokens": 687672,
+      "reasoning_output_tokens": 23743,
+      "cache_rate_input_tokens": 1473868,
+      "cache_rate_cached_input_tokens": 785068,
+      "cache_rate": 0.532658284188272
+    }
+  }
+}
